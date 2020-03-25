@@ -130,7 +130,7 @@ const router = {
 }
 
 const server = http.createServer((req, res)=>{
-
+    console.log(req);
     const parsedReq = {};
 
     parsedReq.parsedUrl = url.parse(req.url, true);
