@@ -164,12 +164,14 @@ const server = http.createServer((req, res)=>{
     // `);
 })
 
-MongoClient.connect("mongodb://localhost:27017/node_shang", (err, client) => {
+var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"
+
+MongoClient.connect(url_db, (err, client) => {
     if(err){
         return console.log("Could not connect to MongoDB Server\n", err.Message);
     }
     console.log("Connected to database...");
-    db = client.db("node_shang");
+    db = client.db("heroku_l0nf7fg6");
 });
 
 var PORT = process.env.PORT||5000;
