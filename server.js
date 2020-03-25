@@ -17,13 +17,13 @@ const Response = function(){
     this.message = "123";
 }
 
-app.get("/", (req, res, next)=>{
+router.get("/", (req, res, next)=>{
 
     res.send("Hello World");
 });
 
 
-app.get("/signin", (req, res, next)=>{
+router.get("/signin", (req, res, next)=>{
     let response = new Response();
     res.send(response);
 });

@@ -6,7 +6,7 @@ var cors = require('cors');
 // var cookieParser = require('cookie-parser');
 // var bodyParser = require('body-parser');
 
-var api = require('server');
+var server = require('server');
 // var users = require('./routes/users');
 
 var app = express();
@@ -36,7 +36,7 @@ var app = express();
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', api);
+app.use('server', server);
 // app.use('/users', users);
 
 // catch 404 and forward to error handler
@@ -64,6 +64,7 @@ const corsOption = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
 }
+
 app.use(cors(corsOption));
 
 module.exports = app;
