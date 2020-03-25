@@ -170,6 +170,7 @@ var url_db = process.env.MONGOLAB_URL;
 
 MongoClient.connect(url_db, (err, client) => {
     if(err){
+        console.log(url_db);
         return console.log("Could not connect to MongoDB Server\n", err.Message);
     }
     console.log("Connected to database...");
