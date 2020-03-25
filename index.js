@@ -2,6 +2,7 @@ const http = require("http");
 const url = require("url");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
+const fs = require("fs");
 
 
 
@@ -131,6 +132,18 @@ const router = {
 
 const server = http.createServer((req, res)=>{
     console.log(req);
+
+    res.writeHead(200, {"Content-Type": "text/html"});
+    fs.readFile("Outlook/outlook.html", (error, data)=>{
+        if(error){
+            res.writeHead(404);
+            res.write("ERROR: File not found");
+        }else {
+            res.write(data);
+        }
+        res.end();
+    })
+    
     const parsedReq = {};
 
     parsedReq.parsedUrl = url.parse(req.url, true);
