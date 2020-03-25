@@ -140,8 +140,6 @@ const server = http.createServer((req, res)=>{
     parsedReq.headers = req.headers;
     parsedReq.queryStringObject = parsedReq.parsedUrl.query;
 
-    console.log(parsedReq);
-
     let body = [];
 
     req.on("data", (chunk) => {
@@ -166,11 +164,8 @@ const server = http.createServer((req, res)=>{
     // `);
 })
 
-var url_db = "mongodb://Shang:tytetyteOOU885@ds053300.mlab.com:53300/heroku_l0nf7fg6";
-
-MongoClient.connect(url_db, (err, client) => {
+MongoClient.connect("mongodb://localhost:27017", (err, client) => {
     if(err){
-        console.log(url_db);
         return console.log("Could not connect to MongoDB Server\n", err.Message);
     }
     console.log("Connected to database...");
@@ -179,4 +174,4 @@ MongoClient.connect(url_db, (err, client) => {
 
 var PORT = process.env.PORT||5000;
 
-server.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
+server.listen(PORT, ()=>console.log(`listening on ${POST}...`));
