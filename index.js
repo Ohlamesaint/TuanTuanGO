@@ -140,6 +140,8 @@ const server = http.createServer((req, res)=>{
     parsedReq.headers = req.headers;
     parsedReq.queryStringObject = parsedReq.parsedUrl.query;
 
+    console.log(parsedReq);
+
     let body = [];
 
     req.on("data", (chunk) => {
