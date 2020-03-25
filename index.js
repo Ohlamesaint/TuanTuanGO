@@ -160,7 +160,7 @@ const server = http.createServer((req, res)=>{
     //     Trimmed Path: ${parsedReq.trimmedPath}
     //     Method: ${parsedReq.method}
     //     Headers: \n${JSON.stringify(parsedReq.headers, null, 2)}
-    //     Query Object: \n${JSON.stringify(parsedReq.queryStringObject, null, 2)}
+    //     Query Object: \n${JSON.stringify(parsedReq.queryStringObject, null, 2)}ddg
     // `);
 })
 
