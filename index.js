@@ -166,7 +166,7 @@ const server = http.createServer((req, res)=>{
     // `);
 })
 
-var url_db = process.env.MONGOLAB_URL;
+var url_db = "mongodb://Shang:tytetyteOOU885@ds053300.mlab.com:53300/heroku_l0nf7fg6";
 
 MongoClient.connect(url_db, (err, client) => {
     if(err){
