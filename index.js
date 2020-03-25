@@ -166,7 +166,9 @@ const server = http.createServer((req, res)=>{
     // `);
 })
 
-MongoClient.connect("mongodb://localhost:27017", (err, client) => {
+var url = process.env.MONGOLAB_URL;
+
+MongoClient.connect(url, (err, client) => {
     if(err){
         return console.log("Could not connect to MongoDB Server\n", err.Message);
     }
