@@ -1,6 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
 var express = require("express");
 var router = express.Router();
+var cors = require("cors");
 // var bodyParser = require("body-parser");
 var app = express();
 
@@ -10,6 +11,15 @@ var app = express();
 //     }
 // ]
 
+const corsOption = {
+    origin:[
+        "https://luffy.ee.ncku.edu.tw"
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
+}
+
+app.use(cors(corsOption));
 
 const Response = function(){
     this.success = false;
@@ -17,13 +27,13 @@ const Response = function(){
     this.message = "123";
 }
 
-router.get("/", (req, res, next)=>{
+app.get("/", (req, res, next)=>{
 
     res.send("Hello World");
 });
 
 
-router.get("/signin", (req, res, next)=>{
+app.get("/signin", (req, res, next)=>{
     let response = new Response();
     res.send(response);
 });
