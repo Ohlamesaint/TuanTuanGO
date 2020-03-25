@@ -1,14 +1,21 @@
 {
-  "name": "CRUD",
+  "name": "crud",
   "version": "1.0.0",
-  "description": "",
+  "description": "touch",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ohlamesaint/TuanTuanGO.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ohlamesaint/TuanTuanGO/issues"
+  },
+  "homepage": "https://github.com/Ohlamesaint/TuanTuanGO#readme",
   "dependencies": {
     "mongodb": "^3.5.5"
   }

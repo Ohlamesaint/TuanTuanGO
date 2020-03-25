@@ -172,4 +172,6 @@ MongoClient.connect("mongodb://localhost:27017", (err, client) => {
     db = client.db("node_shang");
 });
 
-server.listen(3030, ()=>console.log("listening on port 3030..."));
+var PORT = process.env.PORT||5000;
+
+server.listen(PORT, ()=>console.log("listening on port 3030..."));
