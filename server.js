@@ -17,9 +17,15 @@ const Response = function(){
     this.message = "";
 }
 
-app.get("/signin", (req, res, next)=>{
+app.get("/", (req, res, next)=>{
 
     res.send("Hello World");
+});
+
+
+app.get("/signin", (req, res, next)=>{
+
+    res.send("Hello World inin");
 });
 
 
