@@ -1,9 +1,33 @@
 const MongoClient = require("mongodb").MongoClient;
 var express = require("express");
-var bodyParser = require("body-parser");
+var router = express.Router();
+// var bodyParser = require("body-parser");
 var app = express();
 
-var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"
+// let users = [
+//     {
+
+//     }
+// ]
+
+
+const Response = function(){
+    this.success = false;
+    this.result = {};
+    this.message = "";
+}
+
+app.get("/signin", (req, res, next)=>{
+
+    res.send("Hello World");
+});
+
+
+
+
+
+
+var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
 
 MongoClient.connect(url_db, (err, client) => {
     if(err){
@@ -14,12 +38,5 @@ MongoClient.connect(url_db, (err, client) => {
 });
 
 var PORT = process.env.PORT||5000;
-
 // app.use(express.static(__dirname + "/Outlook"));
-
-app.get("/", (req, res)=>{
-    res.send("Hello World");
-});
-
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
-
