@@ -166,9 +166,9 @@ const server = http.createServer((req, res)=>{
     // `);
 })
 
-var url = process.env.MONGOLAB_URL;
+var url_db = process.env.MONGOLAB_URL;
 
-MongoClient.connect(url, (err, client) => {
+MongoClient.connect(url_db, (err, client) => {
     if(err){
         return console.log("Could not connect to MongoDB Server\n", err.Message);
     }
