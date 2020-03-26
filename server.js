@@ -28,7 +28,7 @@ app.get("/", (req, res, next)=>{
 
 app.get("/signin", (req, res, next)=>{
     // let response = new Response();
-    res.send(accountCheck());
+    res.send(exports.accountCheck);
 });
 function accountCheck(callback){
     var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
@@ -46,6 +46,7 @@ function accountCheck(callback){
     });
 }
 
+exports.accountCheck = accountCheck;
 
 
 
