@@ -3,7 +3,7 @@ var express = require("express");
 var router = express.Router();
 var cors = require("cors");
 var app = express();
-var axios = require("axios");
+//var axios = require("axios")
 
 const corsOption = {
     origin:[
@@ -23,6 +23,7 @@ const Response = function(){
 }
 
 app.get("/", (req, res, next)=>{
+
     res.send("Hello World");
 });
 
@@ -33,7 +34,7 @@ app.get("/signin", (req, res, next)=>{
     res.send(response);
 });
 
-axios.post("/signin", (req, res, next)=>{
+app.post("/signin", (req, res, next)=>{
     let data = req.body;
     console.log(req);
     let response = new Response();
