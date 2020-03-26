@@ -28,9 +28,15 @@ app.get("/", (req, res, next)=>{
 
 
 app.get("/signin", (req, res, next)=>{
+    console.log(req);
     let response = new Response();
     res.send(response);
 });
+
+app.post("/signin", (req, res, next)=>{
+    console.log(req);
+
+})
 // function accountCheck(callback){
 //     var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
 
