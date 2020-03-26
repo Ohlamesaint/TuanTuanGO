@@ -19,6 +19,6 @@ function getAccount(callback){
 
 exports.getAccount = getAccount;
 
-getStudent(function(arr){
+getAccount(function(arr){
     console.log(arr);
 })
