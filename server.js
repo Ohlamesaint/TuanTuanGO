@@ -2,14 +2,7 @@ const MongoClient = require("mongodb").MongoClient;
 var express = require("express");
 var router = express.Router();
 var cors = require("cors");
-// var bodyParser = require("body-parser");
 var app = express();
-
-// let users = [
-//     {
-
-//     }
-// ]
 
 const corsOption = {
     origin:[
@@ -24,7 +17,7 @@ app.use(cors(corsOption));
 const Response = function(){
     this.success = false;
     this.result = {};
-    this.message = "123";
+    this.message = "";
 }
 
 app.get("/", (req, res, next)=>{
@@ -34,24 +27,27 @@ app.get("/", (req, res, next)=>{
 
 
 app.get("/signin", (req, res, next)=>{
-    let response = new Response();
-    res.send(response);
+    // let response = new Response();
+    res.send(accountCheck());
 });
+function accountCheck(callback){
+    var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
 
-
-
-
-
-
-var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
-
-MongoClient.connect(url_db, (err, client) => {
+    MongoClient.connect(url_db, (err, client) => {
     if(err){
         return console.log("Could not connect to MongoDB Server\n", err.Message);
     }
-    console.log("Connected to database...");
-    db = client.db("heroku_l0nf7fg6");
-});
+        console.log("Connected to database...");
+        db = client.db("heroku_l0nf7fg6");
+        db.collection("shang").find({}).toArray(function(err, arr){
+            callback(arr);
+            db.close();
+        })
+    });
+}
+
+
+
 
 var PORT = process.env.PORT||5000;
 // app.use(express.static(__dirname + "/Outlook"));
