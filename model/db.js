@@ -12,7 +12,7 @@ function getAccount(callback){
         const myDB = database.db("shang");
         myDB.collection("shang").find({}).toArray(function(err, arr){
             callback(arr);
-            db.close();
+            myDB.close();
         })
     })
 }
