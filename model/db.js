@@ -10,7 +10,7 @@ function getAccount(callback){
         }
         console.log("connect success");
 
-        db.collection("shang").find({}).toArray(function(err, arr){
+        db.db.collection("shang").find({}).toArray(function(err, arr){
             callback(arr);
             db.close();
         })
