@@ -34,6 +34,8 @@ app.get("/signin", (req, res, next)=>{
 });
 
 app.post("/signin", (req, res, next)=>{
+    let data = req.body;
+    console.log(data);
     let response = new Response();
     res.send(response);
 })
