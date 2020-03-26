@@ -25,7 +25,6 @@ const Response = function(){
 }
 
 app.get("/", (req, res, next)=>{
-
     res.send("Hello World");
 });
 
@@ -38,25 +37,34 @@ app.get("/signin", (req, res, next)=>{
 
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
-    console.log(req);
-    let response = new Response();
-    res.send(response);
+    accountCheck(data, r)
+    // accountInput = data.username;
+    // passwordInput = data.password;
+        
+    res.send(r);
 })
-// function accountCheck(callback){
-//     var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
+function accountCheck(json, callback){
+    var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
 
-//     MongoClient.connect(url_db, (err, client) => {
-//     if(err){
-//         return console.log("Could not connect to MongoDB Server\n", err.Message);
-//     }
-//         console.log("Connected to database...");
-//         db = client.db("heroku_l0nf7fg6");
-//         db.collection("shang").find({}).toArray(function(err, arr){
-//             callback(arr);
-//             db.close();
-//         })
-//     });
-// }
+    MongoClient.connect(url_db, (err, client) => {
+    if(err){
+        return console.log("Could not connect to MongoDB Server\n", err.Message);
+    }
+        console.log("Connected to database...");
+        db = client.db("heroku_l0nf7fg6");
+        db.collection.insertOne(json, function(err, r){
+            if(err){
+                console.log("error");
+                callback("-1");
+                return
+            }
+        })
+        // db.collection("shang").find({}).toArray(function(err, arr){
+        //     callback(arr);
+        //     db.close();
+        // })
+    });
+}
 
 // module.exports = accountCheck;
 
