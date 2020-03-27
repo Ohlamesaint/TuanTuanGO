@@ -107,9 +107,15 @@ UserProfileSchema.statics.checkUsername = function(username, response, callback)
     this.find({"username": username}, function(err, docs){
         if(err){
             console.log("not found " + username);
-            response.accountValid = false;
-        } else{
-        response.accountValid = true;
+            return
+        } 
+        else{
+            if(docs){
+                response.accountValid = true;
+            }
+            else{
+                response.accountValid = false;
+            }
         }
         callback(response);
     })
