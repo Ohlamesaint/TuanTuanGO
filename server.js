@@ -7,15 +7,15 @@ var app = express();
 //var axios = require("axios")
 
 const dbsetting = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  autoIndex: false, // Don't build indexes
-  poolSize: 10, // Maintain up to 10 socket connections
-  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-  family: 4 // Use IPv4, skip trying IPv6
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    autoIndex: false, // Don't build indexes
+    poolSize: 10, // Maintain up to 10 socket connections
+    serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+    socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+    family: 4 // Use IPv4, skip trying IPv6
 };
 
 const corsOption = {
@@ -58,20 +58,22 @@ app.post("/signin", (req, res, next)=>{
     let response = new Response();
     UserProfile.checkAccount(data, (result)=>{
         console.log(result, typeof(result));
-        // if(data.username === result.username){
-        //     response.accountValid = true;
-        //     if(data.password === result.password){
-        //         response.passwordValid = true;
-        //         response.user = result.user;
-        //         console.log(result.user);
-        //     }
-        //     else{
-        //         response.passwordValid = false;
-        //     }
-        // }
-        // else{
-        //     response.accountValid = false;
-        // }
+        if(result){
+            response.accountValid = true;
+            if(data.password === result.password){
+                response.passwordValid = true;
+                response.user = result.user;
+                console.log(result);
+                console.log(response);
+            }
+            else{
+                response.passwordValid = false;
+            }
+        }
+        else{
+            response.passwordValid = false;
+            response.accountValid = false;
+        }
         res.send(response);
     })
 })
