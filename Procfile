@@ -1,1 +1,1 @@
-web: node ./model/db.js
+web: node server.js
