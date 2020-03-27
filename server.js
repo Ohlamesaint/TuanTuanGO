@@ -3,7 +3,7 @@ var express = require("express");
 var router = express.Router();
 var cors = require("cors");
 var app = express();
-var db = require("../model/db.js");
+var db = require("./model/db.js");
 //var axios = require("axios")
 
 const corsOption = {
