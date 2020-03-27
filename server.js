@@ -107,13 +107,13 @@ mongoose.connect(process.env.MONGODB_URI+"/shang", dbsetting, (error)=>{
 });
 
 
-mongoose.connection.on('connected', function () {
-    console.log("Connected");
-    mongoose.connection.db.collectionNames(function (err, names) {
-        if (err) console.log(err);
-        else console.log(names);
-    });
-})
+// mongoose.connection.on('connected', function () {
+//     console.log("Connected");
+//     mongoose.connection.db.collectionNames(function (err, names) {
+//         if (err) console.log(err);
+//         else console.log(names);
+//     });
+// })
 
 var Account = mongoose.model("UserProfile", {
     username: String,
