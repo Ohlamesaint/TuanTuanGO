@@ -99,11 +99,12 @@ var PORT = process.env.PORT||5000;
 // app.use(express.static(__dirname + "/Outlook"));
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
-mongoose.connect(process.env.MONGODB_URI+"/shang", dbsetting, (error)=>{
+mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
     if(error){
         console.log(error);
+        return
     }
-    console.log(`Connect to ${process.env.MONGODB_URI}/shang`)
+    console.log(`Connect to ${process.env.MONGODB_URI}`)
 });
 
 
