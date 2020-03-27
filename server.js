@@ -108,7 +108,6 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
                 response.accountValid = false;
             }
         }
-        console.log(docs);
     })
     this.find({"password": AccountInput.password}, function(err, docs){
         if(err){
@@ -124,6 +123,7 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
             }
         }
     })
+    console.log(response);
     callback(response);
 }
 
