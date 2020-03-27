@@ -123,7 +123,7 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
             }
         }
     })
-    console.log(response);
+    console.log(response+" in func");
     callback(response);
 }
 
