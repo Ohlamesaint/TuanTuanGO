@@ -24,7 +24,7 @@ mongoose.connect = (process.env.MONGODB_URI+"/UserProfile", options, function(er
         console.log("database connections error");
         return;
     }
-    console.log(`connect to ${process.env.MONGODB_URI}/UserProfile`);
+    console.log("connect to database");
 });
 // console.log(process.env.MONGODB_URI);
 
