@@ -21,10 +21,7 @@ const dbsetting = {
 
 // console.log(process.env.MONGODB_URI);
 
-var Account = mongoose.model("UserProfile", {
-    username: String,
-    password: String,
-})
+
 
 const corsOption = {
     origin:[
@@ -102,8 +99,7 @@ var PORT = process.env.PORT||5000;
 // app.use(express.static(__dirname + "/Outlook"));
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
-// mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
-mongoose.connect = ("mongodb://localhost:27017", dbsetting);
+mongoose.connect("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
 
 
 mongoose.connection.on('connected', function () {
@@ -112,4 +108,9 @@ mongoose.connection.on('connected', function () {
         if (err) console.log(err);
         else console.log(names);
     });
+})
+
+var Account = mongoose.model("UserProfile", {
+    username: String,
+    password: String,
 })
