@@ -100,7 +100,7 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 });
 
 
-var UserProfileSchema = new mongoose.schema({
+var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
     password: {tyoe: String, required: true, select: false}
 })
