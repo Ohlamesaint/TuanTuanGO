@@ -57,10 +57,8 @@ app.get("/signin", (req, res, next)=>{
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
-    UserProfile.checkUsername(data.username, response)
-    .then((response)=>{
-        res.send(response);
-    });
+    response = UserProfile.checkUsername(data.username, response);
+    console.log(response);
     // res.send(response);
     // if(UserProfile.checkUsername(data.username)){
     //     console.log("in true");
