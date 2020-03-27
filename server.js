@@ -59,7 +59,6 @@ app.post("/signin", (req, res, next)=>{
     let response = new Response();
     UserProfile.checkUsername(data.username, response, (result)=>{
         response = result;
-        console.log(response);
         res.send(response);
     })
     // if(UserProfile.checkUsername(data.username)){
@@ -109,8 +108,9 @@ UserProfileSchema.statics.checkUsername = function(username, response, callback)
         if(err){
             console.log("not found " + username);
             response.accountValid = false;
-        }
+        } else{
         response.accountValid = true;
+        }
         callback(response);
     })
 }
