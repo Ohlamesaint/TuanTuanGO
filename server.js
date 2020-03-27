@@ -34,6 +34,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 const Response = function(){
     this.accountValid = "";
     this.passwordValid = "";
+    this.user = "";
 }
 
 app.get("/", (req, res, next)=>{
@@ -105,6 +106,7 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
                 console.log(docs[0]);
                 if(docs[0].password == AccountInput.password){
                     response.passwordValid = true;
+                    response.user = docs[0].user;
                 }
                 else{
                     response.passwordValid = false;
@@ -116,20 +118,6 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
         }
         callback(response);
     })
-    // this.find({"password": AccountInput.password}, function(err, docs){
-    //     if(err){
-    //         console.log("not found " + AccountInput.password);
-    //         return;
-    //     }
-    //     else{
-    //         if(docs.length > 0){
-    //             response.passwordValid = true;
-    //         }
-    //         else{
-    //             response.passwordValid = false;
-    //         }
-    //     }
-    // })
 }
 
 var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
