@@ -32,8 +32,6 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 // db.use(cors(corsOption));
 
 const Response = function(){
-    this.success = false;
-    this.result = {};
     this.accountValid = "";
     this.passwordValid = "";
 }
@@ -92,7 +90,7 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 
 var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
-    password: {type: String, required: true, select: false}
+    password: {type: String, required: true}
 })
 
 UserProfileSchema.statics.checkAccount = function(AccountInput, response, callback){
