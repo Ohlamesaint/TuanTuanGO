@@ -56,6 +56,7 @@ app.get("/signin", (req, res, next)=>{
 
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
+    console.log(data.username + "in signin")
     let response = new Response();
     if(UserProfile.checkUsername(data.username)){
         response.accountValid = true;
@@ -64,14 +65,6 @@ app.post("/signin", (req, res, next)=>{
         response.accountValid = false;
         res.send(response);
     }
-    // console.log(data);
-    // var accountCheck = new UserProfile({
-    //     username: "",
-    //     password: ""
-    // })
-    // accountCheck.username = data.username;
-    // accountCheck.password = data.password;
-    // accountCheck.save();
 })
 
 app.post("/signup", (req, res, next)=>{
