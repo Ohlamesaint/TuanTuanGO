@@ -18,15 +18,14 @@ const dbsetting = {
   family: 4 // Use IPv4, skip trying IPv6
 };
 
-console.log("wtf");
+mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
 
-mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting, function(error){
-    if(error){
-        console.log("database connections error");
-        return;
-    }
-    console.log("connect to database");
-});
+mongoose.connection.on('connected', function () {
+    mongoose.connection.db.collectionNames(function (err, names) {
+        if (err) console.log(err);
+        else console.log(names);
+    });
+})
 // console.log(process.env.MONGODB_URI);
 
 var Account = mongoose.model("UserProfile", {
