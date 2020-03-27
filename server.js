@@ -65,18 +65,16 @@ app.post("/signin", (req, res, next)=>{
                 response.user = result.user;
                 console.log(result);
                 console.log(response);
-                res.send(response);
             }
             else{
                 response.passwordValid = false;
-                res.send(response);
             }
         }
         else{
             response.passwordValid = false;
             response.accountValid = false;
-            res.send(response);
         }
+        res.send(response);
     })
 })
 
@@ -108,7 +106,8 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 
 var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    user: {type: String, required: true}
 })
 
 UserProfileSchema.statics.checkAccount = function(AccountInput, callback){
