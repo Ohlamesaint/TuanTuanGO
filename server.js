@@ -102,7 +102,9 @@ var PORT = process.env.PORT||5000;
 // app.use(express.static(__dirname + "/Outlook"));
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
-mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
+// mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
+mongoose.connect = ("mongodb://localhost:27017", dbsetting);
+
 
 mongoose.connection.on('connected', function () {
     console.log("Connected");
