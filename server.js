@@ -1,4 +1,3 @@
-
 var mongoose = require("mongoose");
 var express = require("express");
 var router = express.Router();
@@ -19,7 +18,7 @@ const options = {
   family: 4 // Use IPv4, skip trying IPv6
 };
 
-mongoose.connect = (process.env.MONGODB_URI+"/UserProfile", options, function(error){
+mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", options, function(error){
     if(error){
         console.log("database connections error");
         return;
