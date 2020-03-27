@@ -65,16 +65,18 @@ app.post("/signin", (req, res, next)=>{
                 response.user = result.user;
                 console.log(result);
                 console.log(response);
+                res.send(response);
             }
             else{
                 response.passwordValid = false;
+                res.send(response);
             }
         }
         else{
             response.passwordValid = false;
             response.accountValid = false;
+            res.send(response);
         }
-        res.send(response);
     })
 })
 
