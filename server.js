@@ -110,13 +110,14 @@ UserProfileSchema.statics.checkUsername = function(username, response, callback)
             return
         } 
         else{
-            if(docs){
+            if(docs.length > 0){
                 response.accountValid = true;
             }
             else{
                 response.accountValid = false;
             }
         }
+        console.log(docs);
         callback(response);
     })
 }
