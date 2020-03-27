@@ -58,7 +58,7 @@ app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
     UserProfile.checkUsername(data.username, response)
-    .then(()=>{
+    .then((response)=>{
         res.send(response);
     });
     // res.send(response);
