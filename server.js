@@ -57,19 +57,10 @@ app.get("/signin", (req, res, next)=>{
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
-    UserProfile.checkUsername(data.username, response, (result)=>{
+    UserProfile.checkUsername(data, response, (result)=>{
         response = result;
         res.send(response);
     })
-    // if(UserProfile.checkUsername(data.username)){
-    //     console.log("in true");
-    //     response.accountValid = true;
-    //     res.send(response);
-    // } else{
-    //     console.log("in false");
-    //     response.accountValid = false;
-    //     res.send(response);
-    // }
 })
 
 app.post("/signup", (req, res, next)=>{
@@ -103,11 +94,11 @@ var UserProfileSchema = new mongoose.Schema({
     password: {type: String, required: true, select: false}
 })
 
-UserProfileSchema.statics.checkUsername = function(username, response, callback){
-    this.find({"username": username}, function(err, docs){
+UserProfileSchema.statics.checkAccount = function(AccountInput, response, callback){
+    this.find({"username": AccountInput.username}, function(err, docs){
         if(err){
-            console.log("not found " + username);
-            return
+            console.log("not found" + AccountInput.username);
+            return;
         } 
         else{
             if(docs.length > 0){
@@ -118,8 +109,22 @@ UserProfileSchema.statics.checkUsername = function(username, response, callback)
             }
         }
         console.log(docs);
-        callback(response);
     })
+    this.find({"password": AccountInput.password}, function(err, docs){
+        if(err){
+            console.log("not found" + AccountInput.password);
+            return;
+        }
+        else{
+            if(docs.length > 0){
+                response.passwordValid = true;
+            }
+            else{
+                response.passwordValid = false;
+            }
+        }
+    })
+    callback(response);
 }
 
 var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
