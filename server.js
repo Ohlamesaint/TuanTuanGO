@@ -99,7 +99,12 @@ var PORT = process.env.PORT||5000;
 // app.use(express.static(__dirname + "/Outlook"));
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
-mongoose.connect("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
+mongoose.connect(process.env.MONGODB_URI+"/shang", dbsetting, (error)=>{
+    if(error){
+        console.log(error);
+    }
+    console.log(`Connect to ${process.env.MONGODB_URI}/shang`)
+});
 
 
 mongoose.connection.on('connected', function () {
