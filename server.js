@@ -59,6 +59,7 @@ app.post("/signin", (req, res, next)=>{
     let response = new Response();
     UserProfile.checkAccount(data, response, (result)=>{
         response = result;
+        console.log(result);
         res.send(response);
     })
 })
@@ -109,21 +110,20 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
             }
         }
     })
-    // this.find({"password": AccountInput.password}, function(err, docs){
-    //     if(err){
-    //         console.log("not found " + AccountInput.password);
-    //         return;
-    //     }
-    //     else{
-    //         if(docs.length > 0){
-    //             response.passwordValid = true;
-    //         }
-    //         else{
-    //             response.passwordValid = false;
-    //         }
-    //     }
-    // })
-    console.log(response+" in func");
+    this.find({"password": AccountInput.password}, function(err, docs){
+        if(err){
+            console.log("not found " + AccountInput.password);
+            return;
+        }
+        else{
+            if(docs.length > 0){
+                response.passwordValid = true;
+            }
+            else{
+                response.passwordValid = false;
+            }
+        }
+    })
     callback(response);
 }
 
