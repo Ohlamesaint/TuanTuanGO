@@ -17,7 +17,7 @@ const corsOption = {
 app.use(cors(corsOption));
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-db.use(cors(corsOption));
+// db.use(cors(corsOption));
 
 const Response = function(){
     this.success = false;
@@ -44,7 +44,7 @@ app.post("/signin", (req, res, next)=>{
     // passwordInput = data.password;
     db.getAccount(function(arr){
         console.log(arr);
-        res.send(arr);
+        // res.send(arr);
     });
 })
 // function accountCheck(json, callback){
