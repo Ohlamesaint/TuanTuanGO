@@ -108,6 +108,7 @@ UserProfileSchema.statics.checkUsername = function(username, response){
             response.accountValid = false;
         }
         response.accountValid = true;
+        console.log(response);
     })
 }
 
