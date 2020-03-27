@@ -97,7 +97,7 @@ var UserProfileSchema = new mongoose.Schema({
 UserProfileSchema.statics.checkAccount = function(AccountInput, response, callback){
     this.find({"username": AccountInput.username}, function(err, docs){
         if(err){
-            console.log("not found" + AccountInput.username);
+            console.log("not found " + AccountInput.username);
             return;
         } 
         else{
@@ -109,20 +109,20 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
             }
         }
     })
-    this.find({"password": AccountInput.password}, function(err, docs){
-        if(err){
-            console.log("not found" + AccountInput.password);
-            return;
-        }
-        else{
-            if(docs.length > 0){
-                response.passwordValid = true;
-            }
-            else{
-                response.passwordValid = false;
-            }
-        }
-    })
+    // this.find({"password": AccountInput.password}, function(err, docs){
+    //     if(err){
+    //         console.log("not found " + AccountInput.password);
+    //         return;
+    //     }
+    //     else{
+    //         if(docs.length > 0){
+    //             response.passwordValid = true;
+    //         }
+    //         else{
+    //             response.passwordValid = false;
+    //         }
+    //     }
+    // })
     console.log(response+" in func");
     callback(response);
 }
