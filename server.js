@@ -34,8 +34,8 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 const Response = function(){
     this.success = false;
     this.result = {};
-    this.accountValid = "無此會員帳號!";
-    this.passwordValid = "密碼錯誤!";
+    this.accountValid = "!";
+    this.passwordValid = "";
 }
 
 app.get("/", (req, res, next)=>{
@@ -56,10 +56,13 @@ app.get("/signin", (req, res, next)=>{
 
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
+    let response = new Response();
     if(UserProfile.checkUsername(data.username)){
-        res.send("good!");
+        response.accountValid = true;
+        res.send(response);
     } else{
-        res.send("bad!");
+        response.accountValid = false;
+        res.send(response);
     }
     // console.log(data);
     // var accountCheck = new UserProfile({
@@ -69,9 +72,6 @@ app.post("/signin", (req, res, next)=>{
     // accountCheck.username = data.username;
     // accountCheck.password = data.password;
     // accountCheck.save();
-
-    // let response = new Response();
-    // res.send(response);
 })
 
 app.post("/signup", (req, res, next)=>{
