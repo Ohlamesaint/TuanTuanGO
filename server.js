@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 var express = require("express");
 var router = express.Router();
 var cors = require("cors");
@@ -6,7 +6,7 @@ var app = express();
 // var db = require("./model/db.js");
 //var axios = require("axios")
 
-const options = {
+const dbsetting = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -18,7 +18,9 @@ const options = {
   family: 4 // Use IPv4, skip trying IPv6
 };
 
-mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", options, function(error){
+console.log("wtf");
+
+mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting, function(error){
     if(error){
         console.log("database connections error");
         return;
