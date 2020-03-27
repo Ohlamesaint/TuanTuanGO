@@ -102,7 +102,7 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 
 var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
-    password: {tyoe: String, required: true, select: false}
+    password: {type: String, required: true, select: false}
 })
 
 UserProfileSchema.statics.checkUsername = function(username){
