@@ -57,8 +57,8 @@ app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
     UserProfile.checkAccount(data, response, (result)=>{
-        response = result;
-        console.log(result);
+        response = result[0];
+        console.log(result[0+" out");
         res.send(response);
     })
 })
@@ -117,7 +117,7 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
                 response.accountValid = false;
             }
         }
-        callback(response);
+        callback(docs[0]);
     })
 }
 
