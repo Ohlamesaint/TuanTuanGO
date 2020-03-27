@@ -58,7 +58,7 @@ app.post("/signin", (req, res, next)=>{
     let response = new Response();
     UserProfile.checkAccount(data, response, (result)=>{
         response = result[0];
-        console.log(result[0+" out");
+        console.log(result[0]+" out");
         res.send(response);
     })
 })
