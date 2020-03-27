@@ -57,12 +57,13 @@ app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
     UserProfile.checkAccount(data, (result)=>{
-        console.log(result);
+        console.log(result.user, typeof(result));
         if(data.username === result.username){
             response.accountValid = true;
-            if(data.password == result.password){
+            if(data.password === result.password){
                 response.passwordValid = true;
                 response.user = result.user;
+                console.log(result.user);
             }
             else{
                 response.passwordValid = false;
