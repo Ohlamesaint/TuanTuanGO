@@ -60,10 +60,9 @@ app.post("/signin", (req, res, next)=>{
     UserProfile.checkUsername(data.username, response, (res)=>{
         response => res;
         console.log(response);
-        res.send(response);
     })
-    // console.log(response);
-    // res.send(response);
+    console.log(response);
+    res.send(response);
     // if(UserProfile.checkUsername(data.username)){
     //     console.log("in true");
     //     response.accountValid = true;
