@@ -7,7 +7,25 @@ var app = express();
 // var db = require("./model/db.js");
 //var axios = require("axios")
 
-mongoose.connect = (process.env.MONGODB_URI+"/UserProfile");
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  autoIndex: false, // Don't build indexes
+  poolSize: 10, // Maintain up to 10 socket connections
+  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+  family: 4 // Use IPv4, skip trying IPv6
+};
+
+mongoose.connect = (process.env.MONGODB_URI+"/UserProfile", options, function(error){
+    if(error){
+        console.log("database connections error");
+        return;
+    }
+    console.log(`connect to ${process.env.MONGODB_URI}/UserProfile`);
+});
 // console.log(process.env.MONGODB_URI);
 
 var Account = mongoose.model("UserProfile", {
