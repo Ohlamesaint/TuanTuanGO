@@ -3,6 +3,7 @@ var express = require("express");
 var router = express.Router();
 var cors = require("cors");
 var app = express();
+var db = require("../model/db.js");
 //var axios = require("axios")
 
 const corsOption = {
@@ -37,34 +38,36 @@ app.get("/signin", (req, res, next)=>{
 
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
-    accountCheck(data, r)
+    // accountCheck(data, r)
     // accountInput = data.username;
     // passwordInput = data.password;
-        
-    res.send(r);
-})
-function accountCheck(json, callback){
-    var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
-
-    MongoClient.connect(url_db, (err, client) => {
-    if(err){
-        return console.log("Could not connect to MongoDB Server\n", err.Message);
-    }
-        console.log("Connected to database...");
-        db = client.db("heroku_l0nf7fg6");
-        db.collection.insertOne(json, function(err, r){
-            if(err){
-                console.log("error");
-                callback("-1");
-                return
-            }
-        })
-        // db.collection("shang").find({}).toArray(function(err, arr){
-        //     callback(arr);
-        //     db.close();
-        // })
+    db.getAccount(function(arr){
+        console.log(arr);
+        res.send(arr);
     });
-}
+})
+// function accountCheck(json, callback){
+//     var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
+
+//     MongoClient.connect(url_db, (err, client) => {
+//     if(err){
+//         return console.log("Could not connect to MongoDB Server\n", err.Message);
+//     }
+//         console.log("Connected to database...");
+//         db = client.db("heroku_l0nf7fg6");
+//         db.collection.insertOne(json, function(err, r){
+//             if(err){
+//                 console.log("error");
+//                 callback("-1");
+//                 return
+//             }
+//         })
+//         // db.collection("shang").find({}).toArray(function(err, arr){
+//         //     callback(arr);
+//         //     db.close();
+//         // })
+//     });
+// }
 
 // module.exports = accountCheck;
 

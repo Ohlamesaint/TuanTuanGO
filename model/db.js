@@ -19,6 +19,6 @@ function getAccount(callback){
 
 exports.getAccount = getAccount;
 
-getAccount(function(arr){
-    console.log(arr);
-})
+// getAccount(function(arr){
+//     console.log(arr);
+// })
