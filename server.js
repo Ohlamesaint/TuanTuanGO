@@ -101,6 +101,7 @@ var UserProfileSchema = new mongoose.Schema({
 UserProfileSchema.statics.checkUsername = function(username){
     this.find({"username": username}, function(err, docs){
         if(err){
+            console.log("not found " + username);
             return false;
         }
         return true;
