@@ -57,7 +57,10 @@ app.get("/signin", (req, res, next)=>{
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
-    UserProfile.checkUsername(data.username, response);
+    UserProfile.checkUsername(data.username, response)
+    .then(()=>{
+        res.send(response);
+    });
     // res.send(response);
     // if(UserProfile.checkUsername(data.username)){
     //     console.log("in true");
@@ -108,7 +111,7 @@ UserProfileSchema.statics.checkUsername = function(username, response){
             response.accountValid = false;
         }
         response.accountValid = true;
-        res.send(response);
+        return response;
     })
 }
 
