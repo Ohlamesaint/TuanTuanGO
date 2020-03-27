@@ -58,9 +58,11 @@ app.post("/signin", (req, res, next)=>{
     let data = req.body;
     console.log(data);
     var accountCheck = new Account({
-        username: "Leo",
-        password: "0512"
+        username: "",
+        password: ""
     })
+    accountCheck.username = data.username;
+    accountCheck.password = data.password;
     accountCheck.save();
     let response = new Response();
     res.send(response);
