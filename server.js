@@ -18,11 +18,6 @@ const dbsetting = {
   family: 4 // Use IPv4, skip trying IPv6
 };
 
-
-// console.log(process.env.MONGODB_URI);
-
-
-
 const corsOption = {
     origin:[
         "https://luffy.ee.ncku.edu.tw"
@@ -60,6 +55,8 @@ app.get("/signin", (req, res, next)=>{
 });
 
 app.post("/signin", (req, res, next)=>{
+    let data = req.body;
+    console.log(data);
     var accountCheck = new Account({
         username: "Leo",
         password: "0512"
@@ -68,35 +65,8 @@ app.post("/signin", (req, res, next)=>{
     let response = new Response();
     res.send(response);
 })
-// function accountCheck(json, callback){
-//     var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
-
-//     MongoClient.connect(url_db, (err, client) => {
-//     if(err){
-//         return console.log("Could not connect to MongoDB Server\n", err.Message);
-//     }
-//         console.log("Connected to database...");
-//         db = client.db("heroku_l0nf7fg6");
-//         db.collection.insertOne(json, function(err, r){
-//             if(err){
-//                 console.log("error");
-//                 callback("-1");
-//                 return
-//             }
-//         })
-//         // db.collection("shang").find({}).toArray(function(err, arr){
-//         //     callback(arr);
-//         //     db.close();
-//         // })
-//     });
-// }
-
-// module.exports = accountCheck;
-
-
 
 var PORT = process.env.PORT||5000;
-// app.use(express.static(__dirname + "/Outlook"));
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
 mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
@@ -106,15 +76,6 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
     }
     console.log(`Connect to ${process.env.MONGODB_URI}`)
 });
-
-
-// mongoose.connection.on('connected', function () {
-//     console.log("Connected");
-//     mongoose.connection.db.collectionNames(function (err, names) {
-//         if (err) console.log(err);
-//         else console.log(names);
-//     });
-// })
 
 var Account = mongoose.model("UserProfile", {
     username: String,
