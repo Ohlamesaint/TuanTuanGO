@@ -58,8 +58,10 @@ app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
     UserProfile.checkAccount(data, response, (result)=>{
-        response = result;
-        console.log(result);
+        response.accountValid = result.accountValid;
+    })
+    UserProfile.checkPassword(data, response, (result)=>{
+        response.passwordValid = result.passwordValid;
         res.send(response);
     })
 })
@@ -104,20 +106,6 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
         else{
             if(docs.length > 0){
                 response.accountValid = true;
-                this.find({"password": AccountInput.password}, function(err, docs){
-                    if(err){
-                        console.log("not found " + AccountInput.password);
-                        return;
-                    }
-                    else{
-                        if(docs.length > 0){
-                            response.passwordValid = true;
-                        }
-                        else{
-                            response.passwordValid = false;
-                        }
-                    }
-                })
             }
             else{
                 response.accountValid = false;
@@ -125,6 +113,38 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
         }
         callback(response);
     })
+    // this.find({"password": AccountInput.password}, function(err, docs){
+    //     if(err){
+    //         console.log("not found " + AccountInput.password);
+    //         return;
+    //     }
+    //     else{
+    //         if(docs.length > 0){
+    //             response.passwordValid = true;
+    //         }
+    //         else{
+    //             response.passwordValid = false;
+    //         }
+    //     }
+    // })
+}
+
+UserProfileSchema.statics.checkPassword = function(AccountInput, response, callback){
+    this.find({"password": AccountInput.password}, function(err, docs){
+        if(err){
+            console.log("not found " + AccountInput.password);
+            return;
+        }
+        else{
+            if(docs.length > 0){
+                response.passwordValid = true;
+            }
+            else{
+                response.passwordValid = false;
+            }
+        }
+    })
+    callback(response);
 }
 
 var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
