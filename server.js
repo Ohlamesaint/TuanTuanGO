@@ -107,7 +107,7 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
                 if(docs[0].password == AccountInput.password){
                     response.passwordValid = true;
                     response.user = docs[0].user;
-                    console.log(response + " in");
+                    console.log(response.user + " in");
                 }
                 else{
                     response.passwordValid = false;
