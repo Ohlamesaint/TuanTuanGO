@@ -7,8 +7,8 @@ var app = express();
 // var db = require("./model/db.js");
 //var axios = require("axios")
 
-mongoose.connect = (process.env.MONGODB_URI);
-console.log(process.env.MONGODB_URI);
+mongoose.connect = (process.env.MONGODB_URI+"/UserProfile");
+// console.log(process.env.MONGODB_URI);
 
 var Account = mongoose.model("UserProfile", {
     username: String,
