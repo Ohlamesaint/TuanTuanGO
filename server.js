@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 const Response = function(){
     this.success = false;
     this.result = {};
-    this.accountValid = "!";
+    this.accountValid = "";
     this.passwordValid = "";
 }
 
@@ -57,7 +57,7 @@ app.get("/signin", (req, res, next)=>{
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
-    // console.log(UserProfile.checkUsername(data.username, response));
+    UserProfile.checkUsername(data.username, response);
     res.send(response);
     // if(UserProfile.checkUsername(data.username)){
     //     console.log("in true");
