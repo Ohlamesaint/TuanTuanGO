@@ -106,7 +106,7 @@ UserProfileSchema.statics.checkUsername = function(username){
             console.log("not found " + username);
             return false;
         }
-        return true;
+        console.log(docs);
     })
 }
 
