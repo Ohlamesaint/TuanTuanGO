@@ -109,22 +109,22 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, response, callba
                 response.accountValid = false;
             }
         }
+        callback(response);
     })
-    this.find({"password": AccountInput.password}, function(err, docs){
-        if(err){
-            console.log("not found " + AccountInput.password);
-            return;
-        }
-        else{
-            if(docs.length > 0){
-                response.passwordValid = true;
-            }
-            else{
-                response.passwordValid = false;
-            }
-        }
-    })
-    callback(response);
+    // this.find({"password": AccountInput.password}, function(err, docs){
+    //     if(err){
+    //         console.log("not found " + AccountInput.password);
+    //         return;
+    //     }
+    //     else{
+    //         if(docs.length > 0){
+    //             response.passwordValid = true;
+    //         }
+    //         else{
+    //             response.passwordValid = false;
+    //         }
+    //     }
+    // })
 }
 
 var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
