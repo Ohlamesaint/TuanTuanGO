@@ -56,8 +56,28 @@ app.get("/signin", (req, res, next)=>{
 
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
+    if(UserProfile.checkUsername(data.username)){
+        res.send("good!");
+    } else{
+        res.send("bad!");
+    }
+    // console.log(data);
+    // var accountCheck = new UserProfile({
+    //     username: "",
+    //     password: ""
+    // })
+    // accountCheck.username = data.username;
+    // accountCheck.password = data.password;
+    // accountCheck.save();
+
+    // let response = new Response();
+    // res.send(response);
+})
+
+app.post("/signup", (req, res, next)=>{
+    let data = req.body;
     console.log(data);
-    var accountCheck = new Account({
+    var accountCheck = new UserProfile({
         username: "",
         password: ""
     })
@@ -79,7 +99,19 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
     console.log(`Connect to ${process.env.MONGODB_URI}`)
 });
 
-var Account = mongoose.model("UserProfile", {
-    username: String,
-    password: String,
+
+var UserProfileSchema = new mongoose.schema({
+    username: {type: String, required: true},
+    password: {tyoe: String, required: true, select: false}
 })
+
+UserProfileSchema.statics.checkUsername = function(username){
+    this.find({"username": username}, function(err, docs){
+        if(err){
+            return false;
+        }
+        return true;
+    })
+}
+
+var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
