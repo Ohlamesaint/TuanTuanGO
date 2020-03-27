@@ -18,14 +18,7 @@ const dbsetting = {
   family: 4 // Use IPv4, skip trying IPv6
 };
 
-mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
 
-mongoose.connection.on('connected', function () {
-    mongoose.connection.db.collectionNames(function (err, names) {
-        if (err) console.log(err);
-        else console.log(names);
-    });
-})
 // console.log(process.env.MONGODB_URI);
 
 var Account = mongoose.model("UserProfile", {
@@ -108,3 +101,13 @@ app.post("/signin", (req, res, next)=>{
 var PORT = process.env.PORT||5000;
 // app.use(express.static(__dirname + "/Outlook"));
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
+
+mongoose.connect = ("mongodb://symbolwu:eric5800602@ds053300.mlab.com:53300/heroku_l0nf7fg6", dbsetting);
+
+mongoose.connection.on('connected', function () {
+    console.log("Connected");
+    mongoose.connection.db.collectionNames(function (err, names) {
+        if (err) console.log(err);
+        else console.log(names);
+    });
+})
