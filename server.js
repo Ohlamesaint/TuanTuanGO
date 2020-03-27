@@ -1,10 +1,18 @@
-const MongoClient = require("mongodb").MongoClient;
+
+var mongoose = require("mongoose");
 var express = require("express");
 var router = express.Router();
 var cors = require("cors");
 var app = express();
-var db = require("./model/db.js");
+// var db = require("./model/db.js");
 //var axios = require("axios")
+
+mongoose.connect = (process.env.MONGODB_URI || "mongodb://localhost:27017/");
+
+var Account = mongoose.model("UserProfile", {
+    username: String,
+    password: String,
+})
 
 const corsOption = {
     origin:[
@@ -33,19 +41,23 @@ app.get("/", (req, res, next)=>{
 
 app.get("/signin", (req, res, next)=>{
     console.log(req);
+    var accountCheck = new Account({
+        username: "Leo",
+        password: "0512"
+    })
+    accountCheck.save();
     let response = new Response();
     res.send(response);
 });
 
 app.post("/signin", (req, res, next)=>{
-    let data = req.body;
-    // accountCheck(data, r)
-    // accountInput = data.username;
-    // passwordInput = data.password;
-    db.getAccount(function(arr){
-        console.log(arr);
-        // res.send(arr);
-    });
+    var accountCheck = new Account({
+        username: "Leo",
+        password: "0512"
+    })
+    accountCheck.save();
+    let response = new Response();
+    res.send(response);
 })
 // function accountCheck(json, callback){
 //     var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url

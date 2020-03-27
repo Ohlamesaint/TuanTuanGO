@@ -1,6 +1,6 @@
 var url_db = process.env.MONGODB_URI || "mongodb://localhost:27017/"        //database url
 
-var mongoClient = require("mongodb").MongoClient;
+const mongoClient = require("mongodb").MongoClient;
 
 function getAccount(callback){
     mongoClient.connect(url_db, function(err, database){
