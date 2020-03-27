@@ -57,10 +57,12 @@ app.get("/signin", (req, res, next)=>{
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
-    UserProfile.checkUsername(data.username, response).then((res) => {
-        response = res;
-    });
-    console.log(response);
+    UserProfile.checkUsername(data.username, response, (res)=>{
+        response => res;
+        console.log(response);
+        res.send(response);
+    })
+    // console.log(response);
     // res.send(response);
     // if(UserProfile.checkUsername(data.username)){
     //     console.log("in true");
@@ -104,14 +106,14 @@ var UserProfileSchema = new mongoose.Schema({
     password: {type: String, required: true, select: false}
 })
 
-UserProfileSchema.statics.checkUsername = function(username, response){
+UserProfileSchema.statics.checkUsername = function(username, response, callback){
     this.find({"username": username}, function(err, docs){
         if(err){
             console.log("not found " + username);
             response.accountValid = false;
         }
         response.accountValid = true;
-        return response;
+        callback(response);
     })
 }
 
