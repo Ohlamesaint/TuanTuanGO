@@ -56,12 +56,14 @@ app.get("/signin", (req, res, next)=>{
 
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
-    console.log(data.username + "in signin")
     let response = new Response();
+    console.log(UserProfile.checkUsername(data.username));
     if(UserProfile.checkUsername(data.username)){
+        console.log("in true");
         response.accountValid = true;
         res.send(response);
     } else{
+        console.log("in false");
         response.accountValid = false;
         res.send(response);
     }
@@ -104,7 +106,6 @@ UserProfileSchema.statics.checkUsername = function(username){
             console.log("not found " + username);
             return false;
         }
-        console.log("found " + username);
         return true;
     })
 }
