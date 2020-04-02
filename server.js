@@ -51,8 +51,7 @@ app.get("/signin", (req, res, next)=>{
         return;
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
-            console.log(result);
-            res.send(result);
+            res.send({signin: true});
             return;
         })
     }
@@ -63,7 +62,7 @@ app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
     UserProfile.checkAccount(data.username, (result)=>{
-        console.log(result, typeof(result));
+        // console.log(result, typeof(result));
         if(result){
             response.accountValid = true;
             if(data.password === result.password){
@@ -71,8 +70,8 @@ app.post("/signin", (req, res, next)=>{
                 response.user = result.user;
                 if(!req.session.username){
                     req.session.username = result.username;
+                    console.log("session = "+ req.session.username);
                 }
-                console.log("session = "+ req.session.username);
             }
             else{
                 response.passwordValid = false;
@@ -86,19 +85,19 @@ app.post("/signin", (req, res, next)=>{
     })
 })
 
-app.post("/signup", (req, res, next)=>{
-    let data = req.body;
-    console.log(data);
-    var accountCheck = new UserProfile({
-        username: "",
-        password: ""
-    })
-    accountCheck.username = data.username;
-    accountCheck.password = data.password;
-    accountCheck.save();
-    let response = new Response();
-    res.send(response);
-})
+// app.post("/signup", (req, res, next)=>{
+//     let data = req.body;
+//     console.log(data);
+//     var accountCheck = new UserProfile({
+//         username: "",
+//         password: ""
+//     })
+//     accountCheck.username = data.username;
+//     accountCheck.password = data.password;
+//     accountCheck.save();
+//     let response = new Response();
+//     res.send(response);
+// })
 
 
 //server connection
