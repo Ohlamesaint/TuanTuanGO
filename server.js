@@ -29,8 +29,8 @@ const dbsetting = {
 };
 
 app.use(session({ 
-    secret: 'userPassword', 
-    cookie: { maxAge: 60}, 
+    secret: 'username', 
+    cookie: { maxAge: 60*1000}, 
     saveUninitialized: true,
     resave: false
 }))
