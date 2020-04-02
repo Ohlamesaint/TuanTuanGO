@@ -8,4 +8,4 @@ const corsOption = {
     allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
 }
 
-module.exports = cors;
+module.exports = cors(corsOption);
