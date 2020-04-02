@@ -28,7 +28,12 @@ const dbsetting = {
     family: 4 // Use IPv4, skip trying IPv6
 };
 
-app.use(session({ secret: 'userPassword', cookie: { maxAge: null }, saveUninitialized: true}))
+app.use(session({ 
+    secret: 'userPassword', 
+    cookie: { maxAge: null }, 
+    saveUninitialized: true,
+    resave: false
+}))
 
 app.use(cors(corsOption));
 app.use(express.json()); // for parsing application/json
@@ -47,7 +52,7 @@ app.get("/signin", (req, res, next)=>{
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
-            res.send("Hello World");
+            res.send(result);
             return;
         })
     }
@@ -64,9 +69,10 @@ app.post("/signin", (req, res, next)=>{
             if(data.password === result.password){
                 response.passwordValid = true;
                 response.user = result.user;
-                req.session.username = result.username;
-                console.log(result);
-                console.log(response);
+                if(!req.session.username){
+                    req.session.username = result.username;
+                }
+                console.log("session = "+ req.session.username);
             }
             else{
                 response.passwordValid = false;
