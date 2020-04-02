@@ -35,7 +35,8 @@ app.use(session({
     secret: 'firstTime', 
     cookie: { maxAge: 2*60*1000*60}, 
     saveUninitialized: false,
-    resave: false
+    resave: false,
+    secure: false
 }))
 
 app.use(cors(corsOption));
