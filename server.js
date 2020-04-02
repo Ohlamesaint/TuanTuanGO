@@ -51,11 +51,12 @@ app.get("/signin", (req, res, next)=>{
         res.send({signin: false});
         return;
     }else{
-        UserProfile.checkAccount(req.session.username, (result)=>{
-            console.log("success");
-            res.send({signin: true});
-            return;
-        })
+        res.send({signin: true});
+        // UserProfile.checkAccount(req.session.username, (result)=>{
+        //     console.log("success");
+            
+        return;
+        // })
     }
 });
 
