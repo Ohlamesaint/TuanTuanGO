@@ -42,7 +42,7 @@ const Response = function(){
 
 app.get("/signin", (req, res, next)=>{
     if(!req.session.username){
-        res.send("not get it");
+        res.send({signin: false});
         return;
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
