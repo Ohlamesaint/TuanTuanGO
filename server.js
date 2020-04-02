@@ -48,6 +48,7 @@ const Response = function(){
 }
 
 app.get("/signin", {  withCredentials: true  }, (req, res, next)=>{
+    res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
@@ -89,6 +90,7 @@ app.post("/signin",{  withCredentials: true  }, (req, res, next)=>{
             response.passwordValid = false;
             response.accountValid = false;
         }
+        res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
         res.send(response);
         console.log(req.session);
     })
