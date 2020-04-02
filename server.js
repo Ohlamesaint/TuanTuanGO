@@ -43,12 +43,14 @@ const Response = function(){
 app.get("/signin", (req, res, next)=>{
     if(!req.session.username){
         res.send({signin : false})
+        return;
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
+            res.send("Hello World");
+            return;
         })
     }
-    res.send("Hello World");
 });
 
 
