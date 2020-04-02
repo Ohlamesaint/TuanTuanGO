@@ -30,7 +30,7 @@ const dbsetting = {
 
 app.use(session({ 
     secret: 'userPassword', 
-    cookie: { maxAge: null }, 
+    cookie: { maxAge: 60}, 
     saveUninitialized: true,
     resave: false
 }))
@@ -47,10 +47,12 @@ const Response = function(){
 
 app.get("/signin", (req, res, next)=>{
     if(!req.session.username){
+        console.log("fail");
         res.send({signin: false});
         return;
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
+            console.log("success");
             res.send({signin: true});
             return;
         })
