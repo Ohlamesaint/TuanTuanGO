@@ -45,7 +45,7 @@ const Response = function(){
     this.user = "";
 }
 
-app.get("/signin", (req, res, next)=>{
+app.get("/signcheck", (req, res, next)=>{
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
@@ -73,7 +73,7 @@ app.post("/signin", (req, res, next)=>{
                 //if(!req.session.username){
                 req.session.signin = true;
                 req.session.username = result.user;
-                //    console.log("session = "+ req.session.username);
+                console.log("session = "+ req.session.username);
                 //}
             }
             else{
