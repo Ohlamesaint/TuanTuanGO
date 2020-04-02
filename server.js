@@ -47,7 +47,7 @@ const Response = function(){
     this.user = "";
 }
 
-app.get("/signin", (req, res, next)=>{
+app.get("/signin", {  withCredentials: true  }, (req, res, next)=>{
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
@@ -65,7 +65,7 @@ app.get("/signin", (req, res, next)=>{
 });
 
 
-app.post("/signin", (req, res, next)=>{
+app.post("/signin",{  withCredentials: true  }, (req, res, next)=>{
     let data = req.body;
     let response = new Response();
     UserProfile.checkAccount(data.username, (result)=>{
