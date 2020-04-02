@@ -46,15 +46,16 @@ const Response = function(){
 }
 
 app.get("/signin", (req, res, next)=>{
-    if(req.session.signin){
+    if(!req.session.signin){
+        console.log("fail");
+        res.send({signin: false});
+        return;
+    }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log("success");
             res.send({signin: true});
             return;
         })
-    }else{
-        res.send({signin: false});
-        return;
     }
 });
 
