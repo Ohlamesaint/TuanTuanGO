@@ -45,7 +45,7 @@ const Response = function(){
     this.user = "";
 }
 
-app.get("/signcheck", (req, res, next)=>{
+app.get("/signin", (req, res, next)=>{
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
