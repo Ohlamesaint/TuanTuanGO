@@ -1,12 +1,20 @@
 const mongoose = require("mongoose");
 var express = require("express");
 var router = express.Router();
-var cors = require("./models/cors");
+var cors = require("cors");
 var app = express();
 var product = require("./models/data/product");
 const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
+
+const corsOption = {
+    origin:[
+        "https://luffy.ee.ncku.edu.tw"
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
+}
 
 const dbsetting = {
     useNewUrlParser: true,
@@ -22,7 +30,7 @@ const dbsetting = {
 
 app.use(session({ secret: 'userPassword', cookie: { maxAge: null }, saveUninitialized: true}))
 
-app.use(cors());
+app.use(cors(corsOption));
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
