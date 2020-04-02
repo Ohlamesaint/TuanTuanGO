@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 var express = require("express");
 var router = express.Router();
-var cors = require("cors");
+var cors = require("./models/cors");
 var app = express();
-// var db = require("./model/db.js");
-//var axios = require("axios")
-
+var product = require("../models/data/product");
+const formidable = require('formidable');
+    
 const dbsetting = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -18,18 +18,9 @@ const dbsetting = {
     family: 4 // Use IPv4, skip trying IPv6
 };
 
-const corsOption = {
-    origin:[
-        "https://luffy.ee.ncku.edu.tw"
-    ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
-}
-
 app.use(cors(corsOption));
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-// db.use(cors(corsOption));
 
 const Response = function(){
     this.accountValid = "";
@@ -41,17 +32,6 @@ app.get("/", (req, res, next)=>{
     res.send("Hello World");
 });
 
-
-app.get("/signin", (req, res, next)=>{
-    console.log(req);
-    var accountCheck = new Account({
-        username: "Leo",
-        password: "0512"
-    })
-    accountCheck.save();
-    let response = new Response();
-    res.send(response);
-});
 
 app.post("/signin", (req, res, next)=>{
     let data = req.body;
@@ -92,9 +72,13 @@ app.post("/signup", (req, res, next)=>{
     res.send(response);
 })
 
-var PORT = process.env.PORT||5000;
+
+//server connection
+var PORT = process.env.PORT;
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
+
+//db connection
 mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
     if(error){
         console.log(error);
@@ -123,3 +107,6 @@ UserProfileSchema.statics.checkAccount = function(AccountInput, callback){
 }
 
 var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
+
+
+var test = new product
