@@ -29,7 +29,7 @@ const dbsetting = {
 };
 
 app.use(session({ 
-    name: "sid",
+    name: "sessid",
     resave: false,
     secret: 'firstTime', 
     cookie: { maxAge: 2*60*1000*60}, 
