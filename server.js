@@ -66,7 +66,7 @@ app.get("/signin", (req, res, next)=>{
 });
 
 
-app.post("/signin",{  withCredentials: true  }, (req, res, next)=>{
+app.post("/signin", (req, res, next)=>{
     let data = req.body;
     let response = new Response();
     UserProfile.checkAccount(data.username, (result)=>{
