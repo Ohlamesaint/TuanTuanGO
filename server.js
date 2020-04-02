@@ -29,9 +29,11 @@ const dbsetting = {
 };
 
 app.use(session({ 
-    secret: 'username', 
-    cookie: { maxAge: 3*60*1000}, 
-    saveUninitialized: true,
+    name: "sid",
+    resave: false,
+    secret: 'firstTime', 
+    cookie: { maxAge: 2*60*1000*60}, 
+    saveUninitialized: false,
     resave: false
 }))
 
@@ -49,9 +51,11 @@ app.get("/signin", (req, res, next)=>{
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
+        console.log(req.session);
         return;
     }else{
         res.send({signin: true});
+        console.log(req.session);
         // UserProfile.checkAccount(req.session.username, (result)=>{
         //     console.log("success");
             
@@ -86,6 +90,7 @@ app.post("/signin", (req, res, next)=>{
             response.accountValid = false;
         }
         res.send(response);
+        console.log(req.session);
     })
 })
 
