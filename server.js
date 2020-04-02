@@ -12,6 +12,7 @@ const corsOption = {
     origin:[
         "https://luffy.ee.ncku.edu.tw"
     ],
+    credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
 }
@@ -48,7 +49,7 @@ const Response = function(){
 }
 
 app.get("/signin", (req, res, next)=>{
-    res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
+    // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
@@ -90,7 +91,7 @@ app.post("/signin", (req, res, next)=>{
             response.passwordValid = false;
             response.accountValid = false;
         }
-        res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
+        // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
         res.send(response);
         console.log(req.session);
     })
