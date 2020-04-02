@@ -30,7 +30,7 @@ const dbsetting = {
 
 app.use(session({ 
     secret: 'username', 
-    cookie: { maxAge: 60*1000}, 
+    cookie: { maxAge: 3*60*1000}, 
     saveUninitialized: true,
     resave: false
 }))
@@ -46,16 +46,15 @@ const Response = function(){
 }
 
 app.get("/signin", (req, res, next)=>{
-    if(!req.session.username){
-        console.log("fail");
-        res.send({signin: false});
-        return;
-    }else{
+    if(req.session.signin){
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log("success");
             res.send({signin: true});
             return;
         })
+    }else{
+        res.send({signin: false});
+        return;
     }
 });
 
@@ -70,10 +69,11 @@ app.post("/signin", (req, res, next)=>{
             if(data.password === result.password){
                 response.passwordValid = true;
                 response.user = result.user;
-                if(!req.session.username){
-                    req.session.username = result.username;
-                    console.log("session = "+ req.session.username);
-                }
+                //if(!req.session.username){
+                req.session.signin = true;
+                req.session.username = result.user;
+                //    console.log("session = "+ req.session.username);
+                //}
             }
             else{
                 response.passwordValid = false;
