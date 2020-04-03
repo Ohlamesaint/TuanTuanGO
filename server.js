@@ -96,7 +96,8 @@ app.post("/signin", (req, res, next)=>{
                 response.user = result.user;
                 //if(!req.session.username){
                 req.session.signin = true;
-                req.session.username = result.user;
+                req.session.user = result.user;     //於session中儲存使用者姓名
+                req.session.username = result.username  //於session中儲存使用者帳號名稱
                 console.log("session = "+ req.session.username);
                 //}
             }
