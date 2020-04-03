@@ -50,7 +50,7 @@ const Response = function(){
 }
 
 app.get("/signin", (req, res, next)=>{
-    // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
+    res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
@@ -60,7 +60,7 @@ app.get("/signin", (req, res, next)=>{
         console.log(req.session);
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log("success");
-            result.signin = true;
+            result.signin = true;           //add signin property
             res.send(result);
             return;
         })
