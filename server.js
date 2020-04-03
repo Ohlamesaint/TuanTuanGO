@@ -57,13 +57,12 @@ app.get("/signin", (req, res, next)=>{
         console.log(req.session);
         return;
     }else{
-        res.send({signin: true});
         console.log(req.session);
-        // UserProfile.checkAccount(req.session.username, (result)=>{
-        //     console.log("success");
-        
-        return;
-        // })
+        UserProfile.checkAccount(req.session.username, (result)=>{
+            console.log("success");
+            res.send(result);
+            return;
+        })
     }
 });
 
