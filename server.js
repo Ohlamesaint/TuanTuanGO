@@ -59,9 +59,9 @@ app.get("/signin", (req, res, next)=>{
     }else{
         console.log(req.session);
         UserProfile.checkAccount(req.session.username, (result)=>{
-            result.signin = true;
+            // result.signin = true;
             console.log(result);
-            res.send(result);
+            res.send({signin: true, username: result.username, user: result.user});
             return;
         })
     }
