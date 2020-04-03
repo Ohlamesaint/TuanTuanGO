@@ -60,7 +60,7 @@ app.get("/signin", (req, res, next)=>{
         res.send({signin: true});
         console.log(req.session);
         UserProfile.checkAccount(req.session.username, (result)=>{
-            console.log("success");
+            console.log(result);
         
             return;
         })
