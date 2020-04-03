@@ -57,15 +57,14 @@ app.get("/signin", (req, res, next)=>{
         console.log(req.session);
         return;
     }else{
+        
         console.log(req.session);
         UserProfile.checkAccount(req.session.username, (result)=>{
-            res.send(result);
-            return;
-        })
+            res.send({signin: true});
+        return;
+        // })
     }
 });
-
-app.get("/userprofile", )               //go from here
 
 app.get('/signOut', function(req, res, next){
     // 備註：這裡用的 session-file-store 在destroy 方法裡，並沒有銷燬cookie
