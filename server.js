@@ -67,12 +67,19 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
 });
 
 app.get('/profile', function(req, res, next){
-    UserProfile.checkAccount(req.session.username, (result)=>{
-        console.log(result);
-        // var headPasteBuf = (result.headPaste.buffer).toString('utf8');
-        res.send({"user": result.user, "username": result.username, "headPaste": result.headPaste.Buffer});
-        return;             //這裡之後要改成next();
-    })
+    if(!req.session.signin){
+        console.log("fail");
+        res.send({signin: false});
+        console.log(req.session);
+        return;
+    }else{
+        UserProfile.checkAccount(req.session.username, (result)=>{
+            console.log(result);
+            // var headPasteBuf = (result.headPaste.buffer).toString('utf8');
+            res.send({"user": result.user, "username": result.username, "headPaste": result.headPaste.Buffer});
+            return;             //這裡之後要改成next();
+        })
+    }
 })
 
 app.get('/signOut', function(req, res, next){
@@ -93,47 +100,40 @@ app.get('/signOut', function(req, res, next){
 
 
 app.post("/signin", (req, res, next)=>{
-    if(!req.session.signin){
-        console.log("fail");
-        res.send({signin: false});
-        console.log(req.session);
-        return;
-    }else{
-        let data = req.body;
-        let response = new Response();
-        UserProfile.checkAccount(data.username, (result)=>{
-            // console.log(result, typeof(result));
-            // console.log(result);
-            console.log(result.headPaste);
-            // console.log((result.headPaste.buffer).toString('utf8'));
-            // console.log(result.headPaste.contentType);
-            // console.log(result.headPaste.Buffer);
-            // console.log((result.headPaste.Buffer.buffer).toString('utf8'));
-            if(result){
-                response.accountValid = true;
-                if(data.password === result.password){
-                    response.passwordValid = true;
-                    response.user = result.user;
-                    //if(!req.session.username){
-                    req.session.signin = true;
-                    req.session.user = result.user;     //於session中儲存使用者姓名
-                    req.session.username = result.username  //於session中儲存使用者帳號名稱
-                    console.log("session = "+ req.session.username);
-                    //}
-                }
-                else{
-                    response.passwordValid = false;
-                }
+    let data = req.body;
+    let response = new Response();
+    UserProfile.checkAccount(data.username, (result)=>{
+        // console.log(result, typeof(result));
+        // console.log(result);
+        console.log(result.headPaste);
+        // console.log((result.headPaste.buffer).toString('utf8'));
+        // console.log(result.headPaste.contentType);
+        // console.log(result.headPaste.Buffer);
+        // console.log((result.headPaste.Buffer.buffer).toString('utf8'));
+        if(result){
+            response.accountValid = true;
+            if(data.password === result.password){
+                response.passwordValid = true;
+                response.user = result.user;
+                //if(!req.session.username){
+                req.session.signin = true;
+                req.session.user = result.user;     //於session中儲存使用者姓名
+                req.session.username = result.username  //於session中儲存使用者帳號名稱
+                console.log("session = "+ req.session.username);
+                //}
             }
             else{
                 response.passwordValid = false;
-                response.accountValid = false;
             }
-            // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
-            res.send(response);
-            console.log(req.session);
-        })
-    }
+        }
+        else{
+            response.passwordValid = false;
+            response.accountValid = false;
+        }
+        // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
+        res.send(response);
+        console.log(req.session);
+    })
 })
 
 app.post("/registration", (req, res, next)=>{
@@ -143,9 +143,6 @@ app.post("/registration", (req, res, next)=>{
         if(err){
             throw new err;
         }
-        // const username = field.username;
-        var fieldJSON = JSON.stringify(field);
-        var filesJSON = JSON.stringify(files);
         UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
             if(result){
                 console.log("occupied: "+ result);
@@ -174,17 +171,6 @@ app.post("/registration", (req, res, next)=>{
             }
         })
     })
-    
-    // let data = req.body;
-    // console.log(data);
-    
-    // accountGenerate.username = data.username;
-    // accountGenerate.password = data.password;
-    // accountGenerate.user = data.user;
-    // accountGenerate.user = data.headPaste;
-    // accountCheck.save();
-    // let response = new Response();
-    // res.send(response);
 })
 
 
@@ -223,15 +209,3 @@ UserProfileSchema.statics.checkAccount = function(username, callback){
 }
 
 var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
-
-// var imageUrl = "./img/LaoXieZhenFrozenPorkRiceBurger";
-
-// var test = new Product({
-//     pid: 10001,
-//     productType : test,
-//     productName : testProduct,
-//     originPrice : 500,
-// })
-
-// test.img.data = fs.readFileSync(imageUrl);
-// test.img.contentType = "image/svg";
