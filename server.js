@@ -140,7 +140,7 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
-                accountGenerate.headPaste.data = fs.readFileSync(file.headPaste.path);
+                accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
                 accountGenerate.headPaste.contentType = "image/jpg";
                 accountGenerate.save();
                 // console.log("fields: " + fieldJSON);
