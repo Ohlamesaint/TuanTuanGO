@@ -130,12 +130,26 @@ app.post("/registration", (req, res, next)=>{
             user: "",
             headPaste: ""
         })
+        UserProfile.checkAccount(field.username, result=>{
+            if(result){
+                res.send({occupied: true});             //此帳號已被使用
+                return;
+            }
+            else {
+                res.send({occupied: false});
+            }
+        })
+        accountGenerate.username = field.username;
+        accountGenerate.password = field.password;
+        accountGenerate.user = field.user;
+        // accountGenerate.user = field.headPaste;
+        accountGenerate.save();
         console.log("fields: " + fieldJSON);
         console.log("files: " + filesJSON);
         // res.send({"fields": fieldJSON, "files": filesJSON});
         res.end();
     })
-
+    
     // let data = req.body;
     // console.log(data);
     
