@@ -164,7 +164,7 @@ var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
     user: {type: String, required: true},
-    headPaste: {type: String, contentType: image/jpeg}
+    headPaste: {type: String, contentType: "image/jpg"}
 })
 
 UserProfileSchema.statics.checkAccount = function(username, callback){
