@@ -124,12 +124,6 @@ app.post("/registration", (req, res, next)=>{
         // const username = field.username;
         var fieldJSON = JSON.stringify(field);
         var filesJSON = JSON.stringify(files);
-        var accountGenerate = new UserProfile({
-            username: "",
-            password: "",
-            user: "",
-            headPaste: ""
-        })
         UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
             if(result){
                 console.log("occupied: "+ result);
@@ -139,6 +133,12 @@ app.post("/registration", (req, res, next)=>{
             // else {
             //     res.send({occupied: false});
             // }
+        })
+        var accountGenerate = new UserProfile({
+            username: "",
+            password: "",
+            user: "",
+            headPaste: ""
         })
         accountGenerate.username = field.username;
         accountGenerate.password = field.password;
