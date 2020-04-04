@@ -76,7 +76,8 @@ app.get('/profile', function(req, res, next){
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
             var headPasteBuf = (result.headPaste.buffer).toString('utf8');
-            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
+            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": headPasteBuf});
+            console.log(headPasteBuf);
             return;             //這裡之後要改成next();
         })
     }
