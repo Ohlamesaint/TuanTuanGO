@@ -58,9 +58,8 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
     }else{
         console.log(req.session);
         UserProfile.checkAccount(req.session.username, (result)=>{
-            // result.signin = true;
             console.log(result);
-            res.send({signin: true, username: result.username, user: result.user});
+            res.send({signin: true, username: result.username, user: result.user});     //加送headPaste
             return;
         })
     }
@@ -89,6 +88,7 @@ app.post("/signin", (req, res, next)=>{
     UserProfile.checkAccount(data.username, (result)=>{
         // console.log(result, typeof(result));
         console.log(result);
+        console.log(result.headPaste.contentType);
         if(result){
             response.accountValid = true;
             if(data.password === result.password){
