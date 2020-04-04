@@ -132,6 +132,7 @@ app.post("/registration", (req, res, next)=>{
         })
         UserProfile.checkAccount(field.username, result=>{
             if(result){
+                console.log("occupied: "+ result);
                 res.send({occupied: true});             //此帳號已被使用
                 return;
             }
