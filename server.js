@@ -87,7 +87,7 @@ app.post("/signin", (req, res, next)=>{
     let response = new Response();
     UserProfile.checkAccount(data.username, (result)=>{
         // console.log(result, typeof(result));
-        console.log(result);
+        // console.log(result);
         console.log(result.headPaste);
         console.log((result.headPaste.buffer).toString('utf8'));
         // console.log(result.headPaste.Buffer);
