@@ -70,7 +70,7 @@ app.get('/profile', function(req, res, next){
     UserProfile.checkAccount(req.session.username, (result)=>{
         console.log(result);
         // var headPasteBuf = (result.headPaste.buffer).toString('utf8');
-        res.send({user: result.user, username: result.username, headPaste: result.headPaste});
+        res.send({user: result.user, username: result.username, headPaste: result.headPaste.Buffer});
         return;             //這裡之後要改成next();
     })
 })
@@ -99,7 +99,7 @@ app.post("/signin", (req, res, next)=>{
         // console.log(result, typeof(result));
         // console.log(result);
         console.log(result.headPaste);
-        console.log((result.headPaste.buffer).toString('utf8'));
+        // console.log((result.headPaste.buffer).toString('utf8'));
         console.log(result.headPaste.contentType);
         // console.log(result.headPaste.Buffer);
         // console.log((result.headPaste.Buffer.buffer).toString('utf8'));
