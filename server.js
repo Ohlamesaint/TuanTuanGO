@@ -77,7 +77,7 @@ app.get('/profile', function(req, res, next){
             console.log(result);
             var headPasteBuf = (result.headPaste.buffer).toString('utf8');
             var headPasteJSON = JSON.stringify(headPasteBuf);
-            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": headPasteBuf});
+            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
             console.log(headPasteJSON);
             return;             //這裡之後要改成next();
         })
