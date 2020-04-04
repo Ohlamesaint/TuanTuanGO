@@ -130,15 +130,15 @@ app.post("/registration", (req, res, next)=>{
             user: "",
             headPaste: ""
         })
-        UserProfile.checkAccount(field.username, result=>{
+        UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
             if(result){
                 console.log("occupied: "+ result);
                 res.send({occupied: true});             //此帳號已被使用
                 return;
             }
-            else {
-                res.send({occupied: false});
-            }
+            // else {
+            //     res.send({occupied: false});
+            // }
         })
         accountGenerate.username = field.username;
         accountGenerate.password = field.password;
@@ -148,7 +148,7 @@ app.post("/registration", (req, res, next)=>{
         console.log("fields: " + fieldJSON);
         console.log("files: " + filesJSON);
         // res.send({"fields": fieldJSON, "files": filesJSON});
-        res.end();
+        // res.end();
     })
     
     // let data = req.body;
