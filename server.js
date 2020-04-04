@@ -124,19 +124,21 @@ app.post("/registration", (req, res, next)=>{
         // const username = field.username;
         var fieldJSON = JSON.stringify(field);
         var filesJSON = JSON.stringify(files);
+        var accountGenerate = new UserProfile({
+            username: "",
+            password: "",
+            user: "",
+            headPaste: ""
+        })
         console.log("fields: " + fieldJSON);
         console.log("files: " + filesJSON);
-        res.send({"fields": fieldJSON, "files": filesJSON});
+        // res.send({"fields": fieldJSON, "files": filesJSON});
+        res.end();
     })
 
     // let data = req.body;
     // console.log(data);
-    // var accountGenerate = new UserProfile({
-    //     username: "",
-    //     password: "",
-    //     user: "",
-    //     headPaste: ""
-    // })
+    
     // accountGenerate.username = data.username;
     // accountGenerate.password = data.password;
     // accountGenerate.user = data.user;
