@@ -90,7 +90,7 @@ app.post("/signin", (req, res, next)=>{
         // console.log(result);
         console.log(result.headPaste);
         console.log((result.headPaste.buffer).toString('utf8'));
-        console.log(result.headPaste.buffer.utf8Write());
+        console.log((result.headPaste.buffer).toJSON());
         // console.log(result.headPaste.Buffer);
         // console.log((result.headPaste.Buffer.buffer).toString('utf8'));
         if(result){
