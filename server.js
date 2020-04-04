@@ -7,8 +7,6 @@ var product = require("./models/data/product");
 const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
-var 
-
 const corsOption = {
     origin:[
         "https://luffy.ee.ncku.edu.tw"
@@ -116,7 +114,7 @@ app.post("/signin", (req, res, next)=>{
     })
 })
 
-app.post("./registration", (req, res, next)=>{
+app.post("/registration", (req, res, next)=>{
     const form = new formidable.IncomingForm();
     console.log(form);
     form.parse(req, (err, field, files)=>{
