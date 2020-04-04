@@ -75,19 +75,19 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
-            var headPasteBuf = JSON.parse((result.headPaste.buffer).toString());
+            var headPasteBuf = JSON.parse((result.headPaste).toString());
             console.log(headPasteBuf);
-            var headPasteJSON = JSON.stringify(headPasteBuf);
-            fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
-                if(err){
-                    res.send(err);
-                    return
-                }else{
-                    console.log(data);
-                    res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": data});
+            // var headPasteJSON = JSON.stringify(headPasteBuf);
+            // fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
+            //     if(err){
+            //         res.send(err);
+            //         return
+            //     }else{
+            //         console.log(data);
+                    res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste});
                     return; 
-                }
-            })
+                // }
+            // })
             // res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
             // console.log(headPasteJSON);
                         //這裡之後要改成next();
