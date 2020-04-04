@@ -77,7 +77,7 @@ app.get('/profile', function(req, res, next){
             console.log(result);
             var headPasteBuf = (result.headPaste.buffer).toString('utf8');
             var headPasteJSON = JSON.stringify(headPasteBuf);
-            fs.readFileSync(result.headPaste.buffer, 'utf8', (err, data)=>{
+            fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
                 if(err){
                     res.send(err);
                     return
