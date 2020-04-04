@@ -129,7 +129,7 @@ app.post("/signin", (req, res, next)=>{
     })
 })
 
-app.post("/registration", (req, res, next)=>{
+app.get("/registration", (req, res, next)=>{
     const form = new formidable.IncomingForm();
     console.log(form);
     form.parse(req, (err, field, files)=>{
