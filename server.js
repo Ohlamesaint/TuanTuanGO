@@ -148,7 +148,7 @@ app.post("/registration", (req, res, next)=>{
         console.log("fields: " + fieldJSON);
         console.log("files: " + filesJSON);
         // res.send({"fields": fieldJSON, "files": filesJSON});
-        // res.end();
+        res.send({occupied: false});
     })
     
     // let data = req.body;
