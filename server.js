@@ -60,8 +60,8 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
         // UserProfile.checkAccount(req.session.username, (result)=>{
         //     console.log(result);
         //     var headPasteBuf = (result.headPaste.buffer).toString('utf8');
-            res.send({signin: true});
-            return;             //這裡之後要改成next();
+        res.send({signin: true});
+        return;             //這裡之後要改成next();
         // })
     }
 });
@@ -93,40 +93,47 @@ app.get('/signOut', function(req, res, next){
 
 
 app.post("/signin", (req, res, next)=>{
-    let data = req.body;
-    let response = new Response();
-    UserProfile.checkAccount(data.username, (result)=>{
-        // console.log(result, typeof(result));
-        // console.log(result);
-        console.log(result.headPaste);
-        // console.log((result.headPaste.buffer).toString('utf8'));
-        // console.log(result.headPaste.contentType);
-        // console.log(result.headPaste.Buffer);
-        // console.log((result.headPaste.Buffer.buffer).toString('utf8'));
-        if(result){
-            response.accountValid = true;
-            if(data.password === result.password){
-                response.passwordValid = true;
-                response.user = result.user;
-                //if(!req.session.username){
-                req.session.signin = true;
-                req.session.user = result.user;     //於session中儲存使用者姓名
-                req.session.username = result.username  //於session中儲存使用者帳號名稱
-                console.log("session = "+ req.session.username);
-                //}
+    if(!req.session.signin){
+        console.log("fail");
+        res.send({signin: false});
+        console.log(req.session);
+        return;
+    }else{
+        let data = req.body;
+        let response = new Response();
+        UserProfile.checkAccount(data.username, (result)=>{
+            // console.log(result, typeof(result));
+            // console.log(result);
+            console.log(result.headPaste);
+            // console.log((result.headPaste.buffer).toString('utf8'));
+            // console.log(result.headPaste.contentType);
+            // console.log(result.headPaste.Buffer);
+            // console.log((result.headPaste.Buffer.buffer).toString('utf8'));
+            if(result){
+                response.accountValid = true;
+                if(data.password === result.password){
+                    response.passwordValid = true;
+                    response.user = result.user;
+                    //if(!req.session.username){
+                    req.session.signin = true;
+                    req.session.user = result.user;     //於session中儲存使用者姓名
+                    req.session.username = result.username  //於session中儲存使用者帳號名稱
+                    console.log("session = "+ req.session.username);
+                    //}
+                }
+                else{
+                    response.passwordValid = false;
+                }
             }
             else{
                 response.passwordValid = false;
+                response.accountValid = false;
             }
-        }
-        else{
-            response.passwordValid = false;
-            response.accountValid = false;
-        }
-        // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
-        res.send(response);
-        console.log(req.session);
-    })
+            // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
+            res.send(response);
+            console.log(req.session);
+        })
+    }
 })
 
 app.get("/registration", (req, res, next)=>{
