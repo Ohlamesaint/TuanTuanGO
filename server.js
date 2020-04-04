@@ -69,14 +69,14 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
 app.get('/profile', function(req, res, next){
     if(!req.session.signin){
         console.log("fail");
-        res.send({signin: false});
+        res.send({"signin": false});
         console.log(req.session);
         return;
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
             // var headPasteBuf = (result.headPaste.buffer).toString('utf8');
-            res.send({"user": result.user, "username": result.username, "headPaste": result.headPaste.Buffer});
+            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.Buffer});
             return;             //這裡之後要改成next();
         })
     }
