@@ -48,7 +48,7 @@ const Response = function(){
     this.user = "";
 }
 
-app.get("/signin", (req, res, next)=>{
+app.get("/signin", (req, res, next)=>{      //確認是否有登入
     // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
     if(!req.session.signin){
         console.log("fail");
@@ -88,6 +88,7 @@ app.post("/signin", (req, res, next)=>{
     let response = new Response();
     UserProfile.checkAccount(data.username, (result)=>{
         // console.log(result, typeof(result));
+        console.log(result);
         if(result){
             response.accountValid = true;
             if(data.password === result.password){
@@ -143,7 +144,7 @@ app.post("/registration", (req, res, next)=>{
                 console.log(files.headPaste);
                 console.log(files.headPaste.path);
                 accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
-                accountGenerate.headPaste.contentType = "image/jpg";
+                accountGenerate.headPaste.contentType = files.headPaste.type;
                 accountGenerate.save();
                 // console.log("fields: " + fieldJSON);
                 // console.log("files: " + filesJSON);
