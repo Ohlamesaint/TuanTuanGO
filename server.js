@@ -82,6 +82,7 @@ app.get('/profile', function(req, res, next){
                     res.send(err);
                     return
                 }else{
+                    console.log(data);
                     res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": data});
                     return; 
                 }
