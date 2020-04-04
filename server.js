@@ -57,14 +57,23 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
         return;
     }else{
         console.log(req.session);
-        UserProfile.checkAccount(req.session.username, (result)=>{
-            console.log(result);
-            var headPasteBuf = (result.headPaste.buffer).toString('utf8');
+        // UserProfile.checkAccount(req.session.username, (result)=>{
+        //     console.log(result);
+        //     var headPasteBuf = (result.headPaste.buffer).toString('utf8');
             res.send({signin: true});
-            return;
-        })
+            return;             //這裡之後要改成next();
+        // })
     }
 });
+
+app.get('/profile', function(req, res, next){
+    UserProfile.checkAccount(req.session.username, (result)=>{
+        console.log(result);
+        // var headPasteBuf = (result.headPaste.buffer).toString('utf8');
+        res.send({user: result.user, username: result.username, headPaste: result.headPaste});
+        return;             //這裡之後要改成next();
+    })
+})
 
 app.get('/signOut', function(req, res, next){
     // 備註：這裡用的 session-file-store 在destroy 方法裡，並沒有銷燬cookie
