@@ -77,9 +77,18 @@ app.get('/profile', function(req, res, next){
             console.log(result);
             var headPasteBuf = (result.headPaste.buffer).toString('utf8');
             var headPasteJSON = JSON.stringify(headPasteBuf);
-            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
-            console.log(headPasteJSON);
-            return;             //這裡之後要改成next();
+            fs.readFileSync(result.headPaste.buffer, 'utf8', (err, data)=>{
+                if(err){
+                    res.send(err);
+                    return
+                }else{
+                    res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": data});
+                    return; 
+                }
+            })
+            // res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
+            // console.log(headPasteJSON);
+                        //這裡之後要改成next();
         })
     }
 })
