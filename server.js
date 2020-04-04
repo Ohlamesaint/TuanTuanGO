@@ -59,7 +59,8 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
         console.log(req.session);
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
-            res.send({signin: true, username: result.username, user: result.user});     //加送headPaste
+            var headPasteBuf = (result.headPaste.buffer).toString('utf8');
+            res.send({signin: true, username: result.username, user: result.user, headPaste: headPasteBuf});     //加送headPaste
             return;
         })
     }
@@ -90,7 +91,7 @@ app.post("/signin", (req, res, next)=>{
         // console.log(result);
         console.log(result.headPaste);
         console.log((result.headPaste.buffer).toString('utf8'));
-        console.log((result.headPaste.buffer).toJSON());
+        console.log(result.headPaste.contentType);
         // console.log(result.headPaste.Buffer);
         // console.log((result.headPaste.Buffer.buffer).toString('utf8'));
         if(result){
