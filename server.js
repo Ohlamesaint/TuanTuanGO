@@ -75,7 +75,7 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
-            var headPasteBuf = JSON.parse((result.headPaste).toString('binary'));
+            var headPasteBuf = JSON.parse(BUffer.from(result.headPaste, 'binary').toString());
             console.log(headPasteBuf);
             // var headPasteJSON = JSON.stringify(headPasteBuf);
             // fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
