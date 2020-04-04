@@ -70,7 +70,7 @@ app.get('/profile', function(req, res, next){
     UserProfile.checkAccount(req.session.username, (result)=>{
         console.log(result);
         // var headPasteBuf = (result.headPaste.buffer).toString('utf8');
-        res.send({user: result.user, username: result.username, headPaste: result.headPaste.Buffer});
+        res.send({"user": result.user, "username": result.username, "headPaste": result.headPaste.Buffer});
         return;             //這裡之後要改成next();
     })
 })
