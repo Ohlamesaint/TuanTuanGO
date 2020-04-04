@@ -135,12 +135,13 @@ app.post("/registration", (req, res, next)=>{
                     username: "",
                     password: "",
                     user: "",
-                    headPaste: ""
+                    headPaste: "",
                 })
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
-                // accountGenerate.user = field.headPaste;
+                accountGenerate.headPaste.data = fs.readFileSync(field.headPaste);
+                accountGenerate.headPaste.contentType = "image/jpg";
                 accountGenerate.save();
                 // console.log("fields: " + fieldJSON);
                 // console.log("files: " + filesJSON);
@@ -182,7 +183,7 @@ var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
     user: {type: String, required: true},
-    headPaste: {type: String, contentType: "image/jpg"}
+    headPaste: {type: Buffer, contentType: String}      //必須先將圖片檔轉成Binary data
 })
 
 UserProfileSchema.statics.checkAccount = function(username, callback){
