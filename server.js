@@ -88,7 +88,10 @@ app.post("/signin", (req, res, next)=>{
     UserProfile.checkAccount(data.username, (result)=>{
         // console.log(result, typeof(result));
         console.log(result);
-        console.log(result.headPaste.contentType);
+        console.log(result.headPaste);
+        console.log((result.headPaste.buffer).toString('utf8'));
+        console.log(result.headPaste.Buffer);
+        console.log((result.headPaste.Buffer.buffer).toString('utf8'));
         if(result){
             response.accountValid = true;
             if(data.password === result.password){
