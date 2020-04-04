@@ -60,7 +60,7 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result);
             var headPasteBuf = (result.headPaste.buffer).toString('utf8');
-            res.send({signin: true, username: result.username, user: result.user, headPaste: headPasteBuf});     //加送headPaste
+            res.send({signin: true});
             return;
         })
     }
