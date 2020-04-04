@@ -122,10 +122,12 @@ app.post("/registration", (req, res, next)=>{
             throw new err;
         }
         // const username = field.username;
-        console.log("fields: " + field);
-        console.log("files: " + files);
+        var fieldJSON = JSON.stringify(field);
+        var filesJSON = JSON.stringify(files);
+        console.log("fields: " + fieldJSON);
+        console.log("files: " + filesJSON);
+        res.send({"fields": fieldJSON, "files": filesJSON});
     })
-    res.send({"fields": field, "files": files});
 
     // let data = req.body;
     // console.log(data);
