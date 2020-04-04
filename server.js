@@ -130,25 +130,24 @@ app.post("/registration", (req, res, next)=>{
                 res.send({occupied: true});             //此帳號已被使用
                 return;
             }
-            // else {
-            //     res.send({occupied: false});
-            // }
+            else {
+                var accountGenerate = new UserProfile({
+                    username: "",
+                    password: "",
+                    user: "",
+                    headPaste: ""
+                })
+                accountGenerate.username = field.username;
+                accountGenerate.password = field.password;
+                accountGenerate.user = field.user;
+                // accountGenerate.user = field.headPaste;
+                accountGenerate.save();
+                // console.log("fields: " + fieldJSON);
+                // console.log("files: " + filesJSON);
+                // res.send({"fields": fieldJSON, "files": filesJSON});
+                res.send({occupied: false});
+            }
         })
-        var accountGenerate = new UserProfile({
-            username: "",
-            password: "",
-            user: "",
-            headPaste: ""
-        })
-        accountGenerate.username = field.username;
-        accountGenerate.password = field.password;
-        accountGenerate.user = field.user;
-        // accountGenerate.user = field.headPaste;
-        accountGenerate.save();
-        console.log("fields: " + fieldJSON);
-        console.log("files: " + filesJSON);
-        // res.send({"fields": fieldJSON, "files": filesJSON});
-        res.send({occupied: false});
     })
     
     // let data = req.body;
