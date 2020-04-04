@@ -7,6 +7,7 @@ var product = require("./models/data/product");
 const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
+var 
 
 const corsOption = {
     origin:[
@@ -115,19 +116,35 @@ app.post("/signin", (req, res, next)=>{
     })
 })
 
-// app.post("/signup", (req, res, next)=>{
-//     let data = req.body;
-//     console.log(data);
-//     var accountCheck = new UserProfile({
-//         username: "",
-//         password: ""
-//     })
-//     accountCheck.username = data.username;
-//     accountCheck.password = data.password;
-//     accountCheck.save();
-//     let response = new Response();
-//     res.send(response);
-// })
+app.post("./registration", (req, res, next)=>{
+    const form = new formidable.IncomingForm();
+    console.log(form);
+    form.parse(req, (err, field, files)=>{
+        if(err){
+            throw new err;
+        }
+        // const username = field.username;
+        console.log("fields: " + field);
+        console.log("files: " + files);
+    })
+    res.send({"fields": field, "files": files});
+
+    // let data = req.body;
+    // console.log(data);
+    // var accountGenerate = new UserProfile({
+    //     username: "",
+    //     password: "",
+    //     user: "",
+    //     headPaste: ""
+    // })
+    // accountGenerate.username = data.username;
+    // accountGenerate.password = data.password;
+    // accountGenerate.user = data.user;
+    // accountGenerate.user = data.headPaste;
+    // accountCheck.save();
+    // let response = new Response();
+    // res.send(response);
+})
 
 
 //server connection
@@ -148,7 +165,8 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
-    user: {type: String, required: true}
+    user: {type: String, required: true},
+    headPaste: {type: String, contentType: image/jpeg}
 })
 
 UserProfileSchema.statics.checkAccount = function(username, callback){

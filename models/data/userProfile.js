@@ -1,10 +1,13 @@
 var mongoose = require("mongoose");
 
 var userSchema = new mongoose.Schema({
-    "uid": { type: Number },
-    "name": { type: String },
+    // "uid": { type: Number },
+    "username": { type: String },
     "password": {type: String},
+    "user": {type: String}
+    // "headPaste": {type: Buffer, contentType: String}
 })
+
 
 var UserProfile = mongoose.model("UserProfile", userSchema);
 
