@@ -160,6 +160,7 @@ app.post("/registration", (req, res, next)=>{
     form.uploadDir = "/uploads";
     form.parse(req, (err, field, files)=>{
         if(err){
+            console.log('123');
             throw new Error();
         }
         UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
