@@ -9,11 +9,8 @@ var fs = require("fs");
 var session = require("express-session");
 var multer = require("multer");
 
-app.use(multer({ dest: './uploads/',
-    rename: function (fieldname, filename) {
-        return filename;
-    },
-}));
+app.use(multer({dest:'./uploads/'}).single('headPaste'));
+
 
 const corsOption = {
     origin:[
