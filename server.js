@@ -7,7 +7,8 @@ var product = require("./models/data/product");
 const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
-var multer = require("multer");
+// var multer = require("multer");
+// var uploads = 
 
 // app.use(multer({dest:'./uploads/'}).single('headPaste'));
 
@@ -157,7 +158,7 @@ app.post("/signin", (req, res, next)=>{
 app.post("/registration", (req, res, next)=>{
     const form = new formidable.IncomingForm();
     console.log(form);
-    form.uploadDir = "/uploads";
+    form.uploadDir = "uploads/";
     form.parse(req, (err, field, files)=>{
         if(err){
             console.log('123');
