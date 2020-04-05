@@ -181,7 +181,7 @@ app.post("/registration", (req, res, next)=>{
                 console.log(files);
                 console.log(files.headPaste);
                 console.log(files.headPaste.path);
-                accountGenerate.headPaste.data = fs.readFileSync(form.uploadDir + files.headPaste.path);
+                accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
                 accountGenerate.headPaste.contentType = files.headPaste.type;
                 accountGenerate.save();
                 console.log(JSON.stringify(accountGenerate));
