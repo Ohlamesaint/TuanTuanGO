@@ -75,7 +75,7 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result.headPaste);
-            var headPasteBuf = JSON.stringify(result.headPaste);
+            var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));
             console.log(headPasteBuf);
             // var headPasteJSON = JSON.stringify(headPasteBuf);
             // fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
@@ -84,13 +84,13 @@ app.get('/profile', function(req, res, next){
             //         return
             //     }else{
             //         console.log(data);
-            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": headPasteBuf});
-            return; 
-            // }
+                    res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste});
+                    return; 
+                // }
             // })
             // res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
             // console.log(headPasteJSON);
-            //這裡之後要改成next();
+                        //這裡之後要改成next();
         })
     }
 })
@@ -151,7 +151,7 @@ app.post("/signin", (req, res, next)=>{
 
 app.post("/registration", (req, res, next)=>{
     const form = new formidable.IncomingForm();
-    // console.log(form);
+    console.log(form);
     form.parse(req, (err, field, files)=>{
         if(err){
             throw new err;
@@ -172,14 +172,14 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
-                console.log("files: "+ JSON.stringify(files));
-                console.log("files.headPaste: "+ JSON.stringify(files.headPaste));
-                // console.log(files.headPaste);
-                // console.log(files.headPaste.path);
-                accountGenerate.headPaste = files.headPaste;
+                console.log(files);
+                console.log(files.headPaste);
+                console.log(files.headPaste.path);
+                accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
                 accountGenerate.headPaste.contentType = files.headPaste.type;
-                console.log("accountGenerate:"　+ accountGenerate);
                 accountGenerate.save();
+                console.log(JSON.stringify(accountGenerate));
+                console.log(accountGenerate);
                 // console.log("fields: " + fieldJSON);
                 // console.log("files: " + filesJSON);
                 // res.send({"fields": fieldJSON, "files": filesJSON});
