@@ -151,7 +151,7 @@ app.post("/signin", (req, res, next)=>{
 
 app.post("/registration", (req, res, next)=>{
     const form = new formidable.IncomingForm();
-    console.log(form);
+    // console.log(form);
     form.parse(req, (err, field, files)=>{
         if(err){
             throw new err;
@@ -172,12 +172,13 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
-                console.log(files);
+                console.log("files: "+ files);
+                console.log("files.headPaste: "+ files.headPaste);
                 // console.log(files.headPaste);
                 // console.log(files.headPaste.path);
                 accountGenerate.headPaste = files.headPaste;
                 accountGenerate.headPaste.contentType = files.headPaste.type;
-                console.log(accountGenerate);
+                console.log("accountGenerate:"　+ accountGenerate);
                 accountGenerate.save();
                 // console.log("fields: " + fieldJSON);
                 // console.log("files: " + filesJSON);
