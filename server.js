@@ -159,7 +159,7 @@ app.post("/registration", (req, res, next)=>{
     console.log(form);
     form.parse(req, (err, field, files)=>{
         if(err){
-            throw new err;
+            throw new Error(err);
         }
         UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
             if(result){
