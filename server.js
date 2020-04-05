@@ -157,7 +157,7 @@ app.post("/signin", (req, res, next)=>{
 app.post("/registration", (req, res, next)=>{
     const form = new formidable.IncomingForm();
     console.log(form);
-    form.uploadDir = __dirname+ "/uploads";
+    form.uploadDir = "/uploads";
     form.parse(req, (err, field, files)=>{
         if(err){
             throw new Error();
