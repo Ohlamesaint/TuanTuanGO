@@ -7,6 +7,14 @@ var product = require("./models/data/product");
 const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
+var multer = require("multer");
+
+app.use(multer({ dest: './uploads/',
+    rename: function (fieldname, filename) {
+        return filename;
+    },
+}));
+
 const corsOption = {
     origin:[
         "https://luffy.ee.ncku.edu.tw"
@@ -84,13 +92,13 @@ app.get('/profile', function(req, res, next){
             //         return
             //     }else{
             //         console.log(data);
-                    res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste});
-                    return; 
-                // }
+            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste});
+            return; 
+            // }
             // })
             // res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
             // console.log(headPasteJSON);
-                        //這裡之後要改成next();
+            //這裡之後要改成next();
         })
     }
 })
