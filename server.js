@@ -172,8 +172,8 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
-                console.log("files: "+ files);
-                console.log("files.headPaste: "+ files.headPaste);
+                console.log("files: "+ JSON.stringify(files));
+                console.log("files.headPaste: "+ JSON.stringify(files.headPaste));
                 // console.log(files.headPaste);
                 // console.log(files.headPaste.path);
                 accountGenerate.headPaste = files.headPaste;
