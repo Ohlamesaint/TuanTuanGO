@@ -9,7 +9,7 @@ var fs = require("fs");
 var session = require("express-session");
 var multer = require("multer");
 
-app.use(multer({dest:'./uploads/'}).single('headPaste'));
+// app.use(multer({dest:'./uploads/'}).single('headPaste'));
 
 
 const corsOption = {
@@ -159,7 +159,7 @@ app.post("/registration", (req, res, next)=>{
     console.log(form);
     form.parse(req, (err, field, files)=>{
         if(err){
-            throw new Error(err);
+            throw new Error();
         }
         UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
             if(result){
