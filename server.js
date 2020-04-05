@@ -173,10 +173,11 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
                 console.log(files);
-                console.log(files.headPaste);
-                console.log(files.headPaste.path);
+                // console.log(files.headPaste);
+                // console.log(files.headPaste.path);
                 accountGenerate.headPaste = files.headPaste;
                 accountGenerate.headPaste.contentType = files.headPaste.type;
+                console.log(accountGenerate);
                 accountGenerate.save();
                 // console.log("fields: " + fieldJSON);
                 // console.log("files: " + filesJSON);
