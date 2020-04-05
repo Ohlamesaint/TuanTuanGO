@@ -175,7 +175,7 @@ app.post("/registration", (req, res, next)=>{
                 console.log(files);
                 console.log(files.headPaste);
                 console.log(files.headPaste.path);
-                accountGenerate.headPaste.data = files.headPaste;
+                accountGenerate.headPaste = files.headPaste;
                 accountGenerate.headPaste.contentType = files.headPaste.type;
                 accountGenerate.save();
                 // console.log("fields: " + fieldJSON);
