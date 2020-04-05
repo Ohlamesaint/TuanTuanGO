@@ -196,7 +196,7 @@ app.post("/registration", (req, res, next)=>{
 })
 
 
-app.use(express.static(path.join(__dirname)))
+app.use(express.static(__dirname + '/public'));
 
 //server connection
 var PORT = process.env.PORT;
