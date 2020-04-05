@@ -1,10 +1,11 @@
 {
   "name": "crud",
   "version": "1.0.0",
-  "description": "",
+  "description": "touch",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,6 @@
     "formidable": "^1.2.2",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6"
-  }
+  },
+  "devDependencies": {}
 }
