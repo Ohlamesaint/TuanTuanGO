@@ -196,6 +196,8 @@ app.post("/registration", (req, res, next)=>{
 })
 
 
+app.use(express.static(path.join(__dirname)))
+
 //server connection
 var PORT = process.env.PORT;
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
