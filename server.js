@@ -161,8 +161,7 @@ app.post("/registration", (req, res, next)=>{
     // form.uploadDir = "./public";
     form.parse(req, (err, field, files)=>{
         if(err){
-            res.send("bad");
-            // throw new Error();
+            throw new Error();
         }
         UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
             if(result){
@@ -180,6 +179,7 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
+                console.log(field);
                 console.log(files);
                 console.log(files.headPaste);
                 console.log(files.headPaste.path);
