@@ -154,6 +154,7 @@ app.post("/signin", (req, res, next)=>{
         console.log(req.session);
     })
 })
+app.use(cors(corsOption));
 
 app.post("/registration", (req, res, next)=>{
     console.log('req: ', req);
