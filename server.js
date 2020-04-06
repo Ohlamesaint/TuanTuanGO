@@ -127,12 +127,10 @@ app.post("/signin", (req, res, next)=>{
             if(data.password === result.password){
                 response.passwordValid = true;
                 response.user = result.user;
-                //if(!req.session.username){
                 req.session.signin = true;
                 req.session.user = result.user;     //於session中儲存使用者姓名
                 req.session.username = result.username  //於session中儲存使用者帳號名稱
                 console.log("session = "+ req.session.username);
-                //}
             }
             else{
                 response.passwordValid = false;
@@ -142,12 +140,9 @@ app.post("/signin", (req, res, next)=>{
             response.passwordValid = false;
             response.accountValid = false;
         }
-        // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
         res.send(response);
-        console.log(req.session);
     })
 })
-app.use(cors(corsOption));
 
 app.post("/registration", (req, res, next)=>{
     console.log('req: ', req);
