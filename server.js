@@ -158,7 +158,7 @@ app.post("/signin", (req, res, next)=>{
 app.post("/registration", (req, res, next)=>{
     const form = new formidable.IncomingForm();
     console.log(form);
-    form.uploadDir = "uploads/";
+    form.uploadDir = "./public";
     form.parse(req, (err, field, files)=>{
         if(err){
             console.log('123');
@@ -183,7 +183,7 @@ app.post("/registration", (req, res, next)=>{
                 console.log(files);
                 console.log(files.headPaste);
                 console.log(files.headPaste.path);
-                accountGenerate.headPaste.data = fs.readFileSync('./public/' + files.headPaste.path);
+                accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
                 accountGenerate.headPaste.contentType = files.headPaste.type;
                 accountGenerate.save();
                 console.log(JSON.stringify(accountGenerate));
@@ -197,8 +197,12 @@ app.post("/registration", (req, res, next)=>{
     })
 })
 
+app.get('/static/:anything', (req, res, next)=>{
+    res.redirect('https://luffy.ee.ncku.edu.tw/~Shang/TuanTuanGO/main.html');
+})
 
-app.use(express.static('./public'));
+
+app.use('/static', express.static('./public'));
 
 //server connection
 var PORT = process.env.PORT;
