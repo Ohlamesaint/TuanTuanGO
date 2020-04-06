@@ -145,8 +145,8 @@ app.post("/signin", (req, res, next)=>{
 })
 
 app.post("/registration", (req, res, next)=>{
-    console.log('req: ', req);
-    console.log('req.data.username: ' + req.data.username);
+    // console.log('req: ', req);
+    // console.log('req.data.username: ' + req.data.username);
     const form = new formidable.IncomingForm();
     console.log(form);
     // form.uploadDir = "./public";
