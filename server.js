@@ -15,7 +15,7 @@ var session = require("express-session");
 
 const corsOption = {
     origin:[
-        "https://luffy.ee.ncku.edu.tw"
+        "https://luffy.ee.ncku.edu.tw",
     ],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -161,8 +161,8 @@ app.post("/registration", (req, res, next)=>{
     // form.uploadDir = "./public";
     form.parse(req, (err, field, files)=>{
         if(err){
-            console.log('123');
-            throw new Error();
+            res.send("bad");
+            // throw new Error();
         }
         UserProfile.checkAccount(field.username, result=>{      //查詢帳號是否已被使用
             if(result){
