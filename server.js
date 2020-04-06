@@ -202,6 +202,7 @@ app.use(express.static(__dirname + '/public'));
 
 //server connection
 var PORT = process.env.PORT;
+console.log(process.env.PORT);
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
 
