@@ -202,7 +202,7 @@ app.post("/registration", (req, res, next)=>{
 // })
 
 
-app.use('/static', express.static('./public'));
+// app.use('/static', express.static('./public'));
 
 //server connection
 var PORT = process.env.PORT;
