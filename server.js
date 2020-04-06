@@ -197,9 +197,9 @@ app.post("/registration", (req, res, next)=>{
     })
 })
 
-app.get('/static/:anything', (req, res, next)=>{
-    res.redirect('https://luffy.ee.ncku.edu.tw/~Shang/TuanTuanGO/main.html');
-})
+// app.get('/static/:anything', (req, res, next)=>{
+//     res.redirect('https://luffy.ee.ncku.edu.tw/~Shang/TuanTuanGO/main.html');
+// })
 
 
 app.use('/static', express.static('./public'));
