@@ -188,6 +188,8 @@ app.get(/(products)\/:check$/, (req, res, next)=>{
         var productNum = check;
         console.log(productNum);
     }
+    console.log(check);
+    res.send('success');
 })
 
 // app.get('/static/:anything', (req, res, next)=>{
