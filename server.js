@@ -144,12 +144,11 @@ app.get("/products/:check", (req, res, next)=>{
         let productID = req.params.check;
         Product.findProductByID(productID, (result)=>{
             console.log(result);
+            res.send(result);
         })
-        console.log(productNum);
     }else{
         res.send('error! not such ID')
     }
-    res.send('success');
 })
 
 
