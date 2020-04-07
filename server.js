@@ -141,8 +141,13 @@ app.post("/signin", (req, res, next)=>{
 
 app.get("/products/:check", (req, res, next)=>{
     if(/[\d]{6}/.test(req.params.check)){
-        var productNum = req.params.check;
+        let productID = req.params.check;
+        Product.findProductByID(productID, (result)=>{
+            console.log(result);
+        })
         console.log(productNum);
+    }else{
+        res.send('error! not such ID')
     }
     res.send('success');
 })
