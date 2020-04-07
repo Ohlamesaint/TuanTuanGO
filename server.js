@@ -183,12 +183,11 @@ app.post("/registration", (req, res, next)=>{
     })
 })
 
-app.get(/\/products\/:check$/, (req, res, next)=>{
-    if(/[\d]{6}/.test(check)){
-        var productNum = check;
+app.get("/products/:check", (req, res, next)=>{
+    if(/[\d]{6}/.test(req.params.check)){
+        var productNum = req.params.check;
         console.log(productNum);
     }
-    console.log(check);
     res.send('success');
 })
 
