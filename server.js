@@ -283,18 +283,25 @@ app.post("/addProduct", (req, res, next)=>{
         if(err){
             throw new Error(err);
         }else {
-            var productGenerate = new Product({
-                productName: "",
-                productType: "",
-                productID: "",
-                productPhoto: "",
+            Product.findProductByID(fields.ID, (result)=>{
+                if(result){
+                    console.log("ID occupied: "+result);
+                    res.send({occupied: true})
+                }else{
+                    var productGenerate = new Product({
+                        productName: "",
+                        productType: "",
+                        productID: "",
+                        productPhoto: "",
+                    })
+                    productGenerate.productName = fields.productName;
+                    productGenerate.productType = fields.productType;
+                    productGenerate.productID = fields.ID;
+                    console.log(productGenerate);
+                    productGenerate.save();
+                    res.send(productGenerate);
+                }
             })
-            productGenerate.productName = fields.productName;
-            productGenerate.productType = fields.productType;
-            productGenerate.productID = fields.ID;
-            console.log(productGenerate);
-            productGenerate.save();
-            res.send(productGenerate);
         }
     })
 })
