@@ -291,7 +291,7 @@ app.post("/addProduct", (req, res, next)=>{
             })
             productGenerate.productName = fields.productName;
             productGenerate.productType = fields.productType;
-            productGenerate.ID = fields.ID;
+            productGenerate.productID = fields.ID;
             console.log(productGenerate);
             productGenerate.save();
             res.send(productGenerate);
