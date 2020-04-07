@@ -3,7 +3,6 @@ var express = require("express");
 var router = express.Router();
 var cors = require("cors");
 var app = express();
-var product = require("./models/data/product");
 const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
