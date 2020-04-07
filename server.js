@@ -200,6 +200,12 @@ var productsSchema = new mongoose.Schema({
     productName: {type: String, required: true},
     productType: {type:String, required: true},
     productID: {type: Number, required: true},
+    price: {type: Number, required: true},
+    unpackable: {type: Boolean, required: true},        //是否可拆分團購
+    unpackableAmount: {type: Number},                    //可拆分的數量，在可拆分的前提下
+    hasPromotion: {type: Boolean, required: true},
+    PromotionlowestNum: {type: Number},
+    PromotionPrice: {type: Number},
     productPhoto: {type: Buffer, contentType: String},
 })
 
@@ -296,11 +302,23 @@ app.post("/addProduct", (req, res, next)=>{
                         productName: "",
                         productType: "",
                         productID: "",
+                        price: 0,
+                        unpackable: false,        //是否可拆分團購
+                        unpackableAmount: 0,                    //可拆分的數量，在可拆分的前提下
+                        hasPromotion: false,
+                        PromotionlowestNum: 0,
+                        PromotionPrice: 0,
                         productPhoto: "",
                     })
                     productGenerate.productName = fields.productName;
                     productGenerate.productType = fields.productType;
                     productGenerate.productID = fields.ID;
+                    productGenerate.price = fields.price;
+                    productGenerate.unpackable = fields.unpackable;
+                    productGenerate.unpackableAmount = fields.unpackableAmount;
+                    productGenerate.hasPromotion = fields.hasPromotion;
+                    productGenerate.PromotionlowestNum = fields.promotionLowestNum;
+                    productGenerate.PromotionPrice = fields.promotionPrice;
                     console.log(productGenerate);
                     productGenerate.save();
                     res.send(productGenerate);
