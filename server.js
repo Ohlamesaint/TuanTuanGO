@@ -139,6 +139,92 @@ app.post("/signin", (req, res, next)=>{
     })
 })
 
+
+app.get("/products/:check", (req, res, next)=>{
+    if(/[\d]{6}/.test(req.params.check)){
+        var productNum = req.params.check;
+        console.log(productNum);
+    }
+    res.send('success');
+})
+
+
+
+//server connection
+var PORT = process.env.PORT;
+console.log(process.env.PORT);
+console.log(__dirname + '/public');
+app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
+
+
+//db connection
+mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
+    if(error){
+        console.log(error);
+        return
+    }
+    console.log(`Connect to ${process.env.MONGODB_URI}`)
+});
+
+/***************userProfile collection***************/
+
+var UserProfileSchema = new mongoose.Schema({
+    username: {type: String, required: true},
+    password: {type: String, required: true},
+    user: {type: String, required: true},
+    headPaste: {type: Buffer, contentType: String}      //必須先將圖片檔轉成Binary data
+})
+
+UserProfileSchema.statics.checkAccount = function(username, callback){
+    this.find({"username": username}, function(err, docs){
+        if(err){
+            console.log("not found " + username);
+            return;
+        } 
+        else{
+            callback(docs[0]);
+        }
+    })
+}
+
+var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
+
+/*****************products collection*****************/
+
+var productsSchema = new mongoose.Schema({
+    productName: {type: String, required: true},
+    productType: {type:String, required: true},
+    productID: {type: Number, required: true},
+    productPhoto: {type: Buffer, contentType: String},
+})
+
+productsSchema.statics.findProductByID = function(ID, callback){
+    this.find({"productID": ID}, function(err, docs){
+        if(err){
+            console.log("not found " + ID);
+            return;
+        }
+        else{
+            callback(docs[0]);
+        }
+    })
+}
+
+productsSchema.statics.findProductByName = function(productName, callback){
+    this.find({"productName": productName}, function(err, docs){
+        if(err){
+            console.log("not found " + productName);
+            return;
+        }
+        else{
+            callback(docs[0]);
+        }
+    })
+}
+
+var Product = mongoose.model("Product", productsSchema);
+
+
 app.post("/registration", (req, res, next)=>{
     // console.log('req: ', req);
     // console.log('req.data.username: ' + req.data.username);
@@ -183,13 +269,20 @@ app.post("/registration", (req, res, next)=>{
     })
 })
 
-app.get("/products/:check", (req, res, next)=>{
-    if(/[\d]{6}/.test(req.params.check)){
-        var productNum = req.params.check;
-        console.log(productNum);
-    }
-    res.send('success');
+app.post("addProduct", (req, res, next)=>{
+    const form = new formidable.IncomingForm();
+    console.log(form);
+    form.parse(req, (err, fields, files)=>{
+        if(err){
+            throw new Error(err);
+        }else {
+            console.log('fields = ' + fields);
+            console.log('files = ' + files);
+            res.send('success');
+        }
+    })
 })
+
 
 // app.get('/static/:anything', (req, res, next)=>{
 //     res.redirect('https://luffy.ee.ncku.edu.tw/~Shang/TuanTuanGO/main.html');
@@ -197,41 +290,3 @@ app.get("/products/:check", (req, res, next)=>{
 
 
 // app.use('/static', express.static('./public'));
-
-//server connection
-var PORT = process.env.PORT;
-console.log(process.env.PORT);
-console.log(__dirname + '/public');
-app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
-
-
-//db connection
-mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
-    if(error){
-        console.log(error);
-        return
-    }
-    console.log(`Connect to ${process.env.MONGODB_URI}`)
-});
-
-
-var UserProfileSchema = new mongoose.Schema({
-    username: {type: String, required: true},
-    password: {type: String, required: true},
-    user: {type: String, required: true},
-    headPaste: {type: Buffer, contentType: String}      //必須先將圖片檔轉成Binary data
-})
-
-UserProfileSchema.statics.checkAccount = function(username, callback){
-    this.find({"username": username}, function(err, docs){
-        if(err){
-            console.log("not found " + username);
-            return;
-        } 
-        else{
-            callback(docs[0]);
-        }
-    })
-}
-
-var UserProfile = mongoose.model("UserProfile", UserProfileSchema)
