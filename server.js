@@ -284,7 +284,7 @@ app.post("/addProduct", (req, res, next)=>{
         if(err){
             throw new Error(err);
         }else {
-            var productGenerate = new productsSchema({
+            var productGenerate = new Product({
                 productName: "",
                 productType: "",
                 productID: "",
