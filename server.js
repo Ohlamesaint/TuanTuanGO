@@ -172,6 +172,8 @@ var UserProfileSchema = new mongoose.Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
     user: {type: String, required: true},
+    region: {type: String, required: true},
+    address: {type: String, required: true},
     headPaste: {type: Buffer, contentType: String}      //必須先將圖片檔轉成Binary data
 })
 
@@ -225,6 +227,8 @@ productsSchema.statics.findProductByName = function(productName, callback){
 var Product = mongoose.model("Product", productsSchema);
 
 
+/**********************註冊路由**************************/
+
 app.post("/registration", (req, res, next)=>{
     // console.log('req: ', req);
     // console.log('req.data.username: ' + req.data.username);
@@ -246,11 +250,15 @@ app.post("/registration", (req, res, next)=>{
                     username: "",
                     password: "",
                     user: "",
+                    region: "",
+                    address: "",
                     headPaste: "",
                 })
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
+                accountGenerate.region = field.region;
+                accountGenerate.region = field.address;
                 console.log(field);
                 console.log(files);
                 console.log(files.headPaste);
@@ -269,16 +277,25 @@ app.post("/registration", (req, res, next)=>{
     })
 })
 
-app.post("addProduct", (req, res, next)=>{
+app.post("/addProduct", (req, res, next)=>{
     const form = new formidable.IncomingForm();
     console.log(form);
     form.parse(req, (err, fields, files)=>{
         if(err){
             throw new Error(err);
         }else {
-            console.log('fields = ' + fields);
-            console.log('files = ' + files);
-            res.send('success');
+            var productGenerate = new productsSchema({
+                productName: "",
+                productType: "",
+                productID: "",
+                productPhoto: "",
+            })
+            productGenerate.productName = fields.productName;
+            productGenerate.productType = fields.productType;
+            productGenerate.ID = fields.ID;
+            console.log(productGenerate);
+            productGenerate.save();
+            res.send(productGenerate);
         }
     })
 })
