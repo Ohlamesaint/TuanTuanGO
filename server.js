@@ -178,7 +178,9 @@ var UserProfileSchema = new mongoose.Schema({
     user: {type: String, required: true},
     region: {type: String, required: true},
     address: {type: String, required: true},
-    headPaste: {type: Buffer, contentType: String}      //必須先將圖片檔轉成Binary data
+    headPaste: {type: Buffer, contentType: String},      //必須先將圖片檔轉成Binary data
+    walletAddress: {type: String, required: true},
+    walletPrivateKey: {type: String, required:true}
 })
 
 UserProfileSchema.statics.checkAccount = function(username, callback){
@@ -263,22 +265,27 @@ app.post("/registration", (req, res, next)=>{
                     region: "",
                     address: "",
                     headPaste: "",
+                    walletAddress: "",
+                    walletPrivateKey: "",
                 })
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
                 accountGenerate.region = field.region;
                 accountGenerate.address = field.address;
+                create.create(String(field.password)).then((res)=>{
+                    console.log(res);
+                    accountGenerate.walletAddress = res.address;
+                    accountGenerate.walletPrivateKey = res.privatekey;
+                }).catch((err)=>{
+                    throw new Error(err);
+                })
                 // accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
                 // accountGenerate.headPaste.contentType = files.headPaste.type;
                 accountGenerate.save();
                 console.log(JSON.stringify(accountGenerate));
                 console.log(accountGenerate);
-                create.create(String(field.password)).then((res)=>{
-                    console.log(res);
-                }).catch((err)=>{
-                    throw new Error(err);
-                })
+                
                 // console.log("fields: " + fieldJSON);
                 // console.log("files: " + filesJSON);
                 // res.send({"fields": fieldJSON, "files": filesJSON});
