@@ -275,7 +275,7 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.address = field.address;
                 create.create(String(field.password)).then((res)=>{
                     console.log(res);
-                    accountGenerate.walletAddress = res.address;
+                    accountGenerate.walletAddress = `0x${res.address}`;
                     accountGenerate.walletPrivateKey = res.privatekey;
                     return(accountGenerate);
                 }).then((res)=>{
