@@ -277,18 +277,13 @@ app.post("/registration", (req, res, next)=>{
                     console.log(res);
                     accountGenerate.walletAddress = res.address;
                     accountGenerate.walletPrivateKey = res.privatekey;
+                    return(accountGenerate);
+                }).then((res)=>{
+                    console.log(JSON.stringify(res));
+                    accountGenerate.save();
                 }).catch((err)=>{
                     throw new Error(err);
                 })
-                // accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
-                // accountGenerate.headPaste.contentType = files.headPaste.type;
-                accountGenerate.save();
-                console.log(JSON.stringify(accountGenerate));
-                console.log(accountGenerate);
-                
-                // console.log("fields: " + fieldJSON);
-                // console.log("files: " + filesJSON);
-                // res.send({"fields": fieldJSON, "files": filesJSON});
                 res.send({occupied: false});
             }
         })
