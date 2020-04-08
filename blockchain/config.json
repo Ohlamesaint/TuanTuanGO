@@ -1,0 +1,9 @@
+{
+  "private_key": "8519c40c6e3e1036de30bb446e26c7deb03b47f3b0607c750fe45a142abe11f5",
+  "network": "http://a44f070d.ngrok.io",
+  "ERC20": "0xad1F2780Cb594C234E996B92Ac7e64Ad9004D998",
+  "name": "TEST",
+  "symbol": "ETH",
+  "total_supply": "1000000000000000000000000",
+  "decimals": 18
+}

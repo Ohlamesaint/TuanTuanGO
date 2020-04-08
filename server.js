@@ -6,6 +6,7 @@ var app = express();
 const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
+var create= require("./blockchain/create");
 // var multer = require("multer");
 // var uploads = 
 
@@ -267,16 +268,17 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
                 accountGenerate.region = field.region;
-                accountGenerate.region = field.address;
-                console.log(field);
-                console.log(files);
-                console.log(files.headPaste);
-                console.log(files.headPaste.path);
-                accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
-                accountGenerate.headPaste.contentType = files.headPaste.type;
+                accountGenerate.address = field.address;
+                // accountGenerate.headPaste.data = fs.readFileSync(files.headPaste.path);
+                // accountGenerate.headPaste.contentType = files.headPaste.type;
                 accountGenerate.save();
                 console.log(JSON.stringify(accountGenerate));
                 console.log(accountGenerate);
+                create.create(String(field.password)).then((res)=>{
+                    console.log(res);
+                }).catch((err)=>{
+                    throw new Error(err);
+                })
                 // console.log("fields: " + fieldJSON);
                 // console.log("files: " + filesJSON);
                 // res.send({"fields": fieldJSON, "files": filesJSON});
@@ -303,7 +305,7 @@ app.post("/addProduct", (req, res, next)=>{
                         productType: "",
                         productID: "",
                         price: 0,
-                        unpackable: false,        //是否可拆分團購
+                        unpackable: false,                      //是否可拆分團購
                         unpackableAmount: 0,                    //可拆分的數量，在可拆分的前提下
                         hasPromotion: false,
                         PromotionlowestNum: 0,
