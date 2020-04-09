@@ -81,8 +81,8 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result.headPaste);
-            var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));
-            console.log(headPasteBuf);
+            //var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));  大頭貼問題
+            // console.log(headPasteBuf);
             // var headPasteJSON = JSON.stringify(headPasteBuf);
             // fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
             //     if(err){
