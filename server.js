@@ -170,7 +170,7 @@ app.post("/deploy", (req, res, next)=>{
         }
     }
     let targetProduct = {};
-    findProductByID(data.productID, (res)=>{
+    Product.findProductByID(data.productID, (res)=>{
         if(res){
             targetProduct = res;
         }else{
