@@ -436,7 +436,7 @@ module.exports = {
         let tx;
         try{
             tx = await contractWithSigner.join(amount,override);
-            console("Wait transaction of joining to be certified...");
+            console.log("Wait transaction of joining to be certified...");
 			await tx.wait();
 			resolve(true);
         }

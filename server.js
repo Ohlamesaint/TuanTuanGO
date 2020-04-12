@@ -152,6 +152,12 @@ app.get("/products/:check", (req, res, next)=>{
     }
 })
 
+app.post("/deploy", (req, res, next)=>{
+    let data = req.body;
+    console.log(data);
+    res.send("success");
+})
+
 
 
 //server connection
