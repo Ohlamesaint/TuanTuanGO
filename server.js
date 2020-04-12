@@ -155,6 +155,8 @@ app.get("/products/:check", (req, res, next)=>{
 app.post("/deploy", (req, res, next)=>{
     let data = req.body;
     console.log(data);
+    var date = new Date(data.ExpirationTime);
+    console.log(date);
     res.send("success");
 })
 
@@ -175,7 +177,16 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
     }
     console.log(`Connect to ${process.env.MONGODB_URI}`)
 });
+/*****************tuanGO collection******************/
 
+var TuanGOSchema = new mongoose.Schema({
+    productID : {type: Number, required: true},
+    type : {type: String, required: true},
+    setUpTime : {type: Date, default: Date.now, required: true},
+    ExpirationTime : {type: Date, required: true}
+})
+
+var TuanGo = mongoose.model("TuanGO", TuanGOSchema)
 /***************userProfile collection***************/
 
 var UserProfileSchema = new mongoose.Schema({
