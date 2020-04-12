@@ -229,7 +229,7 @@ TuanGOSchema.statics.findTuanGOById = function(TuanGOID, callback){
     })
 }
 
-var TuanGo = mongoose.model("TuanGO", TuanGOSchema)
+var TuanGO = mongoose.model("TuanGO", TuanGOSchema)
 /***************userProfile collection***************/
 
 var UserProfileSchema = new mongoose.Schema({
