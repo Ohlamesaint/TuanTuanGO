@@ -7,10 +7,6 @@ const formidable = require('formidable');
 var fs = require("fs");
 var session = require("express-session");
 var create= require("./blockchain/create");
-// var multer = require("multer");
-// var uploads = 
-
-// app.use(multer({dest:'./uploads/'}).single('headPaste'));
 
 
 const corsOption = {
@@ -154,9 +150,34 @@ app.get("/products/:check", (req, res, next)=>{
 
 app.post("/deploy", (req, res, next)=>{
     let data = req.body;
-    console.log(data);
     var date = new Date(data.ExpirationTime);
+    var date2 = new Date();
     console.log(date);
+    console.log(Math.abs(date1 - date2));
+    let newID = 0;
+    while(1){
+        newID = Math.floor(Math.random*1000000);
+        findTuanGOById(newID, (res)=>{
+            if(res) continue;
+            else break;
+        })
+    }
+    let targetProduct = {};
+    findProductByID(data.productID, (res)=>{
+        if(res){
+            targetProduct = res;
+        }else{
+            throw new Error("product not found");
+        }
+    })
+    var TuanGOGenerate = new TuanGO({
+        TuanGOID : newID,
+        productID : data.productID,
+        type : data.type,
+        price: targetProduct.price,
+        members: [],
+        ExpirationTime : {type: Date, required: true}
+    })
     res.send("success");
 })
 
@@ -180,11 +201,26 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 /*****************tuanGO collection******************/
 
 var TuanGOSchema = new mongoose.Schema({
+    TuanGOID : {type: Number, required: true},
     productID : {type: Number, required: true},
-    type : {type: String, required: true},
+    type : {type: Number, required: true},
     setUpTime : {type: Date, default: Date.now, required: true},
+    price: {type: Number, required: true},
+    members: [],
     ExpirationTime : {type: Date, required: true}
 })
+
+TuanGOSchema.statics.findTuanGOById = function(TuanGOID, callback){
+    this.find({"TuanGOID": TuanGOID}, function(err, docs){
+        if(err){
+            console.log("not found " + username);
+            return;
+        } 
+        else{
+            callback(docs[0]);
+        }
+    })
+}
 
 var TuanGo = mongoose.model("TuanGO", TuanGOSchema)
 /***************userProfile collection***************/
