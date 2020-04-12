@@ -157,7 +157,7 @@ app.post("/deploy", (req, res, next)=>{
     let newID = 0;
     while(1){
         newID = Math.floor(Math.random*1000000);
-        var result = findTuanGOById(newID, (res)=>{
+        var result = TuanGO.findTuanGOById(newID, (res)=>{
             if(!res) {
                 return 1;
             }else{
