@@ -157,11 +157,16 @@ app.post("/deploy", (req, res, next)=>{
     let newID = 0;
     while(1){
         newID = Math.floor(Math.random*1000000);
-        findTuanGOById(newID, (res)=>{
+        var result = findTuanGOById(newID, (res)=>{
             if(!res) {
-                break;
+                return 1;
+            }else{
+                return 0;
             }
         })
+        if(result){
+            break;
+        }
     }
     let targetProduct = {};
     findProductByID(data.productID, (res)=>{
