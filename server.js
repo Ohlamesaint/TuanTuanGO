@@ -153,7 +153,7 @@ app.post("/deploy", (req, res, next)=>{
     var date = new Date(data.ExpirationTime);
     var date2 = new Date();
     console.log(date);
-    console.log(Math.abs(date1 - date2));
+    console.log(Math.abs(date - date2));
     let newID = 0;
     while(1){
         newID = Math.floor(Math.random*1000000);
