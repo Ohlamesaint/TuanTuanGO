@@ -158,8 +158,9 @@ app.post("/deploy", (req, res, next)=>{
     while(1){
         newID = Math.floor(Math.random*1000000);
         findTuanGOById(newID, (res)=>{
-            if(res) continue;
-            else break;
+            if(!res) {
+                break;
+            }
         })
     }
     let targetProduct = {};
@@ -177,7 +178,8 @@ app.post("/deploy", (req, res, next)=>{
         price: targetProduct.price,
         members: [],
         ExpirationTime : {type: Date, required: true}
-    })
+    });
+    TuanGOGenerate.save();
     res.send("success");
 })
 
