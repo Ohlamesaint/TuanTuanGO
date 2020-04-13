@@ -151,12 +151,13 @@ app.get("/products/:check", (req, res, next)=>{
 app.post("/deploy", (req, res, next)=>{
     let data = req.body;
     console.log(data);
-    var date = new Date(data.ExpirationTime);
-    var date2 = new Date();
-    console.log(Date.UTC(date));
-    console.log(Date.UTC(date2));
-    var gap = (Date.UTC(date) - Date.UTC(date2))/60000+1;
-    console.log("date1:" + date);
+    var date;
+    var date2;
+    console.log(date = Date.UTC(data.ExpirationTime.slice(2,3), data.ExpirationTime.slice(5,6), data.ExpirationTime.slice(8,9), data.ExpirationTime.slice(11,12), data.ExpirationTime.slice(14,15), 0, 0));
+    console.log(date2 = Date.UTC(data.setUpTime.slice(2,3), data.setUpTime.slice(5,6), data.setUpTime.slice(8,9), data.setUpTime.slice(11,12), data.setUpTime.slice(14,15), 0, 0));
+    var gap = (date - date2)/60000+1;
+    console.log("ExpirationTime:" + date);
+    console.log("setUpTime" + date2);
     console.log("gap = " + gap);
     console.log(Math.floor(Math.abs(date - date2)/60000));
     let newID = 0;
