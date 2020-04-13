@@ -154,8 +154,8 @@ app.post("/deploy", (req, res, next)=>{
     var date;
     var date2;
     console.log(data.ExpirationTime.slice(2,3), data.ExpirationTime.slice(5,6), data.ExpirationTime.slice(8,9), data.ExpirationTime.slice(11,12), data.ExpirationTime.slice(14,15), 0, 0);
-    console.log(date = Date.UTC(data.ExpirationTime.slice(2,3), data.ExpirationTime.slice(5,6), data.ExpirationTime.slice(8,9), data.ExpirationTime.slice(11,12), data.ExpirationTime.slice(14,15), 0, 0));
-    console.log(date2 = Date.UTC(data.setUpTime.slice(2,3), data.setUpTime.slice(5,6), data.setUpTime.slice(8,9), data.setUpTime.slice(11,12), data.setUpTime.slice(14,15), 0, 0));
+    console.log(date = Date.UTC(data.ExpirationTime.slice(2,4), data.ExpirationTime.slice(5,7), data.ExpirationTime.slice(8,10), data.ExpirationTime.slice(11,13), data.ExpirationTime.slice(14,16), 0, 0));
+    console.log(date2 = Date.UTC(data.setUpTime.slice(2,4), data.setUpTime.slice(5,7), data.setUpTime.slice(8,10), data.setUpTime.slice(11,13), data.setUpTime.slice(14,16), 0, 0));
     var gap = (date - date2)/60000+1;
     console.log("ExpirationTime:" + date);
     console.log("setUpTime" + date2);
