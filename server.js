@@ -152,8 +152,10 @@ app.post("/deploy", (req, res, next)=>{
     let data = req.body;
     console.log(data);
     var date = new Date(data.ExpirationTime);
-    var gap = (Date.UTC(date) - Date.UTC(date2))/60000+1;
     var date2 = new Date();
+    console.log(Date.UTC(date));
+    console.log(Date.UTC(date2));
+    var gap = (Date.UTC(date) - Date.UTC(date2))/60000+1;
     console.log("date1:" + date);
     console.log("gap = " + gap);
     console.log(Math.floor(Math.abs(date - date2)/60000));
