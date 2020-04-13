@@ -153,29 +153,25 @@ app.post("/deploy", (req, res, next)=>{
     console.log(data);
     var date;
     var date2;
-    console.log(data.ExpirationTime.slice(2,3), data.ExpirationTime.slice(5,6), data.ExpirationTime.slice(8,9), data.ExpirationTime.slice(11,12), data.ExpirationTime.slice(14,15), 0, 0);
-    console.log(date = Date.UTC(data.ExpirationTime.slice(2,4), data.ExpirationTime.slice(5,7), data.ExpirationTime.slice(8,10), data.ExpirationTime.slice(11,13), data.ExpirationTime.slice(14,16), 0, 0));
-    console.log(date2 = Date.UTC(data.setUpTime.slice(2,4), data.setUpTime.slice(5,7), data.setUpTime.slice(8,10), data.setUpTime.slice(11,13), data.setUpTime.slice(14,16), 0, 0));
-    var gap = (date - date2)/60000+1;
-    console.log("ExpirationTime:" + date);
-    console.log("setUpTime" + date2);
-    console.log("gap = " + gap);
-    console.log(Math.floor(Math.abs(date - date2)/60000));
+    data.ExpirationTime.slice(2,3), data.ExpirationTime.slice(5,6), data.ExpirationTime.slice(8,9), data.ExpirationTime.slice(11,12), data.ExpirationTime.slice(14,15), 0, 0;
+    date = Date.UTC(data.ExpirationTime.slice(2,4), data.ExpirationTime.slice(5,7), data.ExpirationTime.slice(8,10), data.ExpirationTime.slice(11,13), data.ExpirationTime.slice(14,16), 0, 0);
+    date2 = Date.UTC(data.setUpTime.slice(2,4), data.setUpTime.slice(5,7), data.setUpTime.slice(8,10), data.setUpTime.slice(11,13), data.setUpTime.slice(14,16), 0, 0);
+    let durationInMin = (Math.floor(Math.abs(date - date2)/60000));
     let newID = 0;
-    // for(;;){
-    //     newID = Math.floor(Math.random*1000000);
-    //     var result = TuanGO.findTuanGOById(newID, (res)=>{
-    //         if(!res) {
-    //             return 1;
-    //         }else{
-    //             return 0;
-    //         }
-    //     })
-    //     if(result){
-    //         console.log(newID);
-    //         break;
-    //     }
-    // }
+    while(true){
+        newID = Math.floor(Math.random*1000000);
+        var result = TuanGO.findTuanGOById(newID, (res)=>{
+            if(!res) {
+                return 1;
+            }else{
+                return 0;
+            }
+        })
+        if(result){
+            console.log(newID);
+            break;
+        }
+    }
     let targetProduct = {};
     Product.findProductByID(data.productID, (res)=>{
         if(res){
@@ -189,8 +185,10 @@ app.post("/deploy", (req, res, next)=>{
         productID : data.productID,
         type : data.type,
         price: targetProduct.price,
+        setUpTime: data.setUpTime,
+        ExpirationTime : {type: Date, required: true},
+        duration: durationInMin,
         members: [],
-        ExpirationTime : {type: Date, required: true}
     });
     TuanGOGenerate.save();
     res.send("success");
@@ -221,8 +219,9 @@ var TuanGOSchema = new mongoose.Schema({
     type : {type: Number, required: true},
     setUpTime : {type: Date, default: Date.now, required: true},
     price: {type: Number, required: true},
-    members: [],
-    ExpirationTime : {type: Date, required: true}
+    duration: {type: Number, required: true},
+    ExpirationTime : {type: Date, required: true},
+    members: [String],              //會員username
 })
 
 TuanGOSchema.statics.findTuanGOById = function(TuanGOID, callback){
