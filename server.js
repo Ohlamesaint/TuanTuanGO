@@ -170,21 +170,20 @@ app.post("/join", (req, res, next)=>{
     let data = req.body;
     let dataJSON = JSON.stringify(data);
     console.log("join: " + dataJSON);
-    // UserProfile.checkAccount(req.session.username, (resAccount)=>{
-    //     if(resAccount){
-    //         create.join(data.contractAddress, resAccount.privatekey, data.amount).then((result)=>{
-    //             joinTuanGOFunc(req.session.username, data.contractAddress);
-    //             console.log(result);
-    //             res.send(result);
-    //         }).catch((err=>{
-    //             res.send(err);
-    //             throw new Error(err);
-    //         }))
-    //     }else{
-    //         throw new Error("can't find Account");
-    //     }
-    // })
-    res.send("end");
+    UserProfile.checkAccount(req.session.username, (resAccount)=>{
+        if(resAccount){
+            create.join(data.contractAddress, resAccount.walletPrivateKey, data.amount).then((result)=>{
+                joinTuanGOFunc(req.session.username, data.contractAddress);
+                console.log(result);
+                res.send(result);
+            }).catch((err=>{
+                res.send(err);
+                throw new Error(err);
+            }))
+        }else{
+            throw new Error("can't find Account");
+        }
+    })
 })
 
 app.post("/deploy", (req, res, next)=>{
