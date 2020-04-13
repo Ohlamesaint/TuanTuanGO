@@ -177,12 +177,12 @@ app.post("/deploy", (req, res, next)=>{
         if(res){
             TuanGOGenerate.price = res.price;
             if(data.type === 1){
-                create.deploy_unpack(res.unpackableAmount, res.price, TuanGOGenerate.duration).then((res)=>{
+                create.deploy_unpack(res.unpackableAmount, Math.floor(res.price), TuanGOGenerate.duration).then((res)=>{
                     TuanGOGenerate.TuanGOID = res;
                     res.send({"contractAddress": res});
                 });
             }else if(data.type === 0){
-                create.deploy(res.PromotionlowestNum, res.price, res.PromotionPrice, TuanGOGenerate.duration).then((res)=>{
+                create.deploy(res.PromotionlowestNum, res.price, Math.floor(res.PromotionPrice), TuanGOGenerate.duration).then((res)=>{
                     TuanGOGenerate.TuanGOID = res;
                     res.send({"contractAddress": res});
                 });
