@@ -173,18 +173,18 @@ app.post("/deploy", (req, res, next)=>{
             throw new Error("session wrong");
         }
     });
-    Product.findProductByID(data.productID, (res)=>{
-        if(res){
-            TuanGOGenerate.price = res.price;
+    Product.findProductByID(data.productID, (productRes)=>{
+        if(productRes){
+            TuanGOGenerate.price = productRes.price;
             if(data.type === 1){
-                create.deploy_unpack(res.unpackableAmount, Math.floor(res.price), TuanGOGenerate.duration).then((res)=>{
-                    TuanGOGenerate.TuanGOID = res;
-                    res.send({"contractAddress": res});
+                create.deploy_unpack(res.unpackableAmount, Math.floor(res.price), TuanGOGenerate.duration).then((result)=>{
+                    TuanGOGenerate.TuanGOID = result;
+                    res.send({"contractAddress": result});
                 });
             }else if(data.type === 0){
-                create.deploy(res.PromotionlowestNum, res.price, Math.floor(res.PromotionPrice), TuanGOGenerate.duration).then((res)=>{
-                    TuanGOGenerate.TuanGOID = res;
-                    res.send({"contractAddress": res});
+                create.deploy(res.PromotionlowestNum, res.price, Math.floor(res.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
+                    TuanGOGenerate.TuanGOID = result;
+                    res.send({"contractAddress": result});
                 });
             }else{
                 throw new Error("error TuanGO type");
