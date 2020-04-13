@@ -157,7 +157,7 @@ function joinTuanGOFunc(username, TuanGOAddress){
         }
     })
 
-    TuanGOSchema.findTuanGOByAddress(TuanGOAddress, (res)=>{
+    TuanGO.findTuanGOByAddress(TuanGOAddress, (res)=>{
         if(res){
             res.members.push(username);
         }else{
