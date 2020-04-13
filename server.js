@@ -161,7 +161,7 @@ app.post("/deploy", (req, res, next)=>{
         type : data.type,
         price: 0,
         setUpTime: data.setUpTime,
-        ExpirationTime : {type: Date, required: true},
+        ExpirationTime : data.ExpirationTime,
         duration: durationInMin,
         members: [],
     });
