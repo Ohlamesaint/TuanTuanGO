@@ -148,14 +148,34 @@ app.get("/products/:check", (req, res, next)=>{
     }
 })
 
+function joinTuanGOFunc(username, TuanGOAddress){
+    UserProfile.checkAccount(username, (res)=>{
+        if(res){
+            res.joinTuanGOAddress.push(TuanGOAddress);
+        }else{
+            throw new Error("cannot not join");
+        }
+    })
+
+    TuanGOSchema.findTuanGOByAddress(TuanGOAddress, (res)=>{
+        if(res){
+            res.members.push(username);
+        }else{
+            throw new Error("cannot find tuanGO");
+        }
+    })
+}
+
 app.post("/join", (req, res, next)=>{
     let data = req.body;
     UserProfile.checkAccount(req.session.username, (resAccount)=>{
         if(resAccount){
             create.join(data.contractAddress, resAccount.privatekey, data.amount).then((result)=>{
+                joinTuanGOFunc(req.session.username, data.contractAddress);
                 console.log(result);
                 res.send(result);
             }).catch((err=>{
+                res.send(err);
                 throw new Error(err);
             }))
         }
@@ -177,14 +197,6 @@ app.post("/deploy", (req, res, next)=>{
         ExpirationTime : data.ExpirationTime,
         duration: durationInMin,
         members: [],
-    });
-    console.log(req.session);
-    UserProfile.checkAccount(req.session.username, (res)=>{
-        if(res){
-            TuanGOGenerate.members.push(res.username);
-        }else{
-            throw new Error("session wrong");
-        }
     });
     Product.findProductByID(data.productID, (productRes)=>{
         if(productRes){
@@ -209,7 +221,6 @@ app.post("/deploy", (req, res, next)=>{
         }
     });
     TuanGOGenerate.save();
-    // res.send("success");
 })
 
 
@@ -242,7 +253,7 @@ var TuanGOSchema = new mongoose.Schema({
     members: [String],              //會員username
 })
 
-TuanGOSchema.statics.findTuanGOById = function(TuanGOAddress, callback){
+TuanGOSchema.statics.findTuanGOByAddress = function(TuanGOAddress, callback){
     this.find({"TuanGOAddress": TuanGOAddress}, function(err, docs){
         if(err){
             console.log("not found " + TuanGOAddress);
@@ -265,7 +276,8 @@ var UserProfileSchema = new mongoose.Schema({
     address: {type: String, required: true},
     headPaste: {type: Buffer, contentType: String},      //必須先將圖片檔轉成Binary data
     walletAddress: {type: String, required: true},
-    walletPrivateKey: {type: String, required:true}
+    walletPrivateKey: {type: String, required:true},
+    joinTuanGOAddress: [String],
 })
 
 UserProfileSchema.statics.checkAccount = function(username, callback){
