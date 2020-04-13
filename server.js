@@ -148,15 +148,28 @@ app.get("/products/:check", (req, res, next)=>{
     }
 })
 
+app.post("/join", (req, res, next)=>{
+    let data = req.body;
+    UserProfile.checkAccount(req.session.username, (resAccount)=>{
+        if(resAccount){
+            create.join(data.contractAddress, resAccount.privatekey, data.amount).then((result)=>{
+                console.log(result);
+                res.send(result);
+            }).catch((err=>{
+                throw new Error(err);
+            }))
+        }
+    })
+})
+
 app.post("/deploy", (req, res, next)=>{
     let data = req.body;
     console.log(data);
     var date = Date.UTC(data.ExpirationTime.slice(2,4), data.ExpirationTime.slice(5,7), data.ExpirationTime.slice(8,10), data.ExpirationTime.slice(11,13), data.ExpirationTime.slice(14,16), 0, 0);
     var date2 = Date.UTC(data.setUpTime.slice(2,4), data.setUpTime.slice(5,7), data.setUpTime.slice(8,10), data.setUpTime.slice(11,13), data.setUpTime.slice(14,16), 0, 0);
     let durationInMin = (Math.floor(Math.abs(date - date2)/60000));
-    //let newID = Math.floor(Math.random*1000000);;
     var TuanGOGenerate = new TuanGO({
-        TuanGOID : 0,
+        TuanGOAddress : 0,
         productID : data.productID,
         type : data.type,
         price: 0,
@@ -178,14 +191,14 @@ app.post("/deploy", (req, res, next)=>{
             TuanGOGenerate.price = productRes.price;
             if(data.type === 1){
                 create.deploy_unpack(productRes.unpackableAmount, Math.floor(productRes.price), TuanGOGenerate.duration).then((result)=>{
-                    console.log(result, typeof(result) );
-                    TuanGOGenerate.TuanGOID = result;
+                    TuanGOGenerate.price = productRes.price;
+                    TuanGOGenerate.TuanGOAddress = result;
                     res.send({"contractAddress": result});
                 });
             }else if(data.type === 0){
                 create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
-                    console.log(result, typeof(result));
-                    TuanGOGenerate.TuanGOID = result;
+                    TuanGOGenerate.TuanGOAddress = result;
+                    TuanGOGenerate.price = productRes.PromotionPrice;
                     res.send({"contractAddress": result});
                 });
             }else{
@@ -220,7 +233,7 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 /*****************tuanGO collection******************/
 
 var TuanGOSchema = new mongoose.Schema({
-    TuanGOID : {type: Number, required: true},
+    TuanGOAddress : {type: String, required: true},
     productID : {type: Number, required: true},
     type : {type: Number, required: true},
     setUpTime : {type: Date, default: Date.now, required: true},
@@ -230,10 +243,10 @@ var TuanGOSchema = new mongoose.Schema({
     members: [String],              //會員username
 })
 
-TuanGOSchema.statics.findTuanGOById = function(TuanGOID, callback){
-    this.find({"TuanGOID": TuanGOID}, function(err, docs){
+TuanGOSchema.statics.findTuanGOById = function(TuanGOAddress, callback){
+    this.find({"TuanGOAddress": TuanGOAddress}, function(err, docs){
         if(err){
-            console.log("not found " + username);
+            console.log("not found " + TuanGOAddress);
             return;
         } 
         else{
