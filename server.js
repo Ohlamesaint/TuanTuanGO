@@ -165,6 +165,7 @@ app.post("/deploy", (req, res, next)=>{
         duration: durationInMin,
         members: [],
     });
+    console.log(req.session);
     UserProfile.checkAccount(req.session.username, (res)=>{
         TuanGOGenerate.members.push(res.username);
     });
