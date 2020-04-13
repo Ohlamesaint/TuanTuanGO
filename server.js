@@ -168,18 +168,22 @@ function joinTuanGOFunc(username, TuanGOAddress){
 
 app.post("/join", (req, res, next)=>{
     let data = req.body;
-    UserProfile.checkAccount(req.session.username, (resAccount)=>{
-        if(resAccount){
-            create.join(data.contractAddress, resAccount.privatekey, data.amount).then((result)=>{
-                joinTuanGOFunc(req.session.username, data.contractAddress);
-                console.log(result);
-                res.send(result);
-            }).catch((err=>{
-                res.send(err);
-                throw new Error(err);
-            }))
-        }
-    })
+    console.log("join: " + data);
+    // UserProfile.checkAccount(req.session.username, (resAccount)=>{
+    //     if(resAccount){
+    //         create.join(data.contractAddress, resAccount.privatekey, data.amount).then((result)=>{
+    //             joinTuanGOFunc(req.session.username, data.contractAddress);
+    //             console.log(result);
+    //             res.send(result);
+    //         }).catch((err=>{
+    //             res.send(err);
+    //             throw new Error(err);
+    //         }))
+    //     }else{
+    //         throw new Error("can't find Account");
+    //     }
+    // })
+    res.send("end");
 })
 
 app.post("/deploy", (req, res, next)=>{
@@ -189,7 +193,7 @@ app.post("/deploy", (req, res, next)=>{
     var date2 = Date.UTC(data.setUpTime.slice(2,4), data.setUpTime.slice(5,7), data.setUpTime.slice(8,10), data.setUpTime.slice(11,13), data.setUpTime.slice(14,16), 0, 0);
     let durationInMin = (Math.floor(Math.abs(date - date2)/60000));
     var TuanGOGenerate = new TuanGO({
-        TuanGOAddress : 0,
+        TuanGOAddress : "",
         productID : data.productID,
         type : data.type,
         price: 0,
