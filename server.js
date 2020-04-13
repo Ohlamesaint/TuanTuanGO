@@ -167,7 +167,11 @@ app.post("/deploy", (req, res, next)=>{
     });
     console.log(req.session);
     UserProfile.checkAccount(req.session.username, (res)=>{
-        TuanGOGenerate.members.push(res.username);
+        if(res){
+            TuanGOGenerate.members.push(res.username);
+        }else{
+            throw new Error("session wrong");
+        }
     });
     Product.findProductByID(data.productID, (res)=>{
         if(res){
