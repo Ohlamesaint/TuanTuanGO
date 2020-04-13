@@ -150,9 +150,11 @@ app.get("/products/:check", (req, res, next)=>{
 
 app.post("/deploy", (req, res, next)=>{
     let data = req.body;
+    console.log(data);
     var date = new Date(data.ExpirationTime);
     var date2 = new Date();
-    console.log(date);
+    console.log("date1:" + date);
+    console.log(date2);
     console.log(Math.floor(Math.abs(date - date2)/60000));
     let newID = 0;
     // for(;;){
