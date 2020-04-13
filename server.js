@@ -168,7 +168,8 @@ function joinTuanGOFunc(username, TuanGOAddress){
 
 app.post("/join", (req, res, next)=>{
     let data = req.body;
-    console.log("join: " + data);
+    let dataJSON = JSON.stringify(data);
+    console.log("join: " + dataJSON);
     // UserProfile.checkAccount(req.session.username, (resAccount)=>{
     //     if(resAccount){
     //         create.join(data.contractAddress, resAccount.privatekey, data.amount).then((result)=>{
