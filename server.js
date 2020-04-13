@@ -155,20 +155,20 @@ app.post("/deploy", (req, res, next)=>{
     console.log(date);
     console.log(Math.floor(Math.abs(date - date2)/60000));
     let newID = 0;
-    for(;;){
-        newID = Math.floor(Math.random*1000000);
-        var result = TuanGO.findTuanGOById(newID, (res)=>{
-            if(!res) {
-                return 1;
-            }else{
-                return 0;
-            }
-        })
-        if(result){
-            console.log(newID);
-            break;
-        }
-    }
+    // for(;;){
+    //     newID = Math.floor(Math.random*1000000);
+    //     var result = TuanGO.findTuanGOById(newID, (res)=>{
+    //         if(!res) {
+    //             return 1;
+    //         }else{
+    //             return 0;
+    //         }
+    //     })
+    //     if(result){
+    //         console.log(newID);
+    //         break;
+    //     }
+    // }
     let targetProduct = {};
     Product.findProductByID(data.productID, (res)=>{
         if(res){
