@@ -712,7 +712,7 @@ module.exports = {
         let tx;
         try{
 			console.log("Wait transaction of joining to be certified...");
-			tx = await contractWithSigner.join(amount,override);
+			tx = await contractWithSigner.join(amount,override).catch(r=>{console.log(r)});
 			console.log(config["network_web"]+"/#/tx/"+tx.hash);
 			resolve(config["network_web"]+"/#/tx/"+tx.hash);
         }
