@@ -208,9 +208,8 @@ app.post("/deploy", (req, res, next)=>{
             throw new Error("product not found");
         }
     });
-    
     TuanGOGenerate.save();
-    res.send("success");
+    // res.send("success");
 })
 
 
