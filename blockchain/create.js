@@ -712,8 +712,9 @@ module.exports = {
         let tx;
         try{
 			console.log("Wait transaction of joining to be certified...");
-            tx = await contractWithSigner.join(amount,override);
-			resolve(true);
+			tx = await contractWithSigner.join(amount,override);
+			console.log(config["network_web"]+"/#/tx/"+tx.hash);
+			resolve(config["network_web"]+"/#/tx/"+tx.hash);
         }
         catch{
             console.log(tx);
@@ -729,12 +730,10 @@ module.exports = {
 		var list;
 		var list_balance = new Array();
 		list = await provider.listAccounts();
-		~async function() {
-			for(let i = 0;i < list.length;i++){
-				provider.getBalance(list[i]).then((balance) => {
-					list_balance.push("Balance of "+list[i]+" : " +  ethers.utils.formatEther(balance));
-				});}
-		}().then(resolve(list_balance));
+		for(let i = 0;i < list.length;i++){
+			provider.getBalance(list[i]).then((balance) => {
+				list_balance.push("Balance of "+list[i]+" : " +  ethers.utils.formatEther(balance));
+			}).then(r=>{if(list_balance.length==list.length) resolve(list_balance)});}
 		})
 	}
 }

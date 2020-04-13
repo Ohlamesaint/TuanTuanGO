@@ -151,45 +151,44 @@ app.get("/products/:check", (req, res, next)=>{
 app.post("/deploy", (req, res, next)=>{
     let data = req.body;
     console.log(data);
-    var date;
-    var date2;
-    data.ExpirationTime.slice(2,3), data.ExpirationTime.slice(5,6), data.ExpirationTime.slice(8,9), data.ExpirationTime.slice(11,12), data.ExpirationTime.slice(14,15), 0, 0;
-    date = Date.UTC(data.ExpirationTime.slice(2,4), data.ExpirationTime.slice(5,7), data.ExpirationTime.slice(8,10), data.ExpirationTime.slice(11,13), data.ExpirationTime.slice(14,16), 0, 0);
-    date2 = Date.UTC(data.setUpTime.slice(2,4), data.setUpTime.slice(5,7), data.setUpTime.slice(8,10), data.setUpTime.slice(11,13), data.setUpTime.slice(14,16), 0, 0);
+    var date = Date.UTC(data.ExpirationTime.slice(2,4), data.ExpirationTime.slice(5,7), data.ExpirationTime.slice(8,10), data.ExpirationTime.slice(11,13), data.ExpirationTime.slice(14,16), 0, 0);
+    var date2 = Date.UTC(data.setUpTime.slice(2,4), data.setUpTime.slice(5,7), data.setUpTime.slice(8,10), data.setUpTime.slice(11,13), data.setUpTime.slice(14,16), 0, 0);
     let durationInMin = (Math.floor(Math.abs(date - date2)/60000));
-    let newID = 0;
-    while(true){
-        newID = Math.floor(Math.random*1000000);
-        var result = TuanGO.findTuanGOById(newID, (res)=>{
-            if(!res) {
-                return 1;
-            }else{
-                return 0;
-            }
-        })
-        if(result){
-            console.log(newID);
-            break;
-        }
-    }
-    let targetProduct = {};
-    Product.findProductByID(data.productID, (res)=>{
-        if(res){
-            targetProduct = res;
-        }else{
-            throw new Error("product not found");
-        }
-    })
+    //let newID = Math.floor(Math.random*1000000);;
     var TuanGOGenerate = new TuanGO({
-        TuanGOID : newID,
+        TuanGOID : 0,
         productID : data.productID,
         type : data.type,
-        price: targetProduct.price,
+        price: 0,
         setUpTime: data.setUpTime,
         ExpirationTime : {type: Date, required: true},
         duration: durationInMin,
         members: [],
     });
+    UserProfile.checkAccount(req.session.username, (res)=>{
+        TuanGOGenerate.members.push(res.username);
+    });
+    Product.findProductByID(data.productID, (res)=>{
+        if(res){
+            TuanGOGenerate.price = res.price;
+            if(data.type === 1){
+                create.deploy_unpack(res.unpackableAmount, res.price, TuanGOGenerate.duration).then((res)=>{
+                    TuanGOGenerate.TuanGOID = res;
+                    res.send({"contractAddress": res});
+                });
+            }else if(data.type === 0){
+                create.deploy(res.PromotionlowestNum, res.price, res.PromotionPrice, TuanGOGenerate.duration).then((res)=>{
+                    TuanGOGenerate.TuanGOID = res;
+                    res.send({"contractAddress": res});
+                });
+            }else{
+                throw new Error("error TuanGO type");
+            }
+        }else{
+            throw new Error("product not found");
+        }
+    });
+    
     TuanGOGenerate.save();
     res.send("success");
 })
