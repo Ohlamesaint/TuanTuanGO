@@ -211,6 +211,7 @@ app.post("/deploy", (req, res, next)=>{
                 create.deploy_unpack(productRes.unpackableAmount, Math.floor(productRes.price), TuanGOGenerate.duration).then((result)=>{
                     TuanGOGenerate.price = productRes.price;
                     TuanGOGenerate.TuanGOAddress = result;
+                    console.log(JSON.stringify(TuanGOGenerate));
                     TuanGOGenerate.save();
                     res.send({"contractAddress": result});
                 });
@@ -218,6 +219,7 @@ app.post("/deploy", (req, res, next)=>{
                 create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
                     TuanGOGenerate.TuanGOAddress = result;
                     TuanGOGenerate.price = productRes.PromotionPrice;
+                    console.log(JSON.stringify(TuanGOGenerate));
                     TuanGOGenerate.save();
                     res.send({"contractAddress": result});
                 });
@@ -238,6 +240,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
             res.send(result);
         } else{
             console.log("not found " + data.productType);
+            res.send('bad');
         }
     })
 })
