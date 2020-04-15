@@ -230,6 +230,18 @@ app.post("/deploy", (req, res, next)=>{
     });
 })
 
+app.post('/mainPageProducts', (req, res, next)=>{
+    let data = req.body;
+    console.log(data);
+    TuanGO.findTuanGOByProductType(data.productType, (result)=>{
+        if(result){
+            res.send(result);
+        } else{
+            console.log("not found " + data.productType);
+        }
+    })
+})
+
 
 
 //server connection
@@ -265,6 +277,18 @@ TuanGOSchema.statics.findTuanGOByAddress = function(TuanGOAddress, callback){
     this.find({"TuanGOAddress": TuanGOAddress}, function(err, docs){
         if(err){
             console.log("not found " + TuanGOAddress);
+            return;
+        } 
+        else{
+            callback(docs[0]);
+        }
+    })
+}
+
+TuanGOSchema.statics.findTuanGOByProductType = function(productType, callback){
+    this.find({"productType": productType}, function(err, docs){
+        if(err){
+            console.log("not found " + productType);
             return;
         } 
         else{
