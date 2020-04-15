@@ -232,14 +232,27 @@ app.post("/deploy", (req, res, next)=>{
     });
 })
 
+const mainPageResponse = function(){
+    this.productName = "";
+    this.originalPrice = 0;
+    this.ExpirationTime = "";
+    this.disccountPrice = 0;
+    this.TuanGOType = 0;
+}
+
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
-    console.log(data);
+    let response = new mainPageResponse();
     TuanGO.findTuanGOByProductType(data.productType, (result)=>{
         if(result){
-            Product.findProductByID(result.productID, (ProductImform)=>{
+            response.ExpirationTime = result.ExpirationTime;
+            response.TuanGOType = result.TuanGOType;
+            Product.findProductByID(result.productID, (ProductInform)=>{
                 if(result){
-                    res.send(result);
+                    response.productName = ProductInform.productName;
+                    response.originalPrice = ProductInform.price;
+                    response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
+                    res.send(response);
                 } else{
                     res.send('not found productID');
                 }
