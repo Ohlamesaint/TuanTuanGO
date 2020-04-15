@@ -267,7 +267,7 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 var TuanGOSchema = new mongoose.Schema({
     TuanGOAddress : {type: String, required: true},
     productID : {type: Number, required: true},
-    productType: {type: Number, required: true},
+    productType: {type: String, required: true},
     TuanGOtype : {type: Number, required: true},
     setUpTime : {type: Date, default: Date.now, required: true},
     price: {type: Number, required: true},
