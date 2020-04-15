@@ -248,19 +248,19 @@ app.post('/mainPageProducts', (req, res, next)=>{
             response.ExpirationTime = result.ExpirationTime;
             response.TuanGOType = result.TuanGOType;
             Product.findProductByID(result.productID, (ProductInform)=>{
-                if(result){
+                if(ProductInform){
                     response.productName = ProductInform.productName;
                     response.originalPrice = ProductInform.price;
                     response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
                     console.log(response);
                     res.send(response);
                 } else{
-                    res.send('not found productID');
+                    res.error('not found productID');
                 }
             })
         } else{
             console.log("not found " + data.productType);
-            res.send('bad');
+            res.send(response);
         }
     })
 })
