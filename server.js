@@ -246,7 +246,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
     TuanGO.findTuanGOByProductType(data.productType, (result)=>{
         if(result){
             response.ExpirationTime = result.ExpirationTime;
-            response.TuanGOType = result.TuanGOType;
+            response.TuanGOType = result.TuanGOtype;
             Product.findProductByID(result.productID, (ProductInform)=>{
                 if(ProductInform){
                     response.productName = ProductInform.productName;
