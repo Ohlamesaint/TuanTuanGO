@@ -252,6 +252,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.productName = ProductInform.productName;
                     response.originalPrice = ProductInform.price;
                     response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
+                    console.log(response);
                     res.send(response);
                 } else{
                     res.send('not found productID');
