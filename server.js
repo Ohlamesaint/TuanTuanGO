@@ -237,7 +237,13 @@ app.post('/mainPageProducts', (req, res, next)=>{
     console.log(data);
     TuanGO.findTuanGOByProductType(data.productType, (result)=>{
         if(result){
-            res.send(result);
+            Product.findProductByID(result.productID, (ProductImform)=>{
+                if(result){
+                    res.send(result);
+                } else{
+                    res.send('not found productID');
+                }
+            })
         } else{
             console.log("not found " + data.productType);
             res.send('bad');
