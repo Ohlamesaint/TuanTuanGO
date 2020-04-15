@@ -195,7 +195,8 @@ app.post("/deploy", (req, res, next)=>{
     var TuanGOGenerate = new TuanGO({
         TuanGOAddress : "",
         productID : data.productID,
-        type : data.type,
+        productType : "",
+        TuanGOtype : data.type,
         price: 0,
         setUpTime: data.setUpTime,
         ExpirationTime : data.ExpirationTime,
@@ -205,17 +206,20 @@ app.post("/deploy", (req, res, next)=>{
     Product.findProductByID(data.productID, (productRes)=>{
         if(productRes){
             TuanGOGenerate.price = productRes.price;
+            TuanGOGenerate.productType = productRes.productType;
             if(data.type === 1){
                 create.deploy_unpack(productRes.unpackableAmount, Math.floor(productRes.price), TuanGOGenerate.duration).then((result)=>{
                     TuanGOGenerate.price = productRes.price;
                     TuanGOGenerate.TuanGOAddress = result;
                     res.send({"contractAddress": result});
+                    TuanGOGenerate.save();
                 });
             }else if(data.type === 0){
                 create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
                     TuanGOGenerate.TuanGOAddress = result;
                     TuanGOGenerate.price = productRes.PromotionPrice;
                     res.send({"contractAddress": result});
+                    TuanGOGenerate.save();
                 });
             }else{
                 throw new Error("error TuanGO type");
@@ -224,14 +228,13 @@ app.post("/deploy", (req, res, next)=>{
             throw new Error("product not found");
         }
     });
-    TuanGOGenerate.save();
 })
 
 
 
 //server connection
 var PORT = process.env.PORT;
-console.log(process.env.PORT);
+console.log(process.env);
 console.log(__dirname + '/public');
 app.listen(PORT, ()=>console.log(`listening on ${PORT}...`));
 
@@ -249,7 +252,8 @@ mongoose.connect(process.env.MONGODB_URI, dbsetting, (error)=>{
 var TuanGOSchema = new mongoose.Schema({
     TuanGOAddress : {type: String, required: true},
     productID : {type: Number, required: true},
-    type : {type: Number, required: true},
+    productType: {type: Number, required: true},
+    TuanGOtype : {type: Number, required: true},
     setUpTime : {type: Date, default: Date.now, required: true},
     price: {type: Number, required: true},
     duration: {type: Number, required: true},
