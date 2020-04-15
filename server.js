@@ -211,15 +211,15 @@ app.post("/deploy", (req, res, next)=>{
                 create.deploy_unpack(productRes.unpackableAmount, Math.floor(productRes.price), TuanGOGenerate.duration).then((result)=>{
                     TuanGOGenerate.price = productRes.price;
                     TuanGOGenerate.TuanGOAddress = result;
-                    res.send({"contractAddress": result});
                     TuanGOGenerate.save();
+                    res.send({"contractAddress": result});
                 });
             }else if(data.type === 0){
                 create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
                     TuanGOGenerate.TuanGOAddress = result;
                     TuanGOGenerate.price = productRes.PromotionPrice;
-                    res.send({"contractAddress": result});
                     TuanGOGenerate.save();
+                    res.send({"contractAddress": result});
                 });
             }else{
                 throw new Error("error TuanGO type");
