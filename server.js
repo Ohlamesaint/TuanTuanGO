@@ -244,29 +244,40 @@ const mainPageResponse = function(){
 
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
-    let response = new mainPageResponse();
+    let responseArray = [];
     TuanGO.findTuanGOByProductType(data.productType, (result)=>{
-        if(result){
-            response.ExpirationTime = result.ExpirationTime;
-            response.TuanGOType = result.TuanGOtype;
-            response.TuanGOmembers = result.members;
-            response.TuanGOAddress = result.TuanGOAddress;
-            console.log(result.members);
-            Product.findProductByID(result.productID, (ProductInform)=>{
-                if(ProductInform){
-                    response.productName = ProductInform.productName;
-                    response.originalPrice = ProductInform.price;
-                    response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
-                    console.log(response);
-                    res.send(response);
-                } else{
-                    res.error('not found  productID');
+        return new Promise((resolve, reject)=>{
+            if(result){
+                for(let i=0; i<result.length; i++){
+                    let response = new mainPageResponse();
+                    response.ExpirationTime = result.ExpirationTime;
+                    response.TuanGOType = result.TuanGOtype;
+                    response.TuanGOmembers = result.members;
+                    response.TuanGOAddress = result.TuanGOAddress;
+                    console.log(result.members);
+                    Product.findProductByID(result.productID, (ProductInform)=>{
+                        if(ProductInform){
+                            response.productName = ProductInform.productName;
+                            response.originalPrice = ProductInform.price;
+                            response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
+                            console.log(response);
+                            responseArray.push(response);
+                            console.log(responseArray);
+                        } else{
+                            reject('not found  productID');
+                        }
+                    })
                 }
-            })
-        } else{
-            console.log("not found " + data.productType);
-            res.send(response);
-        }
+                resolve(responseArray);
+            } else{
+                reject("not found " + data.productType);
+            }
+        }).then((responseArray)=>{
+            res.send(responseArray);
+        }).catch((err)=>{
+            console.log(err);
+            res.send(err);
+        })
     })
 })
 
@@ -320,7 +331,7 @@ TuanGOSchema.statics.findTuanGOByProductType = function(productType, callback){
             return;
         } 
         else{
-            callback(docs[0]);
+            callback(docs);
         }
     })
 }
