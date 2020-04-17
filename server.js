@@ -247,7 +247,7 @@ const mainPageResponse = function(){
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
-    TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
+    TuanGO.findTuanGOByProductType(data.productType, (result)=>{
         return new Promise((resolve, reject)=>{
             if(result){
                 console.log(result);
@@ -258,7 +258,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOmembers = result[i].members;
                     response.TuanGOAddress = result[i].TuanGOAddress;
                     console.log("response outside: "+ response);
-                    await Product.findProductByID(result.productID, (ProductInform)=>{
+                    Product.findProductByID(result[i].productID, (ProductInform)=>{
                         return new Promise((resolve, reject)=>{
                             if(ProductInform){
                                 response.productName = ProductInform.productName;
