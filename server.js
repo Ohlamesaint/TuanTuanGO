@@ -248,7 +248,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
     TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
-        return new Promise((resolvem, reject)=>{
+        return new Promise((resolve, reject)=>{
             if(result){
                 console.log(result);
                 for(let i=0; i<result.length; i++){
