@@ -267,7 +267,6 @@ app.post('/mainPageProducts', (req, res, next)=>{
                                 console.log("response:" + response);
                                 responseArray.push(response);
                                 console.log(responseArray);
-                                console.log(responseArray);
                             } else{
                                 reject('not found  productID');
                             }
@@ -336,7 +335,7 @@ TuanGOSchema.statics.findTuanGOByAddress = function(TuanGOAddress, callback){
     })
 }
 
-TuanGOSchema.statics.findTuanGOByProductType = function(productType, callback){
+TuanGOSchema.statics.findTuanGOByProductType = async function(productType, callback){
     this.find({"productType": productType}, function(err, docs){
         if(err){
             console.log("not found " + productType);
