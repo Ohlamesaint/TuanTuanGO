@@ -250,11 +250,11 @@ app.post('/mainPageProducts', (req, res, next)=>{
             if(result){
                 for(let i=0; i<result.length; i++){
                     let response = new mainPageResponse();
-                    response.ExpirationTime = result.ExpirationTime;
-                    response.TuanGOType = result.TuanGOtype;
-                    response.TuanGOmembers = result.members;
-                    response.TuanGOAddress = result.TuanGOAddress;
-                    console.log(result.members);
+                    response.ExpirationTime = result[i].ExpirationTime;
+                    response.TuanGOType = result[i].TuanGOtype;
+                    response.TuanGOmembers = result[i].members;
+                    response.TuanGOAddress = result[i].TuanGOAddress;
+                    console.log(result[i].members);
                     Product.findProductByID(result.productID, (ProductInform)=>{
                         if(ProductInform){
                             response.productName = ProductInform.productName;
