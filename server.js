@@ -152,6 +152,7 @@ function joinTuanGOFunc(username, TuanGOAddress){
     UserProfile.checkAccount(username, (res)=>{
         if(res){
             res.joinTuanGOAddress.push(TuanGOAddress);
+            res.save();
         }else{
             throw new Error("cannot not join");
         }
@@ -160,6 +161,7 @@ function joinTuanGOFunc(username, TuanGOAddress){
     TuanGO.findTuanGOByAddress(TuanGOAddress, (res)=>{
         if(res){
             res.members.push(username);
+            res.save();
         }else{
             throw new Error("cannot find tuanGO");
         }
