@@ -238,6 +238,7 @@ const mainPageResponse = function(){
     this.ExpirationTime = "";
     this.disccountPrice = 0;
     this.TuanGOType = 0;
+    this.TuanGOAddress = "";
     this.TuanGOmembers = [];
 }
 
@@ -249,6 +250,8 @@ app.post('/mainPageProducts', (req, res, next)=>{
             response.ExpirationTime = result.ExpirationTime;
             response.TuanGOType = result.TuanGOtype;
             response.TuanGOmembers = result.members;
+            response.TuanGOAddress = result.TuanGOAddress;
+            console.log(result.members);
             Product.findProductByID(result.productID, (ProductInform)=>{
                 if(ProductInform){
                     response.productName = ProductInform.productName;
