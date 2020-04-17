@@ -257,14 +257,14 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOType = result[i].TuanGOtype;
                     response.TuanGOmembers = result[i].members;
                     response.TuanGOAddress = result[i].TuanGOAddress;
-                    console.log(result[i]);
+                    console.log(i, result[i]);
                     console.log(result[i].members);
                     Product.findProductByID(result.productID, (ProductInform)=>{
                         if(ProductInform){
                             response.productName = ProductInform.productName;
                             response.originalPrice = ProductInform.price;
                             response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
-                            console.log(response);
+                            console.log("response:" + response);
                             responseArray.push(response);
                             console.log(responseArray);
                         } else{
