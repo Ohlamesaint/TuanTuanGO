@@ -257,6 +257,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOType = result[i].TuanGOtype;
                     response.TuanGOmembers = result[i].members;
                     response.TuanGOAddress = result[i].TuanGOAddress;
+                    console.log(result[i]);
                     console.log(result[i].members);
                     Product.findProductByID(result.productID, (ProductInform)=>{
                         if(ProductInform){
