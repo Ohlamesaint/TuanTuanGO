@@ -271,6 +271,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                                 reject('not found  productID');
                             }
                         }).then((response)=>{
+                            console.log("in");
                             responseArray.push(response);
                         }).catch((err)=>{
                             console.log(err);
@@ -283,6 +284,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                 reject("not found " + data.productType);
             }  
         }).then((result)=>{
+            console.log("out");
             res.send(result);
         }).catch((err)=>{
             res.send(err);
