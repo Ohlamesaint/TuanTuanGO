@@ -238,6 +238,7 @@ const mainPageResponse = function(){
     this.ExpirationTime = "";
     this.disccountPrice = 0;
     this.TuanGOType = 0;
+    this.TuanGOmembers = [];
 }
 
 app.post('/mainPageProducts', (req, res, next)=>{
