@@ -260,7 +260,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     console.log(response);
                     res.send(response);
                 } else{
-                    res.error('not found productID');
+                    res.error('not found sa productID');
                 }
             })
         } else{
