@@ -336,7 +336,7 @@ TuanGOSchema.statics.findTuanGOByAddress = function(TuanGOAddress, callback){
 }
 
 TuanGOSchema.statics.findTuanGOByProductType = async function(productType, callback){
-    this.find({"productType": productType}, function(err, docs){
+    this.find({"productType": productType}, async function(err, docs){
         if(err){
             console.log("not found " + productType);
             return;
