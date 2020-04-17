@@ -248,6 +248,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
     TuanGO.findTuanGOByProductType(data.productType, (result)=>{
         return new Promise((resolve, reject)=>{
             if(result){
+                console.log(result);
                 for(let i=0; i<result.length; i++){
                     let response = new mainPageResponse();
                     response.ExpirationTime = result[i].ExpirationTime;
@@ -331,6 +332,7 @@ TuanGOSchema.statics.findTuanGOByProductType = function(productType, callback){
             return;
         } 
         else{
+            console.log(docs);
             callback(docs);
         }
     })
