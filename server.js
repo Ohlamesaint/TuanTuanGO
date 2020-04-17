@@ -343,7 +343,7 @@ TuanGOSchema.statics.findTuanGOByProductType = async function(productType, callb
         } 
         else{
             console.log(docs);
-            callback(docs);
+            await callback(docs);
         }
     })
 }
