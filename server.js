@@ -157,7 +157,7 @@ function joinTuanGOFunc(username, TuanGOAddress){
             throw new Error("cannot not join");
         }
     })
-
+    
     TuanGO.findTuanGOByAddress(TuanGOAddress, (res)=>{
         if(res){
             res.members.push(username);
@@ -247,8 +247,8 @@ const mainPageResponse = function(){
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
-    TuanGO.findTuanGOByProductType(data.productType, (result)=>{
-        return new Promise((resolve, reject)=>{
+    TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
+        return new Promise((resolvem, reject)=>{
             if(result){
                 console.log(result);
                 for(let i=0; i<result.length; i++){
@@ -257,29 +257,34 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOType = result[i].TuanGOtype;
                     response.TuanGOmembers = result[i].members;
                     response.TuanGOAddress = result[i].TuanGOAddress;
-                    console.log(i, result[i]);
-                    console.log(result[i].members);
-                    Product.findProductByID(result.productID, (ProductInform)=>{
-                        if(ProductInform){
-                            response.productName = ProductInform.productName;
-                            response.originalPrice = ProductInform.price;
-                            response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
-                            console.log("response:" + response);
+                    console.log("response outside: "+ response);
+                    await Product.findProductByID(result.productID, (ProductInform)=>{
+                        return new Promise((resolve, reject)=>{
+                            if(ProductInform){
+                                response.productName = ProductInform.productName;
+                                response.originalPrice = ProductInform.price;
+                                response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
+                                console.log("response:" + response);
+                                // responseArray.push(response);
+                                resolve(response);
+                            } else{
+                                reject('not found  productID');
+                            }
+                        }).then((response)=>{
                             responseArray.push(response);
-                            console.log(responseArray);
-                        } else{
-                            reject('not found  productID');
-                        }
+                        }).catch((err)=>{
+                            console.log(err);
+                            res.send(err);
+                        })
                     })
-                }
+                } 
                 resolve(responseArray);
-            } else{
+            } else {
                 reject("not found " + data.productType);
-            }
-        }).then((responseArray)=>{
-            res.send(responseArray);
+            }  
+        }).then((result)=>{
+            res.send(result);
         }).catch((err)=>{
-            console.log(err);
             res.send(err);
         })
     })
