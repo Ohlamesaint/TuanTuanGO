@@ -247,8 +247,8 @@ const mainPageResponse = function(){
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
-    TuanGO.findTuanGOByProductType(data.productType, (result)=>{
-        return new Promise((resolve, reject)=>{
+    TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
+        // return new Promise((resolve, reject)=>{
             if(result){
                 console.log(result);
                 for(let i=0; i<result.length; i++){
@@ -279,16 +279,16 @@ app.post('/mainPageProducts', (req, res, next)=>{
                         // })
                     })
                 } 
-                resolve(responseArray);
+                res.send(responseArray);
             } else {
-                reject("not found " + data.productType);
+                res.send("not found " + data.productType);
             }  
-        }).then((result)=>{
-            console.log("out");
-            res.send(result);
-        }).catch((err)=>{
-            res.send(err);
-        })
+        // }).then((result)=>{
+        //     console.log("out");
+        //     res.send(result);
+        // }).catch((err)=>{
+        //     res.send(err);
+        // })
     })
 })
 
