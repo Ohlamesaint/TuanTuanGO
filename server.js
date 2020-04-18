@@ -267,62 +267,62 @@ app.post('/mainPageProducts', (req, res, next)=>{
             console.log(check);
         }
         console.log('12321')
-        res.send('end');
+        // res.send('end');
         // res.send("fuck");
 
         // return new Promise((resolve, reject)=>{
-        // if(result){
-        //     console.log("first" + result);
-        //     const ProductInform  = '';
-        //     for(let i=0; i<result.length; i++){
-        //         let response = new mainPageResponse();
-        //         response.ExpirationTime = result[i].ExpirationTime;
-        //         response.TuanGOType = result[i].TuanGOtype;
-        //         response.TuanGOmembers = result[i].members;
-        //         response.TuanGOAddress = result[i].TuanGOAddress;
-        //         console.log("response outside: "+ response);
-        //         // const ProductInform = "";
-        //         // ProductInform = await waitForDB(result[i].productID);
-        //         console.log("after waitForDB: " + ProductInform);
-        //         if(ProductInform){
-        //             response.productName = ProductInform.productName;
-        //             response.originalPrice = ProductInform.price;
-        //             response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
-        //             console.log("responseFinished:" + response);
-        //             responseArray.push(response);
-        //             console.log("responseArray: " + responseArray);
-        //             // resolve(response);
-        //         } else{
-        //             console.log('not found  productID');
-        //         }
-        //         // console.log("in await callback");
-        //         // await Product.findProductByID(result[i].productID, (ProductInform)=>{
-        //         //     return new Promise((resolve, reject)=>{
-        //         //         if(ProductInform){
-        //         //             response.productName = ProductInform.productName;
-        //         //             response.originalPrice = ProductInform.price;
-        //         //             response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
-        //         //             console.log("response:" + response);
-        //         //             // responseArray.push(response);
-        //         //             // console.log(responseArray);
-        //         //             resolve(response);
-        //         //         } else{
-        //         //             reject('not found  productID');
-        //         //         }
-        //         //         console.log("in await callback");
-        //         //     }).then((response)=>{
-        //         //         console.log("in");
-        //         //         responseArray.push(response);
-        //         //     }).catch((err)=>{
-        //         //         console.log(err);
-        //         //         res.send(err);
-        //         //     })
-        //         // })
-        //     } 
-        //     res.send(responseArray);
-        // } else {
-        //     res.send("not found " + data.productType);
-        // }  
+        if(result){
+            console.log("first" + result);
+            const ProductInform  = '';
+            for(let i=0; i<result.length; i++){
+                let response = new mainPageResponse();
+                response.ExpirationTime = result[i].ExpirationTime;
+                response.TuanGOType = result[i].TuanGOtype;
+                response.TuanGOmembers = result[i].members;
+                response.TuanGOAddress = result[i].TuanGOAddress;
+                console.log("response outside: "+ response);
+                // const ProductInform = "";
+                ProductInform = await waitForDB(result[i].productID);
+                console.log("after waitForDB: " + ProductInform);
+                if(ProductInform){
+                    response.productName = ProductInform.productName;
+                    response.originalPrice = ProductInform.price;
+                    response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
+                    console.log("responseFinished:" + response);
+                    responseArray.push(response);
+                    console.log("responseArray: " + responseArray);
+                    // resolve(response);
+                } else{
+                    console.log('not found  productID');
+                }
+                // console.log("in await callback");
+                // await Product.findProductByID(result[i].productID, (ProductInform)=>{
+                //     return new Promise((resolve, reject)=>{
+                //         if(ProductInform){
+                //             response.productName = ProductInform.productName;
+                //             response.originalPrice = ProductInform.price;
+                //             response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
+                //             console.log("response:" + response);
+                //             // responseArray.push(response);
+                //             // console.log(responseArray);
+                //             resolve(response);
+                //         } else{
+                //             reject('not found  productID');
+                //         }
+                //         console.log("in await callback");
+                //     }).then((response)=>{
+                //         console.log("in");
+                //         responseArray.push(response);
+                //     }).catch((err)=>{
+                //         console.log(err);
+                //         res.send(err);
+                //     })
+                // })
+            } 
+            res.send(responseArray);
+        } else {
+            res.send("not found " + data.productType);
+        }  
         // }).then((result)=>{
         //     console.log("out");
         //     res.send(result);
