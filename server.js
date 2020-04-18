@@ -245,6 +245,7 @@ const mainPageResponse = function(){
 }
 
 const waitForDB = function(ID){
+    console.log("in waitForDB");
     return findProductByID(ID).then(res=> res);
 }
 
@@ -263,11 +264,12 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOAddress = result[i].TuanGOAddress;
                     console.log("response outside: "+ response);
                     const ProductInform = await waitForDB(result[i].productID);
+                    console.log("after waitForDB: " + ProductInform);
                     if(ProductInform){
                         response.productName = ProductInform.productName;
                         response.originalPrice = ProductInform.price;
                         response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
-                        console.log("response:" + response);
+                        console.log("responseFinished:" + response);
                         responseArray.push(response);
                         console.log(responseArray);
                         // resolve(response);
