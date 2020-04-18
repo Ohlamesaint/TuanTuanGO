@@ -273,7 +273,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
         // return new Promise((resolve, reject)=>{
         if(result){
             console.log("first" + result);
-            const ProductInform  = '';
+            let ProductInform  = '';
             for(let i=0; i<result.length; i++){
                 let response = new mainPageResponse();
                 response.ExpirationTime = result[i].ExpirationTime;
@@ -281,7 +281,6 @@ app.post('/mainPageProducts', (req, res, next)=>{
                 response.TuanGOmembers = result[i].members;
                 response.TuanGOAddress = result[i].TuanGOAddress;
                 console.log("response outside: "+ response);
-                // const ProductInform = "";
                 ProductInform = await waitForDB(result[i].productID);
                 console.log("after waitForDB: " + ProductInform);
                 if(ProductInform){
