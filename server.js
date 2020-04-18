@@ -249,7 +249,7 @@ const waitForDB = function(ID){
     return findProductByID(ID).then(res=> res);
 }
 
-app.post('/mainPageProducts', async (req, res, next)=>{
+app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
     TuanGO.findTuanGOByProductType(data.productType, (result)=>{
