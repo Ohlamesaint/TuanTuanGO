@@ -469,7 +469,7 @@ const waitForDB = function(ID){
 
 app.post("/addProduct", (req, res, next)=>{
     const form = new formidable.IncomingForm();
-    console.log(form);
+    console.log("form:" + form);
     form.parse(req, async (err, fields, files)=>{
         if(err){
             throw new Error(err);
@@ -491,7 +491,7 @@ app.post("/addProduct", (req, res, next)=>{
                     PromotionPrice: 0,
                     productPhoto: "",
                 })
-                console.log(fields);
+                console.log("fields: " + fields);
                 productGenerate.productName = fields.productName;
                 productGenerate.productType = fields.productType;
                 productGenerate.productID = fields.ID;
@@ -501,7 +501,7 @@ app.post("/addProduct", (req, res, next)=>{
                 productGenerate.hasPromotion = fields.hasPromotion;
                 productGenerate.PromotionlowestNum = fields.promotionLowestNum;
                 productGenerate.PromotionPrice = fields.promotionPrice;
-                console.log(productGenerate);
+                console.log("productGenerate: " + productGenerate);
                 productGenerate.save();
                 res.send(productGenerate);
             }
