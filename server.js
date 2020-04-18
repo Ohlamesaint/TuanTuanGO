@@ -249,10 +249,10 @@ const waitForDB = function(ID){
     return findProductByID(ID).then(res=> res);
 }
 
-app.post('/mainPageProducts', (req, res, next)=>{
+app.post('/mainPageProducts', async (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
-    TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
+    TuanGO.findTuanGOByProductType(data.productType, (result)=>{
         // return new Promise((resolve, reject)=>{
             if(result){
                 console.log("first" + result);
@@ -264,7 +264,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOAddress = result[i].TuanGOAddress;
                     console.log("response outside: "+ response);
                     const ProductInform = "";
-                    // const ProductInform = await waitForDB(result[i].productID);
+                    const ProductInform = await waitForDB(result[i].productID);
                     console.log("after waitForDB: " + ProductInform);
                     if(ProductInform){
                         response.productName = ProductInform.productName;
