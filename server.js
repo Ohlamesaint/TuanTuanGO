@@ -469,7 +469,7 @@ const waitForDB = function(ID){
 
 app.post("/addProduct", (req, res, next)=>{
     const form = new formidable.IncomingForm();
-    console.log("form:" + form);
+    console.log("form: " + JSON.stringify(form));
     form.parse(req, async (err, fields, files)=>{
         if(err){
             throw new Error(err);
