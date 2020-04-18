@@ -261,8 +261,11 @@ app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
     TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
-        let check = await test2(1500);
-        console.log(check);
+        for(let i=0; i<3; i++){
+            console.log("i= "+ i);
+            let check = await test2(1500);
+            console.log(check);
+        }
         console.log('12321')
         res.send('end');
         // res.send("fuck");
@@ -380,10 +383,7 @@ TuanGOSchema.statics.findTuanGOByProductType = function(productType, callback){
             return('not Found');
         } 
         else{
-            console.log("in productType Function")
-            console.log(docs);
             callback(docs);
-            // return(docs);
         }
     })
     // })
