@@ -264,6 +264,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
         let check = await test2(1500);
         console.log(check);
         console.log('12321')
+        res.send('end');
         // res.send("fuck");
 
         // return new Promise((resolve, reject)=>{
