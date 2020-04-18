@@ -246,7 +246,7 @@ const mainPageResponse = function(){
 
 const waitForDB = function(ID){
     console.log("in waitForDB");
-    return findProductByID(ID).then(res=> res);
+    return Product.findProductByID(ID).then(res=> res);
 }
 
 const test = function(ms){
