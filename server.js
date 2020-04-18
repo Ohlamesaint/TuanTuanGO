@@ -11,6 +11,7 @@ var create= require("./blockchain/create");
 
 const corsOption = {
     origin:[
+        "https://ohlamesaint.github.io",
         "https://luffy.ee.ncku.edu.tw",
     ],
     credentials: true,
