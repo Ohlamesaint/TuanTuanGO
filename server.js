@@ -258,7 +258,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOmembers = result[i].members;
                     response.TuanGOAddress = result[i].TuanGOAddress;
                     console.log("response outside: "+ response);
-                    Product.findProductByID(result[i].productID, (ProductInform)=>{
+                    await Product.findProductByID(result[i].productID, (ProductInform)=>{
                         // return new Promise((resolve, reject)=>{
                             if(ProductInform){
                                 response.productName = ProductInform.productName;
@@ -270,6 +270,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                             } else{
                                 reject('not found  productID');
                             }
+                            console.log("in await callback");
                         // }).then((response)=>{
                         //     console.log("in");
                         //     responseArray.push(response);
@@ -342,6 +343,7 @@ TuanGOSchema.statics.findTuanGOByProductType = async function(productType, callb
             return;
         } 
         else{
+            console.log("in productType Function")
             console.log(docs);
             await callback(docs);
         }
