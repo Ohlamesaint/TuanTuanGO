@@ -464,7 +464,7 @@ app.post("/registration", (req, res, next)=>{
 
 const waitForDB = function(ID){
     console.log("in waitForDB");
-    return Product.findProductByID(ID).then(res=> res);
+    return Product.findProductByID(ID).then(res=> res).catch((err) => err);
 }
 
 app.post("/addProduct", (req, res, next)=>{
