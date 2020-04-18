@@ -255,7 +255,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
     TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
         // return new Promise((resolve, reject)=>{
             if(result){
-                console.log(result);
+                console.log("first" + result);
                 for(let i=0; i<result.length; i++){
                     let response = new mainPageResponse();
                     response.ExpirationTime = result[i].ExpirationTime;
@@ -263,7 +263,8 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOmembers = result[i].members;
                     response.TuanGOAddress = result[i].TuanGOAddress;
                     console.log("response outside: "+ response);
-                    const ProductInform = await waitForDB(result[i].productID);
+                    const ProductInform = "";
+                    // const ProductInform = await waitForDB(result[i].productID);
                     console.log("after waitForDB: " + ProductInform);
                     if(ProductInform){
                         response.productName = ProductInform.productName;
@@ -271,7 +272,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
                         response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
                         console.log("responseFinished:" + response);
                         responseArray.push(response);
-                        console.log(responseArray);
+                        console.log("responseArray: " + responseArray);
                         // resolve(response);
                     } else{
                         console.log('not found  productID');
