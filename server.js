@@ -371,7 +371,7 @@ TuanGOSchema.statics.findTuanGOByAddress = function(TuanGOAddress, callback){
     })
 }
 
-TuanGOSchema.statics.findTuanGOByProductType = function(productType){
+TuanGOSchema.statics.findTuanGOByProductType = function(productType, callback){
     // return new Promise((resolve, reject)=>{
     this.find({"productType": productType}, function(err, docs){
         if(err){
