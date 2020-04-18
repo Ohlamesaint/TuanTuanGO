@@ -249,28 +249,10 @@ const waitForDB = function(ID){
     return Product.findProductByID(ID).then(res=> res);
 }
 
-const test = function(ms){
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-const test2 = function(ms){
-    return test(ms).then(value => 3);
-}
-
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
     TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
-        for(let i=0; i<3; i++){
-            console.log("i= "+ i);
-            let check = await test2(1500);
-            console.log(check);
-        }
-        console.log('12321')
-        // res.send('end');
-        // res.send("fuck");
-
-        // return new Promise((resolve, reject)=>{
         if(result){
             console.log("first" + result);
             let ProductInform  = '';
@@ -290,44 +272,14 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     console.log("responseFinished:" + response);
                     responseArray.push(response);
                     console.log("responseArray: " + responseArray);
-                    // resolve(response);
                 } else{
                     console.log('not found  productID');
                 }
-                // console.log("in await callback");
-                // await Product.findProductByID(result[i].productID, (ProductInform)=>{
-                //     return new Promise((resolve, reject)=>{
-                //         if(ProductInform){
-                //             response.productName = ProductInform.productName;
-                //             response.originalPrice = ProductInform.price;
-                //             response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
-                //             console.log("response:" + response);
-                //             // responseArray.push(response);
-                //             // console.log(responseArray);
-                //             resolve(response);
-                //         } else{
-                //             reject('not found  productID');
-                //         }
-                //         console.log("in await callback");
-                //     }).then((response)=>{
-                //         console.log("in");
-                //         responseArray.push(response);
-                //     }).catch((err)=>{
-                //         console.log(err);
-                //         res.send(err);
-                //     })
-                // })
             } 
             res.send(responseArray);
         } else {
             res.send("not found " + data.productType);
         }  
-        // }).then((result)=>{
-        //     console.log("out");
-        //     res.send(result);
-        // }).catch((err)=>{
-        //     res.send(err);
-        // })
     })
 })
 
