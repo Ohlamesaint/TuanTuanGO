@@ -259,25 +259,26 @@ app.post('/mainPageProducts', (req, res, next)=>{
                     response.TuanGOAddress = result[i].TuanGOAddress;
                     console.log("response outside: "+ response);
                     await Product.findProductByID(result[i].productID, (ProductInform)=>{
-                        // return new Promise((resolve, reject)=>{
+                        return new Promise((resolve, reject)=>{
                             if(ProductInform){
                                 response.productName = ProductInform.productName;
                                 response.originalPrice = ProductInform.price;
                                 response.disccountPrice = response.TuanGOType?ProductInform.price:ProductInform.PromotionPrice
                                 console.log("response:" + response);
-                                responseArray.push(response);
-                                console.log(responseArray);
+                                // responseArray.push(response);
+                                // console.log(responseArray);
+                                resolve(response);
                             } else{
                                 reject('not found  productID');
                             }
                             console.log("in await callback");
-                        // }).then((response)=>{
-                        //     console.log("in");
-                        //     responseArray.push(response);
-                        // }).catch((err)=>{
-                        //     console.log(err);
-                        //     res.send(err);
-                        // })
+                        }).then((response)=>{
+                            console.log("in");
+                            responseArray.push(response);
+                        }).catch((err)=>{
+                            console.log(err);
+                            res.send(err);
+                        })
                     })
                 } 
                 res.send(responseArray);
