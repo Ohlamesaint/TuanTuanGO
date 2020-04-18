@@ -264,8 +264,8 @@ app.post('/mainPageProducts', async (req, res, next)=>{
                     response.TuanGOmembers = result[i].members;
                     response.TuanGOAddress = result[i].TuanGOAddress;
                     console.log("response outside: "+ response);
-                    // const ProductInform = "";
-                    ProductInform = await waitForDB(result[i].productID);
+                    const ProductInform = "";
+                    // ProductInform = await waitForDB(result[i].productID);
                     console.log("after waitForDB: " + ProductInform);
                     if(ProductInform){
                         response.productName = ProductInform.productName;
