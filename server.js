@@ -252,7 +252,7 @@ const waitForDB = function(ID){
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
-    TuanGO.findTuanGOByProductType(data.productType, (result)=>{
+    // TuanGO.findTuanGOByProductType(data.productType, (result)=>{
         res.send("fuck");
         // return new Promise((resolve, reject)=>{
         // if(result){
@@ -313,7 +313,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
         // }).catch((err)=>{
         //     res.send(err);
         // })
-    })
+    // })
 })
 
 
