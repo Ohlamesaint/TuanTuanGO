@@ -245,10 +245,6 @@ const mainPageResponse = function(){
     this.TuanGOmembers = [];
 }
 
-const waitForDB = function(ID){
-    console.log("in waitForDB");
-    return Product.findProductByID(ID).then(res=> res);
-}
 
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
@@ -465,44 +461,49 @@ app.post("/registration", (req, res, next)=>{
     })
 })
 
+
+const waitForDB = function(ID){
+    console.log("in waitForDB");
+    return Product.findProductByID(ID).then(res=> res);
+}
+
 app.post("/addProduct", (req, res, next)=>{
     const form = new formidable.IncomingForm();
     console.log(form);
-    form.parse(req, (err, fields, files)=>{
+    form.parse(req, async (err, fields, files)=>{
         if(err){
             throw new Error(err);
         }else {
-            Product.findProductByID(fields.ID, (result)=>{
-                if(result){
-                    console.log("ID occupied: "+result);
-                    res.send({occupied: true})
-                }else{
-                    var productGenerate = new Product({
-                        productName: "",
-                        productType: "",
-                        productID: "",
-                        price: 0,
-                        unpackable: false,                      //是否可拆分團購
-                        unpackableAmount: 0,                    //可拆分的數量，在可拆分的前提下
-                        hasPromotion: false,
-                        PromotionlowestNum: 0,
-                        PromotionPrice: 0,
-                        productPhoto: "",
-                    })
-                    productGenerate.productName = fields.productName;
-                    productGenerate.productType = fields.productType;
-                    productGenerate.productID = fields.ID;
-                    productGenerate.price = fields.price;
-                    productGenerate.unpackable = fields.unpackable;
-                    productGenerate.unpackableAmount = fields.unpackableAmount;
-                    productGenerate.hasPromotion = fields.hasPromotion;
-                    productGenerate.PromotionlowestNum = fields.promotionLowestNum;
-                    productGenerate.PromotionPrice = fields.promotionPrice;
-                    console.log(productGenerate);
-                    productGenerate.save();
-                    res.send(productGenerate);
-                }
-            })
+            let ProductInform = await waitForDB(fields.ID);
+            if(ProductInform){
+                console.log("ID occupied: "+ProductInform);
+                res.send({occupied: true})
+            }else{
+                var productGenerate = new Product({
+                    productName: "",
+                    productType: "",
+                    productID: "",
+                    price: 0,
+                    unpackable: false,                      //是否可拆分團購
+                    unpackableAmount: 0,                    //可拆分的數量，在可拆分的前提下
+                    hasPromotion: false,
+                    PromotionlowestNum: 0,
+                    PromotionPrice: 0,
+                    productPhoto: "",
+                })
+                productGenerate.productName = fields.productName;
+                productGenerate.productType = fields.productType;
+                productGenerate.productID = fields.ID;
+                productGenerate.price = fields.price;
+                productGenerate.unpackable = fields.unpackable;
+                productGenerate.unpackableAmount = fields.unpackableAmount;
+                productGenerate.hasPromotion = fields.hasPromotion;
+                productGenerate.PromotionlowestNum = fields.promotionLowestNum;
+                productGenerate.PromotionPrice = fields.promotionPrice;
+                console.log(productGenerate);
+                productGenerate.save();
+                res.send(productGenerate);
+            }
         }
     })
 })
