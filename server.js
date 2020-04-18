@@ -249,11 +249,23 @@ const waitForDB = function(ID){
     return findProductByID(ID).then(res=> res);
 }
 
+const test = function(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const test2 = function(ms){
+    return test(ms).then(value => 3);
+}
+
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
-    // TuanGO.findTuanGOByProductType(data.productType, (result)=>{
-        res.send("fuck");
+    TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
+        let check = await test2(1500);
+        console.log(check);
+        console.log('12321')
+        // res.send("fuck");
+
         // return new Promise((resolve, reject)=>{
         // if(result){
         //     console.log("first" + result);
@@ -313,7 +325,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
         // }).catch((err)=>{
         //     res.send(err);
         // })
-    // })
+    })
 })
 
 
@@ -369,8 +381,8 @@ TuanGOSchema.statics.findTuanGOByProductType = function(productType){
         else{
             console.log("in productType Function")
             console.log(docs);
-            // await callback(docs);
-            return(docs);
+            callback(docs);
+            // return(docs);
         }
     })
     // })
