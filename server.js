@@ -491,6 +491,7 @@ app.post("/addProduct", (req, res, next)=>{
                     PromotionPrice: 0,
                     productPhoto: "",
                 })
+                console.log(fields);
                 productGenerate.productName = fields.productName;
                 productGenerate.productType = fields.productType;
                 productGenerate.productID = fields.ID;
