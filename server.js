@@ -166,7 +166,7 @@ function joinTuanGOFunc(username, TuanGOAddress, amount){
     TuanGO.findTuanGOByAddress(TuanGOAddress, (res)=>{
         if(res){
             res.members.push(username);
-            res.SoldAmounts = res.SoldAmounts + amount;
+            res.SoldAmounts.push(amount);
             res.save();
         }else{
             throw new Error("cannot find tuanGO");
@@ -321,7 +321,7 @@ var TuanGOSchema = new mongoose.Schema({
     duration: {type: Number, required: true},
     ExpirationTime : {type: Date, required: true},
     members: [String],              //會員username
-    SoldAmounts: Number,
+    SoldAmounts: [Number],
     TotalAmount: Number
 })
 
