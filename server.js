@@ -137,15 +137,19 @@ app.post("/signin", (req, res, next)=>{
 })
 
 
-app.get("/products/:check", (req, res, next)=>{
+app.get("/products/:check", async (req, res, next)=>{
     if(/[\d]{6}/.test(req.params.check)){
         let productID = req.params.check;
-        Product.findProductByID(productID, (result)=>{
+        let result = await waitForDB(productID);
+        if(result){
             console.log(result);
             res.send(result);
-        })
+        } else {
+            console.log("error! not such ID")
+            res.send('error! not such ID')
+        }
     }else{
-        res.send('error! not such ID')
+        res.send('wrong FORMATE')
     }
 })
 
@@ -189,7 +193,7 @@ app.post("/join", (req, res, next)=>{
     })
 })
 
-app.post("/deploy", (req, res, next)=>{
+app.post("/deploy", async (req, res, next)=>{
     let data = req.body;
     console.log(data);
     var date = Date.UTC(data.ExpirationTime.slice(2,4), data.ExpirationTime.slice(5,7), data.ExpirationTime.slice(8,10), data.ExpirationTime.slice(11,13), data.ExpirationTime.slice(14,16), 0, 0);
@@ -206,33 +210,32 @@ app.post("/deploy", (req, res, next)=>{
         duration: durationInMin,
         members: [],
     });
-    Product.findProductByID(data.productID, (productRes)=>{
-        if(productRes){
-            TuanGOGenerate.price = productRes.price;
-            TuanGOGenerate.productType = productRes.productType;
-            if(data.type === 1){
-                create.deploy_unpack(productRes.unpackableAmount, Math.floor(productRes.price), TuanGOGenerate.duration).then((result)=>{
-                    TuanGOGenerate.price = productRes.price;
-                    TuanGOGenerate.TuanGOAddress = result;
-                    console.log(JSON.stringify(TuanGOGenerate));
-                    TuanGOGenerate.save();
-                    res.send({"contractAddress": result});
-                });
-            }else if(data.type === 0){
-                create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
-                    TuanGOGenerate.TuanGOAddress = result;
-                    TuanGOGenerate.price = productRes.PromotionPrice;
-                    console.log(JSON.stringify(TuanGOGenerate));
-                    TuanGOGenerate.save();
-                    res.send({"contractAddress": result});
-                });
-            }else{
-                throw new Error("error TuanGO type");
-            }
+    let productRes = await waitForDB(data.productID);
+    if(productRes){
+        TuanGOGenerate.price = productRes.price;
+        TuanGOGenerate.productType = productRes.productType;
+        if(data.type === 1){
+            create.deploy_unpack(productRes.unpackableAmount, Math.floor(productRes.price), TuanGOGenerate.duration).then((result)=>{
+                TuanGOGenerate.price = productRes.price;
+                TuanGOGenerate.TuanGOAddress = result;
+                console.log(JSON.stringify(TuanGOGenerate));
+                TuanGOGenerate.save();
+                res.send({"contractAddress": result});
+            });
+        }else if(data.type === 0){
+            create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
+                TuanGOGenerate.TuanGOAddress = result;
+                TuanGOGenerate.price = productRes.PromotionPrice;
+                console.log(JSON.stringify(TuanGOGenerate));
+                TuanGOGenerate.save();
+                res.send({"contractAddress": result});
+            });
         }else{
-            throw new Error("product not found");
+            throw new Error("error TuanGO type");
         }
-    });
+    }else{
+        throw new Error("product not found");
+    }
 })
 
 const mainPageResponse = function(){
