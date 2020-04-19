@@ -211,7 +211,8 @@ app.post("/deploy", async (req, res, next)=>{
         members: [],
     });
     let productRes = await waitForDB(data.productID);
-    if(productRes){
+    if(productRes){ 
+        console.log(productRes);
         TuanGOGenerate.price = productRes.price;
         TuanGOGenerate.productType = productRes.productType;
         if(data.type === 1){
@@ -223,7 +224,9 @@ app.post("/deploy", async (req, res, next)=>{
                 res.send({"contractAddress": result});
             });
         }else if(data.type === 0){
+            console.log('brfore');
             create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
+                console.log('after');
                 TuanGOGenerate.TuanGOAddress = result;
                 TuanGOGenerate.price = productRes.PromotionPrice;
                 console.log(JSON.stringify(TuanGOGenerate));
@@ -386,6 +389,11 @@ var productsSchema = new mongoose.Schema({
     productPhoto: {type: Buffer, contentType: String},
 })
 
+const waitForDB = function(ID){
+    console.log("in waitForDB");
+    return Product.findProductByID(ID).then(res=> res).catch((err) => err);
+}
+
 productsSchema.statics.findProductByID = function(ID, callback){
     return new Promise((resolve, reject)=>{
         
@@ -467,10 +475,7 @@ app.post("/registration", (req, res, next)=>{
 })
 
 
-const waitForDB = function(ID){
-    console.log("in waitForDB");
-    return Product.findProductByID(ID).then(res=> res).catch((err) => err);
-}
+
 
 app.post("/addProduct", (req, res, next)=>{
     const form = new formidable.IncomingForm();
