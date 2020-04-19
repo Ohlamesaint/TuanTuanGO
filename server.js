@@ -331,6 +331,7 @@ TuanGOSchema.statics.findTuanGOByProductType = function(productType, callback){
             return('not Found');
         } 
         else{
+            console.log(docs);
             callback(docs);
         }
     })
