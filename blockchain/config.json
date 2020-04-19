@@ -1,7 +1,7 @@
 {
   "private_key": "8519c40c6e3e1036de30bb446e26c7deb03b47f3b0607c750fe45a142abe11f5",
-  "network": "http://symbolwu.serverless.social",
-  "network_web": "http://7a50eb13.ngrok.io",
+  "network": "http://140.116.82.201:7545",
+  "network_web": "http://140.116.82.201:7777/#/",
   "ERC20": "0xad1F2780Cb594C234E996B92Ac7e64Ad9004D998",
   "name": "TEST",
   "symbol": "ETH",
