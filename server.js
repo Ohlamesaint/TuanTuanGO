@@ -210,7 +210,7 @@ app.post("/deploy", async (req, res, next)=>{
         ExpirationTime : data.ExpirationTime,
         duration: durationInMin,
         members: [],
-        SoldAmounts: 0,
+        SoldAmounts: [],
         TotalAmount: 0
     });
     let productRes = await waitForDB(data.productID);
