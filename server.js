@@ -254,6 +254,8 @@ const mainPageResponse = function(){
     this.TuanGOType = 0;
     this.TuanGOAddress = "";
     this.TuanGOmembers = [];
+    this.TotalAmount = 0;
+    this.SoldAmounts = [];
 }
 
 
@@ -271,6 +273,8 @@ app.post('/mainPageProducts', (req, res, next)=>{
                 response.TuanGOType = result[i].TuanGOtype;
                 response.TuanGOmembers = result[i].members;
                 response.TuanGOAddress = result[i].TuanGOAddress;
+                response.TotalAmount = result[i].TotalAmount;
+                response.SoldAmounts = result[i].SoldAmounts;
                 console.log("response outside: "+ response);
                 ProductInform = await waitForDB(result[i].productID);
                 console.log("after waitForDB: " + ProductInform);
