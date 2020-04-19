@@ -153,7 +153,7 @@ app.get("/products/:check", async (req, res, next)=>{
     }
 })
 
-function joinTuanGOFunc(username, TuanGOAddress){
+function joinTuanGOFunc(username, TuanGOAddress, amount){
     UserProfile.checkAccount(username, (res)=>{
         if(res){
             res.joinTuanGOAddress.push(TuanGOAddress);
@@ -166,6 +166,7 @@ function joinTuanGOFunc(username, TuanGOAddress){
     TuanGO.findTuanGOByAddress(TuanGOAddress, (res)=>{
         if(res){
             res.members.push(username);
+            res.SoldAmounts = res.SoldAmounts + amount;
             res.save();
         }else{
             throw new Error("cannot find tuanGO");
@@ -180,7 +181,7 @@ app.post("/join", (req, res, next)=>{
     UserProfile.checkAccount(req.session.username, (resAccount)=>{
         if(resAccount){
             create.join(data.contractAddress, resAccount.walletPrivateKey, data.amount).then((result)=>{
-                joinTuanGOFunc(req.session.username, data.contractAddress);
+                joinTuanGOFunc(req.session.username, data.contractAddress, data.amount);
                 console.log(result);
                 res.send(result);
             }).catch((err=>{
@@ -209,6 +210,8 @@ app.post("/deploy", async (req, res, next)=>{
         ExpirationTime : data.ExpirationTime,
         duration: durationInMin,
         members: [],
+        SoldAmounts: 0,
+        TotalAmount: 0
     });
     let productRes = await waitForDB(data.productID);
     if(productRes){ 
@@ -216,6 +219,7 @@ app.post("/deploy", async (req, res, next)=>{
         TuanGOGenerate.price = productRes.price;
         TuanGOGenerate.productType = productRes.productType;
         if(data.type === 1){
+            TuanGOGenerate.TotalAmount = productRes.unpackableAmount
             create.deploy_unpack(productRes.unpackableAmount, Math.floor(productRes.price), TuanGOGenerate.duration).then((result)=>{
                 TuanGOGenerate.price = productRes.price;
                 TuanGOGenerate.TuanGOAddress = result;
@@ -224,6 +228,7 @@ app.post("/deploy", async (req, res, next)=>{
                 res.send({"contractAddress": result});
             });
         }else if(data.type === 0){
+            TuanGOGenerate.TotalAmount = productRes.PromotionLowestNum;
             console.log('brfore');
             create.deploy(productRes.PromotionlowestNum, productRes.price, Math.floor(productRes.PromotionPrice), TuanGOGenerate.duration).then((result)=>{
                 console.log('after');
@@ -316,6 +321,8 @@ var TuanGOSchema = new mongoose.Schema({
     duration: {type: Number, required: true},
     ExpirationTime : {type: Date, required: true},
     members: [String],              //會員username
+    SoldAmounts: Number,
+    TotalAmount: Number
 })
 
 TuanGOSchema.statics.findTuanGOByAddress = function(TuanGOAddress, callback){
