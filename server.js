@@ -250,6 +250,7 @@ app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
     TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
+        console.log(data.productType);
         if(result){
             console.log("first" + result);
             let ProductInform  = '';
