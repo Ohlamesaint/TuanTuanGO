@@ -78,7 +78,7 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result.headPaste);
-            result.data.signin = true;
+            result.signin = true;
             //var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));  大頭貼問題
             // console.log(headPasteBuf);
             // var headPasteJSON = JSON.stringify(headPasteBuf);
@@ -88,8 +88,13 @@ app.get('/profile', function(req, res, next){
             //         return
             //     }else{
             //         console.log(data);
-            res.send(result);
+            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste});
             return; 
+            // }
+            // })
+            // res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
+            // console.log(headPasteJSON);
+            //這裡之後要改成next();
         })
     }
 })
