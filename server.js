@@ -78,6 +78,7 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result.headPaste);
+            result.signin = true;
             //var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));  大頭貼問題
             // console.log(headPasteBuf);
             // var headPasteJSON = JSON.stringify(headPasteBuf);
@@ -87,7 +88,7 @@ app.get('/profile', function(req, res, next){
             //         return
             //     }else{
             //         console.log(data);
-            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste});
+            res.send(result);
             return; 
             // }
             // })
