@@ -52,6 +52,7 @@ const Response = function(){
 }
 
 app.get("/signin", (req, res, next)=>{      //確認是否有登入
+    // res.setHeader('Access-Control-Allow-Origin',"https://luffy.ee.ncku.edu.tw");
     if(!req.session.signin){
         console.log("fail");
         res.send({signin: false});
@@ -59,6 +60,9 @@ app.get("/signin", (req, res, next)=>{      //確認是否有登入
         return;
     }else{
         console.log(req.session);
+        // UserProfile.checkAccount(req.session.username, (result)=>{
+        //     console.log(result);
+        //     var headPasteBuf = (result.headPaste.buffer).toString('utf8');
         res.send({signin: true});
         return;             //這裡之後要改成next();
         // })
@@ -74,9 +78,16 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result.headPaste);
-            let response = result;
-            console.log(response);
-            response.signin = true;
+            result.data.signin = true;
+            //var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));  大頭貼問題
+            // console.log(headPasteBuf);
+            // var headPasteJSON = JSON.stringify(headPasteBuf);
+            // fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
+            //     if(err){
+            //         res.send(err);
+            //         return
+            //     }else{
+            //         console.log(data);
             res.send(result);
             return; 
         })
