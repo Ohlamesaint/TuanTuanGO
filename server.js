@@ -180,7 +180,7 @@ app.post("/join", (req, res, next)=>{
     console.log("join: " + dataJSON);
     UserProfile.checkAccount(req.session.username, (resAccount)=>{
         if(resAccount){
-            console.log(data.contractAddress, resAccount.walletPrivateKe, data.amount)
+            console.log(data.contractAddress, resAccount.walletPrivateKey, data.amount)
             create.join(data.contractAddress, resAccount.walletPrivateKey, data.amount).then((result)=>{
                 joinTuanGOFunc(req.session.username, data.contractAddress, data.amount);
                 console.log(result);
