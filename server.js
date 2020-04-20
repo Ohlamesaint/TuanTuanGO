@@ -74,7 +74,8 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result.headPaste);
-            let response = result.data;
+            let response = result;
+            console.log(response);
             response.signin = true;
             res.send(result);
             return; 
