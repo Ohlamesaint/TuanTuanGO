@@ -14,7 +14,7 @@ const corsOption = {
     //     "https://ohlamesaint.github.io",
     //     "https://luffy.ee.ncku.edu.tw",
     // ],
-    // credentials: true,
+    credentials: false,
     // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     // allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
 }
