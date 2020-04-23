@@ -10,13 +10,13 @@ var create= require("./blockchain/create");
 
 
 const corsOption = {
-    // origin:[
-    //     "https://ohlamesaint.github.io",
-    //     "https://luffy.ee.ncku.edu.tw",
-    // ],
-    credentials: false,
-    // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
+    origin:[
+        "https://ohlamesaint.github.io",
+        "https://luffy.ee.ncku.edu.tw",
+    ],
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
 }
 
 const dbsetting = {
@@ -78,7 +78,6 @@ app.get('/profile', function(req, res, next){
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
             console.log(result.headPaste);
-            result.signin = true;
             //var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));  大頭貼問題
             // console.log(headPasteBuf);
             // var headPasteJSON = JSON.stringify(headPasteBuf);
@@ -181,8 +180,6 @@ app.post("/join", (req, res, next)=>{
     console.log("join: " + dataJSON);
     UserProfile.checkAccount(req.session.username, (resAccount)=>{
         if(resAccount){
-            console.log(resAccount);
-            console.log(data.contractAddress, resAccount.walletPrivateKey, data.amount)
             create.join(data.contractAddress, resAccount.walletPrivateKey, data.amount).then((result)=>{
                 joinTuanGOFunc(req.session.username, data.contractAddress, data.amount);
                 console.log(result);
