@@ -177,12 +177,9 @@ app.post('/sendMoney', async (req, res, next) => {
         console.log(req.session);
         return;
     } else {
-        console.log(req.data);
         UserProfile.checkAccount(req.session.username, (userResult) => {
             if(userResult){
-                console.log(userResult);
-                create.send(userResult.walletAddress, req.data.money).then((result) => {
-                    console.log(result);
+                create.send(userResult.walletAddress, req.body.money).then((result) => {
                     res.send({"balance": result, "signin": true})
                 })
             } else {
