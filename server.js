@@ -580,7 +580,7 @@ app.post("/addProduct", (req, res, next)=>{
 app.post('/static/:anything', (req, res, next)=>{
     console.log(req.body);
     let form = new formidable.IncomingForm();
-
+    form.uploadDir = "./public";
     form.parse(req, (err, fields, files) => {
         console.log(fields);
         console.log(files);
