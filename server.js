@@ -78,22 +78,16 @@ app.get('/profile', function(req, res, next){
         return;
     }else{
         UserProfile.checkAccount(req.session.username, (result)=>{
-            console.log(result.headPaste);
-            //var headPasteBuf = JSON.parse(Buffer.from(result.headPaste, 'binary'));  大頭貼問題
-            // console.log(headPasteBuf);
-            // var headPasteJSON = JSON.stringify(headPasteBuf);
-            // fs.readFileSync(result.headPaste, 'utf8', (err, data)=>{
-            //     if(err){
-            //         res.send(err);
-            //         return
-            //     }else{
-            //         console.log(data);
-            res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste});
+            res.send({
+                "signin": true, 
+                "user": result.user, 
+                "username": result.username, 
+                "headPaste": result.headPaste, 
+                "phoneNumber": result.phoneNumber,
+                "email": result.email,
+                "address": result.address
+            });
             return; 
-            // }
-            // })
-            // res.send({"signin": true, "user": result.user, "username": result.username, "headPaste": result.headPaste.buffer});
-            // console.log(headPasteJSON);
             //這裡之後要改成next();
         })
     }
