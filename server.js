@@ -577,9 +577,16 @@ app.post("/addProduct", (req, res, next)=>{
 })
 
 
-// app.get('/static/:anything', (req, res, next)=>{
-//     res.redirect('https://luffy.ee.ncku.edu.tw/~Shang/TuanTuanGO/main.html');
-// })
+app.post('/static/:anything', (req, res, next)=>{
+    console.log(req.body);
+    let form = new formidable.IncomingForm();
+
+    form.parse(req, (err, fields, files) => {
+        console.log(fields);
+        console.log(files);
+        res.send("success!");
+    })
+})
 
 
 app.use('/static', express.static('./public'));
