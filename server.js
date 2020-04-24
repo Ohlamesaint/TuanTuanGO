@@ -368,7 +368,7 @@ var UserProfileSchema = new mongoose.Schema({
     headPaste: {type: Buffer, contentType: String},      //必須先將圖片檔轉成Binary data
     walletAddress: {type: String, required: true},
     walletPrivateKey: {type: String, required:true},
-    phone: {type: Number, required: true},
+    phoneNum: {type: Number, required: true},
     email: {type: String, required: true},
     joinTuanGOAddress: [String],
 })
