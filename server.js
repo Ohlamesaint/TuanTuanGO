@@ -156,10 +156,16 @@ app.get("/products/:check", async (req, res, next)=>{
 
 app.get('/userwallet', async (req, res, next) => {
     UserProfile.checkAccount(req.session.username, (userResult) => {
-        console.log(userResult);
-        create.inquery(userResult.walletPrivateKey).then((result) => {
-            console.log(result);
-        })
+        if(userResult){
+            console.log(userResult);
+            create.inquery(userResult.walletPrivateKey).then((result) => {
+                console.log(result);
+                res.send(userResult)
+            })
+        } else {
+            console.log('unexpected error');
+            res.send('unexpected error')
+        }
     })
 })
 
