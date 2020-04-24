@@ -152,7 +152,7 @@ app.get('/userwallet', async (req, res, next) => {
     UserProfile.checkAccount(req.session.username, (userResult) => {
         if(userResult){
             console.log(userResult);
-            create.inquery(userResult.walletPrivateKey).then((result) => {
+            create.inquery(userResult.walletAddress).then((result) => {
                 console.log(result);
                 res.send(result)
             })
