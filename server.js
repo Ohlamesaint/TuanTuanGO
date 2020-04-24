@@ -180,7 +180,7 @@ app.post('/sendMoney', async (req, res, next) => {
         UserProfile.checkAccount(req.session.username, (userResult) => {
             if(userResult){
                 console.log(userResult);
-                create.inquery(userResult.walletAddress).then((result) => {
+                create.send(userResult.walletAddress, req.data.money).then((result) => {
                     console.log(result);
                     res.send({"balance": result, "signin": true})
                 })
