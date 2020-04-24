@@ -160,7 +160,7 @@ app.get('/userwallet', async (req, res, next) => {
             console.log(userResult);
             create.inquery(userResult.walletPrivateKey).then((result) => {
                 console.log(result);
-                res.send(userResult)
+                res.send(result)
             })
         } else {
             console.log('unexpected error');
