@@ -467,6 +467,7 @@ app.post("/registration", (req, res, next)=>{
                     phoneNumber: 0,
                     email: "",
                 })
+                console.log(field);
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
@@ -475,7 +476,6 @@ app.post("/registration", (req, res, next)=>{
                 accountGenerate.phoneNumber = field.phoneNumber;
                 accountGenerate.email = field.email;
                 create.create(String(field.password)).then((res)=>{
-                    console.log(res);
                     accountGenerate.walletAddress = `0x${res.address}`;
                     accountGenerate.walletPrivateKey = res.privatekey;
                     return(accountGenerate);
