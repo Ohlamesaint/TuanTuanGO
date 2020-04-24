@@ -149,18 +149,25 @@ app.get("/products/:check", async (req, res, next)=>{
 })
 
 app.get('/userwallet', async (req, res, next) => {
-    UserProfile.checkAccount(req.session.username, (userResult) => {
-        if(userResult){
-            console.log(userResult);
-            create.inquery(userResult.walletAddress).then((result) => {
-                console.log(result);
-                res.send(result)
-            })
-        } else {
-            console.log('unexpected error');
-            res.send('unexpected error')
-        }
-    })
+    if(!req.session.signin){
+        console.log("fail");
+        res.send({"signin": false});
+        console.log(req.session);
+        return;
+    } else {
+        UserProfile.checkAccount(req.session.username, (userResult) => {
+            if(userResult){
+                console.log(userResult);
+                create.inquery(userResult.walletAddress).then((result) => {
+                    console.log(result);
+                    res.send({"balance": result, "signin": true})
+                })
+            } else {
+                console.log('unexpected error');
+                res.send('unexpected error')
+            }
+        })
+    }
 })
 
 function joinTuanGOFunc(username, TuanGOAddress, amount){
