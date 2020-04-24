@@ -180,11 +180,13 @@ app.post('/sendMoney', async (req, res, next) => {
         UserProfile.checkAccount(req.session.username, (userResult) => {
             if(userResult){
                 create.send(userResult.walletAddress, req.body.money).then((result) => {
-                    res.send({"balance": result, "signin": true})
+                    create.inquery(userResult.walletAddress).then((resultMoney) => {
+                        res.send({"balance": resultMoney, "success": true});
+                    })
                 })
             } else {
                 console.log('unexpected error');
-                res.send('unexpected error')
+                res.send({"success": false});
             }
         })
     }
