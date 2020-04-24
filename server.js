@@ -368,6 +368,8 @@ var UserProfileSchema = new mongoose.Schema({
     headPaste: {type: Buffer, contentType: String},      //必須先將圖片檔轉成Binary data
     walletAddress: {type: String, required: true},
     walletPrivateKey: {type: String, required:true},
+    phone: {type: Number, required: true},
+    email: {type: String, required: true},
     joinTuanGOAddress: [String],
 })
 
@@ -462,12 +464,16 @@ app.post("/registration", (req, res, next)=>{
                     headPaste: "",
                     walletAddress: "",
                     walletPrivateKey: "",
+                    phoneNumber: 0,
+                    email: "",
                 })
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
                 accountGenerate.region = field.region;
                 accountGenerate.address = field.address;
+                accountGenerate.phoneNumber = field.phoneNumber;
+                accountGenerate.email = field.email;
                 create.create(String(field.password)).then((res)=>{
                     console.log(res);
                     accountGenerate.walletAddress = `0x${res.address}`;
