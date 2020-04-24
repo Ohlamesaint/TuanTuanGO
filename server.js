@@ -177,6 +177,7 @@ app.post('/sendMoney', async (req, res, next) => {
         console.log(req.session);
         return;
     } else {
+        console.log(req.data);
         UserProfile.checkAccount(req.session.username, (userResult) => {
             if(userResult){
                 console.log(userResult);
