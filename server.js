@@ -588,13 +588,13 @@ app.post('/static/:anything', (req, res, next)=>{
         console.log(fields);
         console.log(files);
         // use default bucket
-        // const Attachment = createModel();
+        const Attachment = createModel();
         
         // or create custom bucket with custom options
-        const Attachment = createModel({
-            modelName: 'userPhotos',
-            connection: connection
-        });
+        // const Attachment = createModel({
+        //     modelName: 'userPhotos',
+        //     connection: connection
+        // });
         
         // write file to gridfs
         const readStream = createReadStream(files);
