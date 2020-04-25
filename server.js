@@ -12,12 +12,12 @@ const { createModel } = require('mongoose-gridfs');
 
 
 const corsOption = {
-    // origin:[
-    //     "https://ohlamesaint.github.io",
-    //     "http://haohao.git.ismplab.com",
-    //     "https://luffy.ee.ncku.edu.tw",
-    // ],
-    credentials: false,
+    origin:[
+        "https://ohlamesaint.github.io",
+        "http://haohao.git.ismplab.com",
+        "https://luffy.ee.ncku.edu.tw",
+    ],
+    credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: ['Accept', 'Authorization', 'Content-Type', 'X-Requested-With', 'Range']
 }
@@ -597,7 +597,7 @@ app.post('/static/:anything', (req, res, next)=>{
         // });
         
         // write file to gridfs
-        const readStream = createReadStream(files);
+        const readStream = createReadStream(files);             //<= 必須要是ｂｕｆｆｅｒ黨
         const options = ({ filename: files, contentType: 'image/png' });
         Attachment.write(options, readStream, (error, file) => {
             console.log(file);
