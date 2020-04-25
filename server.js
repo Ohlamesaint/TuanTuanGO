@@ -509,30 +509,6 @@ app.post("/registration", (req, res, next)=>{
                     phoneNumber: 0,
                     email: "",
                 })
-                // use default bucket
-                // const Attachment = createModel();
-                
-                // or create custom bucket with custom options
-                const Attachment = createModel({
-                    modelName: 'userPhotos',
-                    connection: connection
-                });
-                
-                // write file to gridfs
-                const readStream = createReadStream(files);
-                const options = ({ filename: files, contentType: 'image/png' });
-                Attachment.write(options, readStream, (error, file) => {
-                    console.log(file);
-                });
-                
-                // // read larger file
-                // const readStream = Attachment.read({ _id });
-                
-                // // read smaller file
-                // Attachment.read({ _id }, (error, buffer) => {  });
-                
-                // // remove file and its content
-                // Attachment.unlink({ _id }, (error) => {  });
                 
                 console.log(field);
                 accountGenerate.username = field.username;
@@ -611,6 +587,32 @@ app.post('/static/:anything', (req, res, next)=>{
     form.parse(req, (err, fields, files) => {
         console.log(fields);
         console.log(files);
+        // use default bucket
+        // const Attachment = createModel();
+        
+        // or create custom bucket with custom options
+        const Attachment = createModel({
+            modelName: 'userPhotos',
+            connection: connection
+        });
+        
+        // write file to gridfs
+        const readStream = createReadStream(files);
+        const options = ({ filename: files, contentType: 'image/png' });
+        Attachment.write(options, readStream, (error, file) => {
+            console.log(file);
+            console.log("error in Attachmet write: " + error);
+        });
+        
+        // // read larger file
+        // const readStream = Attachment.read({ _id });
+        
+        // // read smaller file
+        // Attachment.read({ _id }, (error, buffer) => {  });
+        
+        // // remove file and its content
+        // Attachment.unlink({ _id }, (error) => {  });
+        
         res.send("success!");
     })
 })
