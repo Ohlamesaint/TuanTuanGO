@@ -4,9 +4,11 @@ var router = express.Router();
 var cors = require("cors");
 var app = express();
 const formidable = require('formidable');
-var fs = require("fs");
 var session = require("express-session");
 var create= require("./blockchain/create");
+const { createReadStream } = require('fs');
+const { createModel } = require('mongoose-gridfs');
+
 
 
 const corsOption = {
@@ -507,6 +509,31 @@ app.post("/registration", (req, res, next)=>{
                     phoneNumber: 0,
                     email: "",
                 })
+                // use default bucket
+                // const Attachment = createModel();
+                
+                // or create custom bucket with custom options
+                const Attachment = createModel({
+                    modelName: 'userPhotos',
+                    connection: connection
+                });
+                
+                // write file to gridfs
+                const readStream = createReadStream(files);
+                const options = ({ filename: files, contentType: 'image/png' });
+                Attachment.write(options, readStream, (error, file) => {
+                    console.log(file);
+                });
+                
+                // // read larger file
+                // const readStream = Attachment.read({ _id });
+                
+                // // read smaller file
+                // Attachment.read({ _id }, (error, buffer) => {  });
+                
+                // // remove file and its content
+                // Attachment.unlink({ _id }, (error) => {  });
+                
                 console.log(field);
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
@@ -580,7 +607,7 @@ app.post("/addProduct", (req, res, next)=>{
 app.post('/static/:anything', (req, res, next)=>{
     console.log(req.body);
     let form = new formidable.IncomingForm();
-    form.uploadDir = "./public";
+    form.uploadDir = "./public/";
     form.parse(req, (err, fields, files) => {
         console.log(fields);
         console.log(files);
