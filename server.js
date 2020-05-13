@@ -319,8 +319,8 @@ const options = {
     }
 }
 
-const subject = 'mailto:mkop9456@gmail.com',
-const publicKey = "BGxHf6ZQkHVoIdROO4Fir61eouPlqUp3IzxsV4ud10FeXgS5vvG9q3Gw5J7lsp2XHnF_49aJ9RxWNV99_TD9--8",
+const subject = 'mailto:mkop9456@gmail.com';
+const publicKey = "BGxHf6ZQkHVoIdROO4Fir61eouPlqUp3IzxsV4ud10FeXgS5vvG9q3Gw5J7lsp2XHnF_49aJ9RxWNV99_TD9--8";
 const privateKey = 'Dif3UmuTtyX9iwlvQYCaiIKXBgsk-pK-5TQS_QAosFU'
 let pushConfig = {
     endpoint: "https://fcm.googleapis.com/fcm/send/cTSrRcs9Duk:APA91bHf14z6XSb8YOXgjsvrB6CE7OGEOrrwCwHWUsnmvwQRpTIONQkAZkE-dQVAaYiTHHuAlu9jeJplpvQ8fgcNg-0PlNsiHH6kAnXM8Zty2Dm5cG91fzFPpW_vNIifNTl7r5g038Rf",
