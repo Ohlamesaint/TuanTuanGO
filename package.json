@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "web-push": "web-push"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "mongoose-gridfs": "^1.2.36",
     "multer": "^1.4.2",
     "request": "^2.88.2",
+    "web-push": "^3.4.4",
     "web3": "^1.2.6"
   },
   "devDependencies": {

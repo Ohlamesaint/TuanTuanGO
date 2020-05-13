@@ -9,8 +9,6 @@ var create= require("./blockchain/create");
 const { createReadStream } = require('fs');
 const { createModel } = require('mongoose-gridfs');
 
-
-
 const corsOption = {
     origin:[
         "https://ohlamesaint.github.io",
@@ -300,6 +298,11 @@ const mainPageResponse = function(){
 }
 
 
+app.post('/subscribe', (req, res) => {
+    let data = req.body;
+    console.log(data);
+})
+
 app.post('/mainPageProducts', (req, res, next)=>{
     let data = req.body;
     let responseArray = [];
@@ -475,6 +478,11 @@ productsSchema.statics.findProductByName = function(productName, callback){
 }
 
 var Product = mongoose.model("Product", productsSchema);
+
+/**********************註冊訂閱**************************/
+// subscriptionSchema = new mongoose.Schema({
+
+// })
 
 
 /**********************註冊路由**************************/
