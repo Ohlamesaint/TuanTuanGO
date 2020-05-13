@@ -339,6 +339,7 @@ app.post('/subscribe', (req, res) => {
         auth: data.keys.auth
     })
     newSubscription.save();
+    res.status(201).json({});
     webpush.setVapidDetails('mailto:mkop9456@gmail.com', publicKey, privateKey);
     webpush.sendNotification(data, payload).catch((err) => console.log('something went wrong => webpush', err));
 })
