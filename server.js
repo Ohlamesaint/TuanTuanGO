@@ -312,9 +312,9 @@ const PushSubsciption = (endpoint, p256dh, auth) => {
         auth: this.auth
     }
 }
-const payload = Json.stringify({title: "tuantuanGO", content: "your tuanGO is ready!"});
+const payload = JSON.stringify({title: "tuantuanGO", content: "your tuanGO is ready!"});
 const options = {
-    vapidDetails = {
+    vapidDetails : {
         subject: 'mailto:mkop9456@gmail.com',
         publicKey: "BDS16gOHo-U1qqgD6cGbLMTEZe_lrbgk3aKAs3T38YQiFvoucK7hSRjJUJhuj8e4_PxqIWm-CWc3OFOi2sSXbZI",
         privateKey: 'jHbtNwxKgiGaUHr7VRDqGfY8Qt6F0vG5DZp_0o9nOws'
