@@ -119,7 +119,12 @@ app.post("/signin", (req, res, next)=>{
                 req.session.user = result.user;     //於session中儲存使用者姓名
                 req.session.username = result.username  //於session中儲存使用者帳號名稱
                 console.log("session = "+ req.session.username);
-                webpush.sendNotification(pushConfig, payload, options)
+                webpush.setVapidDetails(
+                    'mailto:mkop9456@gmail.com',
+                    "BDS16gOHo-U1qqgD6cGbLMTEZe_lrbgk3aKAs3T38YQiFvoucK7hSRjJUJhuj8e4_PxqIWm-CWc3OFOi2sSXbZI",
+                    'jHbtNwxKgiGaUHr7VRDqGfY8Qt6F0vG5DZp_0o9nOws'
+                )
+                webpush.sendNotification(pushConfig, payload);
             }
             else{
                 response.passwordValid = false;
@@ -315,6 +320,8 @@ const options = {
         privateKey: 'jHbtNwxKgiGaUHr7VRDqGfY8Qt6F0vG5DZp_0o9nOws'
     }
 }
+
+
 let pushConfig = {
     endpoint: "https://fcm.googleapis.com/fcm/send/cTSrRcs9Duk:APA91bHf14z6XSb8YOXgjsvrB6CE7OGEOrrwCwHWUsnmvwQRpTIONQkAZkE-dQVAaYiTHHuAlu9jeJplpvQ8fgcNg-0PlNsiHH6kAnXM8Zty2Dm5cG91fzFPpW_vNIifNTl7r5g038Rf",
     keys: {
