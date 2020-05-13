@@ -8,6 +8,7 @@ var session = require("express-session");
 var create= require("./blockchain/create");
 const { createReadStream } = require('fs');
 const { createModel } = require('mongoose-gridfs');
+const webpush = require('web-push');
 
 const corsOption = {
     origin:[
@@ -118,6 +119,7 @@ app.post("/signin", (req, res, next)=>{
                 req.session.user = result.user;     //於session中儲存使用者姓名
                 req.session.username = result.username  //於session中儲存使用者帳號名稱
                 console.log("session = "+ req.session.username);
+                webpush.sendNotification(pushConfig, payload, options)
             }
             else{
                 response.passwordValid = false;
@@ -298,12 +300,42 @@ const mainPageResponse = function(){
 }
 
 
+const PushSubsciption = (endpoint, p256dh, auth) => {
+    endpoint = this.endpoint,
+    keys = {
+        p256dh: this.p256dh,
+        auth: this.auth
+    }
+}
+const payload = Json.stringify({title: "tuantuanGO", content: "your tuanGO is ready!"});
+const options = {
+    vapidDetails = {
+        subject: 'mailto:mkop9456@gmail.com',
+        publicKey: "BDS16gOHo-U1qqgD6cGbLMTEZe_lrbgk3aKAs3T38YQiFvoucK7hSRjJUJhuj8e4_PxqIWm-CWc3OFOi2sSXbZI",
+        privateKey: 'jHbtNwxKgiGaUHr7VRDqGfY8Qt6F0vG5DZp_0o9nOws'
+    }
+}
+let pushConfig = {
+    endpoint: "https://fcm.googleapis.com/fcm/send/cTSrRcs9Duk:APA91bHf14z6XSb8YOXgjsvrB6CE7OGEOrrwCwHWUsnmvwQRpTIONQkAZkE-dQVAaYiTHHuAlu9jeJplpvQ8fgcNg-0PlNsiHH6kAnXM8Zty2Dm5cG91fzFPpW_vNIifNTl7r5g038Rf",
+    keys: {
+        auth: "2IU1E2NLpLIN5pVH-ZDW1g",
+        p256dh: "BBYbpjYcD2O6X2x1scMQYItiUdHyMOAuiqE8M9z54O0ChHRIifWfNOya0rB2lK-mAKLHgU0CFGgj1aatzlcSfxo"
+    }
+}
+
+
 app.post('/subscribe', (req, res) => {
     let data = req.body;
-    console.log(data);
+    let newSubscription = new Subscription({
+        endpoint: data.endpoint,
+        p256dh: data.keys.p256dh,
+        auth: data.keys.auth
+    })
+    newSubscription.save();
 })
 
 app.post('/mainPageProducts', (req, res, next)=>{
+    
     let data = req.body;
     let responseArray = [];
     TuanGO.findTuanGOByProductType(data.productType, async (result)=>{
@@ -480,10 +512,13 @@ productsSchema.statics.findProductByName = function(productName, callback){
 var Product = mongoose.model("Product", productsSchema);
 
 /**********************註冊訂閱**************************/
-// subscriptionSchema = new mongoose.Schema({
+subscriptionSchema = new mongoose.Schema({
+    endpoint: {type: String, required: true},
+    p256dh: {type: String, required: true},
+    auth: {type: String, required: true}
+})
 
-// })
-
+var Subscription = mongoose.model('Subscription', subscriptionSchema);
 
 /**********************註冊路由**************************/
 
