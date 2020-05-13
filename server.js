@@ -339,6 +339,7 @@ app.post('/subscribe', (req, res) => {
         auth: data.keys.auth
     })
     newSubscription.save();
+    webpush.sendNotification(data, payload).catch((err) => console.log(err));
 })
 
 app.post('/mainPageProducts', (req, res, next)=>{
