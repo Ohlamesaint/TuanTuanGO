@@ -305,7 +305,7 @@ const mainPageResponse = function(){
 }
 
 
-const PushSubsciption = (endpoint, p256dh, auth) => {
+const PushSubscription = (endpoint, p256dh, auth) => {
     endpoint = this.endpoint,
     keys = {
         p256dh: this.p256dh,
@@ -341,7 +341,7 @@ app.post('/subscribe', (req, res) => {
     newSubscription.save();
     res.status(201).json({});
     webpush.setVapidDetails('mailto:mkop9456@gmail.com', publicKey, privateKey);
-    webpush.sendNotification(data, payload).catch((err) => console.log('something went wrong => webpush', err));
+    webpush.sendNotification(data, payload).then(res => console.log('webpush success', res)).catch((err) => console.log('something went wrong => webpush', err));
 })
 
 app.post('/mainPageProducts', (req, res, next)=>{
