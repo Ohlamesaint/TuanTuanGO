@@ -12,9 +12,7 @@ const webpush = require('web-push');
 
 const corsOption = {
     origin:[
-        "https://ohlamesaint.github.io",
-        "http://haohao.git.ismplab.com",
-        "https://luffy.ee.ncku.edu.tw",
+        "https://ohlamesaint.github.io"
     ],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
