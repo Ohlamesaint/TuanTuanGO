@@ -331,6 +331,7 @@ let pushConfig = {
 
 app.post('/subscribe', (req, res) => {
     let data = req.body;
+    console.log(data);
     let newSubscription = new Subscription({
         endpoint: data.endpoint,
         p256dh: data.keys.p256dh,
@@ -561,7 +562,6 @@ app.post("/registration", (req, res, next)=>{
                     email: "",
                 })
                 
-                console.log(field);
                 accountGenerate.username = field.username;
                 accountGenerate.password = field.password;
                 accountGenerate.user = field.user;
